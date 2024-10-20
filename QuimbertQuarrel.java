@@ -674,6 +674,9 @@ public class QuimbertQuarrel {
                 BeginDrawing();
 
 
+                Rectangle okayButton = new Rectangle((GetScreenWidth() / 2) - 105, ((GetScreenHeight() / 4) * 3) + 50, 200, 100);
+
+
                 //okay button
                 if (!CheckCollisionPointRec(GetMousePosition(), okayButton)) {
                     DrawRectangleRec(okayButton, BLACK);
@@ -741,7 +744,8 @@ public class QuimbertQuarrel {
 
 
                 a = drawPlus(plusButton, posx, posy, (a > 9), a, 10, false);
-                DrawText(a, )
+                
+                DrawText("" + a, GetScreenWidth() / 2 + posx - 10, GetScreenHeight() / 2 + posy + 45, 72, BLACK);
             }
 
             EndDrawing();
