@@ -672,6 +672,35 @@ public class QuimbertQuarrel {
                 
             } else if (layout.equals("createQuimbert2")) {
                 BeginDrawing();
+
+
+                //okay button
+                if (!CheckCollisionPointRec(GetMousePosition(), okayButton)) {
+                    DrawRectangleRec(okayButton, BLACK);
+                    DrawRectangle((GetScreenWidth() / 2) - 95, ((GetScreenHeight() / 4) * 3) + 60, 180, 80, LIGHTGRAY);
+                    DrawRectangle((GetScreenWidth() / 2) - 100, ((GetScreenHeight() / 4) * 3) + 150, 195, 5, DARKGRAY);
+                    DrawRectangle((GetScreenWidth() / 2) + 95, ((GetScreenHeight() / 4) * 3) + 55, 5, 100, DARKGRAY);
+                    DrawText("Okay", ((GetScreenWidth() / 2) - 5) - (MeasureText("Okay", 60) / 2), ((GetScreenHeight() / 4) * 3) + 70, 60, BLACK);
+                } else {
+                    if (!IsMouseButtonDown(0)) {
+                        DrawRectangle((GetScreenWidth() / 2) - 105, ((GetScreenHeight() / 4) * 3) + 50, 200, 100, BLACK);
+                        DrawRectangle((GetScreenWidth() / 2) - 95, ((GetScreenHeight() / 4) * 3) + 60, 180, 80, GRAY);
+                        DrawRectangle((GetScreenWidth() / 2) - 100, ((GetScreenHeight() / 4) * 3) + 150, 195, 5, DARKGRAY);
+                        DrawRectangle((GetScreenWidth() / 2) + 95, ((GetScreenHeight() / 4) * 3) + 55, 5, 100, DARKGRAY);
+                        DrawText("Okay", ((GetScreenWidth() / 2) - 5) - (MeasureText("Okay", 60) / 2), ((GetScreenHeight() / 4) * 3) + 70, 60, BLACK);
+                    } else {
+                        DrawRectangle((GetScreenWidth() / 2) - 100, ((GetScreenHeight() / 4) * 3) + 55, 200, 100, BLACK);
+                        DrawRectangle((GetScreenWidth() / 2) - 90, ((GetScreenHeight() / 4) * 3) + 65, 180, 80, GRAY);
+                        DrawText("Okay", ((GetScreenWidth() / 2)) - (MeasureText("Okay", 60) / 2), ((GetScreenHeight() / 4) * 3) + 75, 60, BLACK);
+                    }
+
+                    if (IsMouseButtonReleased(0)) {
+                        layout = "createQuimbert2";
+                    }
+                }
+
+
+
                 ClearBackground(RAYWHITE);
 
                 int posx = -750;
@@ -712,6 +741,7 @@ public class QuimbertQuarrel {
 
 
                 a = drawPlus(plusButton, posx, posy, (a > 9), a, 10, false);
+                DrawText(a, )
             }
 
             EndDrawing();
