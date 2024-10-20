@@ -331,9 +331,7 @@ public class QuimbertQuarrel {
                     DrawTriangle(new Vector2().x(50).y(65), new Vector2().x(75).y(85), new Vector2().x(75).y(45), BLACK);
                     DrawRectangle(145, 30, 5, 80, DARKGRAY);
                     DrawRectangle(30, 105, 115, 5, DARKGRAY);
-                }
-                else
-                {
+                } else {
                     if (!IsMouseButtonDown(0))
                     {
                         DrawRectangle(25, 25, 120, 80, BLACK);
