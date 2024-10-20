@@ -104,6 +104,7 @@ public class QuimbertQuarrel {
 
         int framesCounter = 0;
         boolean isTextBoxName = false;
+        boolean displayColors = false;
 
         SetConfigFlags(FLAG_WINDOW_RESIZABLE | FLAG_WINDOW_MAXIMIZED);
 
@@ -315,8 +316,7 @@ public class QuimbertQuarrel {
                     DrawRectangle((GetScreenWidth() / 2) - 160, (GetScreenHeight() / 2) + 55, 80, 80, DARKGRAY);
                     DrawRectangle((GetScreenWidth() / 2) - 145, (GetScreenHeight() / 2) + 90, 50, 10, BLACK);
                 }
-            }
-            else if (layout.equals("createQuimbert")) {
+            } else if (layout.equals("createQuimbert")) {
                 BeginDrawing();
                 ClearBackground(RAYWHITE);
 
@@ -366,14 +366,38 @@ public class QuimbertQuarrel {
                 DrawText(("Make your Quimbert"), (GetScreenWidth() / 2) - (MeasureText("Make your Quimbert", 96) / 2), 120, 96, BLACK);
 
                 DrawText("Name:", ((GetScreenWidth() / 2) - MeasureText("Name:", 72)) - 30, 250, 72, BLACK);
-                DrawText("Owner:", ((GetScreenWidth() / 2) - MeasureText("Owner:", 72)) - 30, 340, 72, BLACK);
-                DrawText("Color:", ((GetScreenWidth() / 2) - MeasureText("Color:", 72)) - 30, 430, 72, BLACK);
+                DrawText("Owner:", ((GetScreenWidth() / 2) - MeasureText("Owner:", 72)) - 30, 350, 72, BLACK);
+                DrawText("Color:", ((GetScreenWidth() / 2) - MeasureText("Color:", 72)) - 30, 450, 72, BLACK);
 
 
-                Rectangle colorButton = new Rectangle ((GetScreenWidth () / 2) + 20, 430, 75, 75);
+                Rectangle colorButton = new Rectangle ((GetScreenWidth () / 2) + 20, 450, 75, 75);
 
-                //Rectangle(); //will be color selection view
-                //Rectangle();
+                if (!CheckCollisionPointRec(GetMousePosition(), colorButton)) {
+                    DrawRectangleRec(colorButton, BLACK);
+                    DrawRectangle((GetScreenWidth () / 2) + 30, 460, 55, 55, LIGHTGRAY);
+                    DrawRectangle((GetScreenWidth () / 2) + 95, 455, 5, 75, DARKGRAY);
+                    DrawRectangle((GetScreenWidth () / 2) + 25, 525, 70, 5, DARKGRAY);
+                } else {
+                    if (IsMouseButtonReleased(0))
+                    {
+                        if (displayColors){
+                            displayColors = false;
+                        } else {
+                            displayColors = true;
+                        }
+                    }
+                    
+                    if (IsMouseButtonDown(0))
+                    {
+                        DrawRectangle((GetScreenWidth () / 2) + 25, 455, 75, 75, BLACK);
+                        DrawRectangle((GetScreenWidth () / 2) + 35, 465, 55, 55, GRAY);
+                    } else {
+                        DrawRectangleRec(colorButton, BLACK);
+                        DrawRectangle((GetScreenWidth () / 2) + 30, 460, 55, 55, GRAY);
+                        DrawRectangle((GetScreenWidth () / 2) + 95, 455, 5, 75, DARKGRAY);
+                        DrawRectangle((GetScreenWidth () / 2) + 25, 525, 70, 5, DARKGRAY);
+                    }
+                }
 
                 textBoxName.setPos(new Rectangle(GetScreenWidth () / 2 + 20, 250, 375, 75));
                 textBoxName.render();
@@ -382,8 +406,12 @@ public class QuimbertQuarrel {
                 textBoxOwner.render();
                 textBoxOwner.processTextInput();
 
-                DrawRectangleRec(colorButton, BLACK);
-                
+                Rectangle colorDisplay = new Rectangle((GetScreenWidth () / 2) + 110, 450, 500, 500);
+
+                if (displayColors) {
+                    DrawRectangleRec(colorDisplay, BLACK);
+                    DrawRectangle((GetScreenWidth () / 2) + 120, 460, 480, 480, LIGHTGRAY);
+                }
 
                 Rectangle okayButton = new Rectangle((GetScreenWidth() / 2) - 105, ((GetScreenHeight() / 4) * 3) + 50, 200, 100);
 
