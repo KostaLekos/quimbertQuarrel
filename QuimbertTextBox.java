@@ -35,8 +35,8 @@ public class QuimbertTextBox {
     }
 
     public void processTextInput () {
-        if (CheckCollisionPointRec(GetMousePosition(), boundingBox)) mouseOnText = true;
-        else mouseOnText = false;
+        if (CheckCollisionPointRec(GetMousePosition(), boundingBox) && IsMouseButtonPressed(0)) mouseOnText = true;
+        else if (!CheckCollisionPointRec(GetMousePosition(), boundingBox) && IsMouseButtonPressed(0)) mouseOnText = false;
 
         if (mouseOnText)
         {
@@ -74,12 +74,13 @@ public class QuimbertTextBox {
 
         framesCounter++;
 
-        DrawRectangleRec(boundingBox, LIGHTGRAY);
+        
         if (mouseOnText) {
-            DrawRectangleLines((int)boundingBox.x(), (int)boundingBox.y(), (int)boundingBox.width(), (int)boundingBox.height(), RED);
+            DrawRectangleRec(boundingBox, GRAY);
         } else {
-            DrawRectangleLines((int)boundingBox.x(), (int)boundingBox.y(), (int)boundingBox.width(), (int)boundingBox.height(), DARKGRAY);
+            DrawRectangleRec(boundingBox, LIGHTGRAY); 
         }
+        DrawRectangleLinesEx(boundingBox, 10.0f, BLACK);
 
         DrawText(String.format("INPUT CHARS: %d/%d", text.length(), maxCharCount), 315, 250, 20, DARKGRAY);
         
@@ -90,13 +91,14 @@ public class QuimbertTextBox {
             {
                 // Draw blinking underscore char
                 if (((framesCounter/20)%2) == 0) {
-                    DrawText("_", (int)boundingBox.x() + 8 + MeasureText(text, 40), (int)boundingBox.y() + 12, 40, MAROON);
+                    DrawText("_", (int)boundingBox.x() + 23 + MeasureText(text, 40), (int)boundingBox.y() + 19, 40, DARKGRAY);
                 }
             } else {
                 DrawText("Press BACKSPACE to delete chars...", 230, 300, 20, GRAY);
             }
         }
         
-        DrawText(text, (int)boundingBox.x() + 5, (int)boundingBox.y() + 8, 40, MAROON);
+        //draw typed text
+        DrawText(text, (int)boundingBox.x() + 20, (int)boundingBox.y() + 15, 40, DARKGRAY);
     }
 }

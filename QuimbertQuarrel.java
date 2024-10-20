@@ -411,12 +411,12 @@ public class QuimbertQuarrel
                     }    
                 }    
                 
-                
-
                 //for (int i = 0; i < quimbertQuantity; i++)
                 
                 madeQuimbert = false;
                 points = randInt(25, 35);
+
+                //while (!madeQuimbert)
 
                 DrawText(("Quimbert #" + (makingQuimbert + 1)), (GetScreenWidth() / 2) - (MeasureText("Quimbert #1", 96) / 2), 20, 96, BLACK);
                 DrawText(("Make your Quimbert"), (GetScreenWidth() / 2) - (MeasureText("Make your Quimbert", 96) / 2), 120, 96, BLACK);
@@ -428,7 +428,7 @@ public class QuimbertQuarrel
 
                 Rectangle colorButton = new Rectangle ((GetScreenWidth () / 2) + 20, 430, 75, 75);
 
-                //Rectangle();
+                //Rectangle(); //will be color selection view
                 //Rectangle();
 
                 textBoxName.render();
@@ -436,69 +436,8 @@ public class QuimbertQuarrel
                 textBoxOwner.render();
                 textBoxOwner.processTextInput();
 
-
-                // System.out.println(textBoxName.getText());
-                // System.out.println(textBoxOwner.getText());
-
-                // DrawRectangleRec(textBoxName, BLACK);
-                // DrawRectangleRec(textBoxOwner, BLACK); // Migrate to QuimbertTextBox
                 DrawRectangleRec(colorButton, BLACK);
                 
-                // DrawRectangle((GetScreenWidth() / 2) + 30, 260, 355, 55, LIGHTGRAY);
-                // DrawRectangle((GetScreenWidth() / 2) + 30, 350, 355, 55, LIGHTGRAY);
-                // DrawRectangle((GetScreenWidth() / 2) + 30, 440, 55, 55, WHITE); // ???
-
-                // if (CheckCollisionPointRec(GetMousePosition(), textBoxName))
-                // {
-                //     isTextBoxName = true;
-                // }
-                // else
-                // {
-                //     isTextBoxName = false;
-                // }
-
-                if (isTextBoxName)
-                {
-                    // DrawRectangleLines((int)textBoxName.x(), (int)textBoxName.y(), (int)textBoxName.width(), (int)textBoxName.height(), RED);
-                    // SetMouseCursor(MOUSE_CURSOR_IBEAM);
-
-                    // int key = GetCharPressed();
-
-                    // while (key > 0) {
-                    //     if (key >= 32 && key <= 125 && (name.length() < MAX_INPUT_CHARS)) {
-                    //         name = new String(name + (char)key);
-                    //     }
-
-                    // }
-            
-                    
-                    
-                    // if (IsKeyPressed(KEY_BACKSPACE))
-                    // {
-                    //     if (name.length() <= 1) {
-                    //         name = new String("");
-                    //     } else {
-                    //         name = new String(name.substring(0, name.length() - 2));
-                    //     }
-                    // }
-
-                    // if (name.length() < MAX_INPUT_CHARS)
-                    // {
-                    //     // Draw blinking underscore char
-                    //     if (((framesCounter/20)%2) == 0) DrawText("_", (int)textBoxName.x() + 8 + MeasureText(name, 40), (int)textBoxName.y() + 12, 40, MAROON);
-                    // }
-                    // else DrawText("Press BACKSPACE to delete chars...", 230, 300, 20, GRAY);
-                }
-                else
-                {
-                    // SetMouseCursor(MOUSE_CURSOR_DEFAULT);
-                    // DrawRectangleLines((int)textBoxName.x(), (int)textBoxName.y(), (int)textBoxName.width(), (int)textBoxName.height(), DARKGRAY);
-                }
-
-                // DrawText(String.format("%s", name), (int)textBoxName.x() + 5, (int)textBoxName.y() + 8, 40, MAROON);
-                // DrawText(String.format("INPUT CHARS: %f/%f", (float)name.length(), (float)MAX_INPUT_CHARS), 315, 250, 20, DARKGRAY);
-
-                // System.out.println(name);
 
                 Rectangle okayButton = new Rectangle((GetScreenWidth() / 2) - 105, ((GetScreenHeight() / 4) * 3) + 50, 200, 100);
 
