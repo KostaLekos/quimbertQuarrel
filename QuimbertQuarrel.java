@@ -279,7 +279,27 @@ public class QuimbertQuarrel
                     }
                     else
                     {
-                        if (!IsMouseButtonDown(0))
+                        if (IsMouseButtonReleased(0))
+                        {
+                            quimbertQuantity += 1;
+
+                            if (quimbertQuantity > 7)
+                            {
+                                DrawRectangle((GetScreenWidth() / 2) + 75, (GetScreenHeight() / 2) + 45, 100, 100, BLACK);
+                                DrawRectangle((GetScreenWidth() / 2) + 85, (GetScreenHeight() / 2) + 55, 80, 80, DARKGRAY);
+                                DrawRectangle((GetScreenWidth() / 2) + 120, (GetScreenHeight() / 2) + 70, 10, 50, BLACK);
+                                DrawRectangle((GetScreenWidth() / 2) + 100, (GetScreenHeight() / 2) + 90, 50, 10, BLACK);
+                            }
+                        }
+
+                        if (IsMouseButtonDown(0))
+                        {
+                            DrawRectangle((GetScreenWidth() / 2) + 75, (GetScreenHeight() / 2) + 45, 100, 100, BLACK);
+                            DrawRectangle((GetScreenWidth() / 2) + 85, (GetScreenHeight() / 2) + 55, 80, 80, GRAY);
+                            DrawRectangle((GetScreenWidth() / 2) + 120, (GetScreenHeight() / 2) + 70, 10, 50, BLACK);
+                            DrawRectangle((GetScreenWidth() / 2) + 100, (GetScreenHeight() / 2) + 90, 50, 10, BLACK);
+                        }
+                        else if (quimbertQuantity < 8)
                         {
                             DrawRectangle((GetScreenWidth() / 2) + 70, (GetScreenHeight() / 2) + 40, 100, 100, BLACK);
                             DrawRectangle((GetScreenWidth() / 2) + 80, (GetScreenHeight() / 2) + 50, 80, 80, GRAY);
@@ -287,26 +307,6 @@ public class QuimbertQuarrel
                             DrawRectangle((GetScreenWidth() / 2) + 95, (GetScreenHeight() / 2) + 85, 50, 10, BLACK);
                             DrawRectangle((GetScreenWidth() / 2) + 75, (GetScreenHeight() / 2) + 140, 95, 5, DARKGRAY);
                             DrawRectangle((GetScreenWidth() / 2) + 170, (GetScreenHeight() / 2) + 45, 5, 100, DARKGRAY);
-                        }
-                        else
-                        {
-                            DrawRectangle((GetScreenWidth() / 2) + 75, (GetScreenHeight() / 2) + 45, 100, 100, BLACK);
-                            DrawRectangle((GetScreenWidth() / 2) + 85, (GetScreenHeight() / 2) + 55, 80, 80, GRAY);
-                            DrawRectangle((GetScreenWidth() / 2) + 120, (GetScreenHeight() / 2) + 70, 10, 50, BLACK);
-                            DrawRectangle((GetScreenWidth() / 2) + 100, (GetScreenHeight() / 2) + 90, 50, 10, BLACK);
-                        }
-
-                        if (IsMouseButtonReleased(0))
-                        {
-                            quimbertQuantity += 1;
-
-                            if (!(quimbertQuantity < 8))
-                            {
-                                DrawRectangle((GetScreenWidth() / 2) + 75, (GetScreenHeight() / 2) + 45, 100, 100, BLACK);
-                                DrawRectangle((GetScreenWidth() / 2) + 85, (GetScreenHeight() / 2) + 55, 80, 80, DARKGRAY);
-                                DrawRectangle((GetScreenWidth() / 2) + 120, (GetScreenHeight() / 2) + 70, 10, 50, BLACK);
-                                DrawRectangle((GetScreenWidth() / 2) + 100, (GetScreenHeight() / 2) + 90, 50, 10, BLACK);
-                            }
                         }
                     }
                 }
@@ -333,31 +333,31 @@ public class QuimbertQuarrel
                     }
                     else
                     {
-                        if (!IsMouseButtonDown(0))
+                        if (IsMouseButtonReleased(0))
+                        {
+                            quimbertQuantity -= 1;
+
+                            if (quimbertQuantity < 3)
+                            {
+                                DrawRectangle((GetScreenWidth() / 2) - 170, (GetScreenHeight() / 2) + 45, 100, 100, BLACK);
+                                DrawRectangle((GetScreenWidth() / 2) - 160, (GetScreenHeight() / 2) + 55, 80, 80, DARKGRAY);
+                                DrawRectangle((GetScreenWidth() / 2) - 145, (GetScreenHeight() / 2) + 90, 50, 10, BLACK);
+                            }
+                        }
+
+                        if (IsMouseButtonDown(0))
+                        {
+                            DrawRectangle((GetScreenWidth() / 2) - 170, (GetScreenHeight() / 2) + 45, 100, 100, BLACK);
+                            DrawRectangle((GetScreenWidth() / 2) - 160, (GetScreenHeight() / 2) + 55, 80, 80, GRAY);
+                            DrawRectangle((GetScreenWidth() / 2) - 145, (GetScreenHeight() / 2) + 90, 50, 10, BLACK);
+                        }
+                        else if (quimbertQuantity > 2)
                         {
                             DrawRectangle((GetScreenWidth() / 2) - 175, (GetScreenHeight() / 2) + 40, 100, 100, BLACK);
                             DrawRectangle((GetScreenWidth() / 2) - 165, (GetScreenHeight() / 2) + 50, 80, 80, GRAY);
                             DrawRectangle((GetScreenWidth() / 2) - 150, (GetScreenHeight() / 2) + 85, 50, 10, BLACK);
                             DrawRectangle((GetScreenWidth() / 2) - 170, (GetScreenHeight() / 2) + 140, 95, 5, DARKGRAY);
                             DrawRectangle((GetScreenWidth() / 2) - 75, (GetScreenHeight() / 2) + 45, 5, 100, DARKGRAY);
-                        }
-                        else
-                        {
-                            DrawRectangle((GetScreenWidth() / 2) - 170, (GetScreenHeight() / 2) + 45, 100, 100, BLACK);
-                            DrawRectangle((GetScreenWidth() / 2) - 160, (GetScreenHeight() / 2) + 55, 80, 80, GRAY);
-                            DrawRectangle((GetScreenWidth() / 2) - 145, (GetScreenHeight() / 2) + 90, 50, 10, BLACK);
-                        }
-
-                        if (IsMouseButtonReleased(0))
-                        {
-                            if (quimbertQuantity == 3)
-                            {
-                                DrawRectangle((GetScreenWidth() / 2) - 170, (GetScreenHeight() / 2) + 45, 100, 100, BLACK);
-                                DrawRectangle((GetScreenWidth() / 2) - 160, (GetScreenHeight() / 2) + 55, 80, 80, DARKGRAY);
-                                DrawRectangle((GetScreenWidth() / 2) - 145, (GetScreenHeight() / 2) + 90, 50, 10, BLACK);
-                            }
-
-                            quimbertQuantity -= 1;
                         }
                     }
                 }
