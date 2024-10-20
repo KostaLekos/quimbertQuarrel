@@ -8,6 +8,9 @@ import static com.raylib.Jaylib.*;
  * 
  * git add <changed files>
  * git commit -m "message"
+ * 
+ * git pull --rebase
+ * 
  * git push --set-upstream origin main
  */
 
