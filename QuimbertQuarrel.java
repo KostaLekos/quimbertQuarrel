@@ -256,7 +256,7 @@ public class QuimbertQuarrel {
                         DrawTriangle(new Vector2().x(55).y(70), new Vector2().x(80).y(90), new Vector2().x(80).y(50), BLACK);
                     }
 
-                    if (IsMouseButtonReleased(0)) {
+                    if (IsMouseButtonReleased(0) || IsKeyPressed(27)) {
                         layout = "start";
                     }
                 }
@@ -283,7 +283,7 @@ public class QuimbertQuarrel {
                         DrawText("Okay", ((GetScreenWidth() / 2)) - (MeasureText("Okay", 60) / 2), ((GetScreenHeight() / 4) * 3) + 75, 60, BLACK);
                     }
 
-                    if (IsMouseButtonReleased(0)) {
+                    if (IsMouseButtonReleased(0) || IsKeyPressed(13)) {
                         layout = "createQuimbert";
                     }
                 }
@@ -404,7 +404,7 @@ public class QuimbertQuarrel {
                         DrawTriangle(new Vector2().x(55).y(70), new Vector2().x(80).y(90), new Vector2().x(80).y(50), BLACK);
                     }
 
-                    if (IsMouseButtonReleased(0)) {
+                    if (IsMouseButtonReleased(0) || IsKeyPressed(27)) {
                         layout = "howManyQ";
                     }    
                 }    
@@ -506,7 +506,7 @@ public class QuimbertQuarrel {
                         DrawText("Okay", ((GetScreenWidth() / 2)) - (MeasureText("Okay", 60) / 2), ((GetScreenHeight() / 4) * 3) + 75, 60, BLACK);
                     }
                 
-                    if (IsMouseButtonReleased(0)) {
+                    if (IsMouseButtonReleased(0) || IsKeyPressed(13)) {
                         if (textBoxName.getText().length() > 0 && textBoxOwner.getText().length() > 0) {
                             g = textBoxName.getText();
                             h = textBoxOwner.getText();
@@ -731,7 +731,7 @@ public class QuimbertQuarrel {
                         DrawText("Okay", ((GetScreenWidth() / 2)) - (MeasureText("Okay", 60) / 2), ((GetScreenHeight() / 4) * 3) + 75, 60, BLACK);
                     }
 
-                    if (IsMouseButtonReleased(0)) {
+                    if (IsMouseButtonReleased(0) || IsKeyPressed(13)) {
                         layout = "createQuimbert2";
                     }
                 }
@@ -768,7 +768,7 @@ public class QuimbertQuarrel {
                         DrawTriangle(new Vector2().x(55).y(70), new Vector2().x(80).y(90), new Vector2().x(80).y(50), BLACK);
                     }
 
-                    if (IsMouseButtonReleased(0)) {
+                    if (IsMouseButtonReleased(0) || IsKeyPressed(27)) {
                         layout = "createQuimbert";
                     }    
                 }   
