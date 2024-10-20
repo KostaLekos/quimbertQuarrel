@@ -31,7 +31,12 @@ public class QuimbertTextBox {
 
     public QuimbertTextBox (com.raylib.Jaylib.Rectangle bound) {
         boundingBox = bound;
+
         text = "";
+    }
+
+    public void setPos(com.raylib.Jaylib.Rectangle boundingBox) {
+        this.boundingBox = boundingBox;
     }
 
     public void processTextInput () {
@@ -81,7 +86,10 @@ public class QuimbertTextBox {
             DrawRectangleLines((int)boundingBox.x(), (int)boundingBox.y(), (int)boundingBox.width(), (int)boundingBox.height(), DARKGRAY);
         }
 
-        DrawText(String.format("INPUT CHARS: %d/%d", text.length(), maxCharCount), 315, 250, 20, DARKGRAY);
+
+        if (mouseOnText) {
+            DrawText(String.format("INPUT CHARS: %d/%d", text.length(), maxCharCount), 315, 250, 20, DARKGRAY);
+        }
         
         
         if (mouseOnText)

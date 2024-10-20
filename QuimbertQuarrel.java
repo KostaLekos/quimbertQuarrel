@@ -431,8 +431,10 @@ public class QuimbertQuarrel
                 //Rectangle();
                 //Rectangle();
 
+                textBoxName.setPos(new Rectangle(GetScreenWidth () / 2 + 20, 250, 375, 75));
                 textBoxName.render();
                 textBoxName.processTextInput();
+                textBoxOwner.setPos(new Rectangle(GetScreenWidth () / 2 + 20, 350, 375, 75));
                 textBoxOwner.render();
                 textBoxOwner.processTextInput();
 
