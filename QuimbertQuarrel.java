@@ -373,8 +373,7 @@ public class QuimbertQuarrel {
                 Rectangle backButton = new Rectangle(25, 25, 120, 80);
 
                 //back button
-                if (!CheckCollisionPointRec(GetMousePosition(), backButton))
-                {
+                if (!CheckCollisionPointRec(GetMousePosition(), backButton)) {
                     DrawRectangleRec(backButton, BLACK);
                     DrawRectangle(35, 35, 100, 60, LIGHTGRAY);
                     DrawLineEx(new Vector2().x(120).y(65), new Vector2().x(65).y(65), 15, BLACK);
@@ -382,25 +381,21 @@ public class QuimbertQuarrel {
                     DrawRectangle(145, 30, 5, 80, DARKGRAY);
                     DrawRectangle(30, 105, 115, 5, DARKGRAY);
                 } else {
-                    if (!IsMouseButtonDown(0))
-                    {
+                    if (!IsMouseButtonDown(0)) {
                         DrawRectangle(25, 25, 120, 80, BLACK);
                         DrawRectangle(35, 35, 100, 60, GRAY);
                         DrawLineEx(new Vector2().x(120).y(65), new Vector2().x(65).y(65), 15, BLACK);
                         DrawTriangle(new Vector2().x(50).y(65), new Vector2().x(75).y(85), new Vector2().x(75).y(45), BLACK);
                         DrawRectangle(145, 30, 5, 80, DARKGRAY);
                         DrawRectangle(30, 105, 115, 5, DARKGRAY);
-                    }
-                    else
-                    {
+                    } else {
                         DrawRectangle(30, 30, 120, 80, BLACK);
                         DrawRectangle(40, 40, 100, 60, GRAY);
                         DrawLineEx(new Vector2().x(125).y(70), new Vector2().x(70).y(70), 15, BLACK);
                         DrawTriangle(new Vector2().x(55).y(70), new Vector2().x(80).y(90), new Vector2().x(80).y(50), BLACK);
                     }
 
-                    if (IsMouseButtonReleased(0))
-                    {
+                    if (IsMouseButtonReleased(0)) {
                         layout = "howManyQ";
                     }    
                 }    
@@ -681,6 +676,36 @@ public class QuimbertQuarrel {
 
                 int posx = -750;
                 int posy = -400;
+
+                Rectangle backButton = new Rectangle(25, 25, 120, 80);
+
+                //back button
+                if (!CheckCollisionPointRec(GetMousePosition(), backButton)) {
+                    DrawRectangleRec(backButton, BLACK);
+                    DrawRectangle(35, 35, 100, 60, LIGHTGRAY);
+                    DrawLineEx(new Vector2().x(120).y(65), new Vector2().x(65).y(65), 15, BLACK);
+                    DrawTriangle(new Vector2().x(50).y(65), new Vector2().x(75).y(85), new Vector2().x(75).y(45), BLACK);
+                    DrawRectangle(145, 30, 5, 80, DARKGRAY);
+                    DrawRectangle(30, 105, 115, 5, DARKGRAY);
+                } else {
+                    if (!IsMouseButtonDown(0)) {
+                        DrawRectangle(25, 25, 120, 80, BLACK);
+                        DrawRectangle(35, 35, 100, 60, GRAY);
+                        DrawLineEx(new Vector2().x(120).y(65), new Vector2().x(65).y(65), 15, BLACK);
+                        DrawTriangle(new Vector2().x(50).y(65), new Vector2().x(75).y(85), new Vector2().x(75).y(45), BLACK);
+                        DrawRectangle(145, 30, 5, 80, DARKGRAY);
+                        DrawRectangle(30, 105, 115, 5, DARKGRAY);
+                    } else {
+                        DrawRectangle(30, 30, 120, 80, BLACK);
+                        DrawRectangle(40, 40, 100, 60, GRAY);
+                        DrawLineEx(new Vector2().x(125).y(70), new Vector2().x(70).y(70), 15, BLACK);
+                        DrawTriangle(new Vector2().x(55).y(70), new Vector2().x(80).y(90), new Vector2().x(80).y(50), BLACK);
+                    }
+
+                    if (IsMouseButtonReleased(0)) {
+                        layout = "createQuimbert";
+                    }    
+                }   
 
                 Rectangle plusButton = new Rectangle((GetScreenWidth() / 2) + 70 + posx, (GetScreenHeight() / 2) + 40 + posy, 100, 100);
 
