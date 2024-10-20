@@ -29,6 +29,10 @@ public class QuimbertTextBox {
         return text;
     }
 
+    public void clear() {
+        text = "";
+    }
+
     public QuimbertTextBox (com.raylib.Jaylib.Rectangle bound) {
         boundingBox = bound;
 
