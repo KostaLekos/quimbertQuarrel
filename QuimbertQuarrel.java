@@ -4,6 +4,15 @@ import java.util.ArrayList;
 import static com.raylib.Jaylib.*;
 
 /*
+ * git pull
+ * 
+ * git add <changed files>
+ * git commit -m "message"
+ * git push --set-upstream origin main
+ */
+
+
+/*
 compile it: cmd +
 "E:\Actually Useful\NonZips\java\jdk-21.0.4+7\bin\javac.exe" -cp .\jaylib-5.0.0-0.jar .\QuimbertQuarrel.java .\Quimbert.java
 run it: cmd +
@@ -289,15 +298,15 @@ public class QuimbertQuarrel
 
                         if (IsMouseButtonReleased(0))
                         {
-                            if (quimbertQuantity == 7)
+                            quimbertQuantity += 1;
+
+                            if (!(quimbertQuantity < 8))
                             {
                                 DrawRectangle((GetScreenWidth() / 2) + 75, (GetScreenHeight() / 2) + 45, 100, 100, BLACK);
                                 DrawRectangle((GetScreenWidth() / 2) + 85, (GetScreenHeight() / 2) + 55, 80, 80, DARKGRAY);
                                 DrawRectangle((GetScreenWidth() / 2) + 120, (GetScreenHeight() / 2) + 70, 10, 50, BLACK);
                                 DrawRectangle((GetScreenWidth() / 2) + 100, (GetScreenHeight() / 2) + 90, 50, 10, BLACK);
                             }
-
-                            quimbertQuantity += 1;
                         }
                     }
                 }
