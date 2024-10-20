@@ -11,7 +11,7 @@ import static com.raylib.Jaylib.*;
  * 
  * git pull --rebase
  * 
- * git push --set-upstream origin main
+ * git push --set-upstream origin main (only do set upstream if first time you run)
  */
 
 
@@ -97,11 +97,6 @@ public class QuimbertQuarrel {
         String layout = "start";
         int mWidth = GetMonitorWidth(0), mHeight = GetMonitorHeight(0);
         int makingQuimbert = 0;
-        //final int MAX_INPUT_CHARS = 25;
-
-        // char[] name = new char[MAX_INPUT_CHARS + 1];
-        //String name = "";
-
         int framesCounter = 0;
         boolean isTextBoxName = false;
         boolean displayColors = false;
