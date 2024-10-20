@@ -108,6 +108,7 @@ public class QuimbertQuarrel
         boolean madeQuimbert;
         String layout = "start";
         int mWidth = GetMonitorWidth(0), mHeight = GetMonitorHeight(0);
+        int makingQuimbert = 0;
         //final int MAX_INPUT_CHARS = 25;
 
         // char[] name = new char[MAX_INPUT_CHARS + 1];
@@ -412,311 +413,308 @@ public class QuimbertQuarrel
                 
                 
 
-                for (int i = 0; i < quimbertQuantity; i++)
+                //for (int i = 0; i < quimbertQuantity; i++)
+                
+                madeQuimbert = false;
+                points = randInt(25, 35);
+
+                DrawText(("Quimbert #" + (makingQuimbert + 1)), (GetScreenWidth() / 2) - (MeasureText("Quimbert #1", 96) / 2), 20, 96, BLACK);
+                DrawText(("Make your Quimbert"), (GetScreenWidth() / 2) - (MeasureText("Make your Quimbert", 96) / 2), 120, 96, BLACK);
+
+                DrawText("Name:", ((GetScreenWidth() / 2) - MeasureText("Name:", 72)) - 30, 250, 72, BLACK);
+                DrawText("Owner:", ((GetScreenWidth() / 2) - MeasureText("Owner:", 72)) - 30, 340, 72, BLACK);
+                DrawText("Color:", ((GetScreenWidth() / 2) - MeasureText("Color:", 72)) - 30, 430, 72, BLACK);
+
+
+                Rectangle colorButton = new Rectangle ((GetScreenWidth () / 2) + 20, 430, 75, 75);
+
+                //Rectangle();
+                //Rectangle();
+
+                textBoxName.render();
+                textBoxName.processTextInput();
+                textBoxOwner.render();
+                textBoxOwner.processTextInput();
+
+
+                // System.out.println(textBoxName.getText());
+                // System.out.println(textBoxOwner.getText());
+
+                // DrawRectangleRec(textBoxName, BLACK);
+                // DrawRectangleRec(textBoxOwner, BLACK); // Migrate to QuimbertTextBox
+                DrawRectangleRec(colorButton, BLACK);
+                
+                // DrawRectangle((GetScreenWidth() / 2) + 30, 260, 355, 55, LIGHTGRAY);
+                // DrawRectangle((GetScreenWidth() / 2) + 30, 350, 355, 55, LIGHTGRAY);
+                // DrawRectangle((GetScreenWidth() / 2) + 30, 440, 55, 55, WHITE); // ???
+
+                // if (CheckCollisionPointRec(GetMousePosition(), textBoxName))
+                // {
+                //     isTextBoxName = true;
+                // }
+                // else
+                // {
+                //     isTextBoxName = false;
+                // }
+
+                if (isTextBoxName)
                 {
-                    madeQuimbert = false;
-                    points = randInt(25, 35);
+                    // DrawRectangleLines((int)textBoxName.x(), (int)textBoxName.y(), (int)textBoxName.width(), (int)textBoxName.height(), RED);
+                    // SetMouseCursor(MOUSE_CURSOR_IBEAM);
 
-                    //while (!madeQuimbert)
-                    //{
-                        DrawText(("Quimbert #" + (i + 1)), (GetScreenWidth() / 2) - (MeasureText("Quimbert #1", 96) / 2), 20, 96, BLACK);
-                        DrawText(("Make your Quimbert"), (GetScreenWidth() / 2) - (MeasureText("Make your Quimbert", 96) / 2), 120, 96, BLACK);
+                    // int key = GetCharPressed();
 
-                        DrawText("Name:", ((GetScreenWidth() / 2) - MeasureText("Name:", 72)) - 30, 250, 72, BLACK);
-                        DrawText("Owner:", ((GetScreenWidth() / 2) - MeasureText("Owner:", 72)) - 30, 340, 72, BLACK);
-                        DrawText("Color:", ((GetScreenWidth() / 2) - MeasureText("Color:", 72)) - 30, 430, 72, BLACK);
+                    // while (key > 0) {
+                    //     if (key >= 32 && key <= 125 && (name.length() < MAX_INPUT_CHARS)) {
+                    //         name = new String(name + (char)key);
+                    //     }
 
-
-                        Rectangle colorButton = new Rectangle ((GetScreenWidth () / 2) + 20, 430, 75, 75);
-
-                        //Rectangle();
-                        //Rectangle();
-
-                        textBoxName.render();
-                        textBoxName.processTextInput();
-                        textBoxOwner.render();
-                        textBoxOwner.processTextInput();
-
-
-                        // System.out.println(textBoxName.getText());
-                        // System.out.println(textBoxOwner.getText());
-
-                        // DrawRectangleRec(textBoxName, BLACK);
-                        // DrawRectangleRec(textBoxOwner, BLACK); // Migrate to QuimbertTextBox
-                        DrawRectangleRec(colorButton, BLACK);
-                        
-                        // DrawRectangle((GetScreenWidth() / 2) + 30, 260, 355, 55, LIGHTGRAY);
-                        // DrawRectangle((GetScreenWidth() / 2) + 30, 350, 355, 55, LIGHTGRAY);
-                        // DrawRectangle((GetScreenWidth() / 2) + 30, 440, 55, 55, WHITE); // ???
-
-                        // if (CheckCollisionPointRec(GetMousePosition(), textBoxName))
-                        // {
-                        //     isTextBoxName = true;
-                        // }
-                        // else
-                        // {
-                        //     isTextBoxName = false;
-                        // }
-
-                        if (isTextBoxName)
-                        {
-                            // DrawRectangleLines((int)textBoxName.x(), (int)textBoxName.y(), (int)textBoxName.width(), (int)textBoxName.height(), RED);
-                            // SetMouseCursor(MOUSE_CURSOR_IBEAM);
-
-                            // int key = GetCharPressed();
-
-                            // while (key > 0) {
-                            //     if (key >= 32 && key <= 125 && (name.length() < MAX_INPUT_CHARS)) {
-                            //         name = new String(name + (char)key);
-                            //     }
-
-                            // }
+                    // }
+            
                     
-                            
-                            
-                            // if (IsKeyPressed(KEY_BACKSPACE))
-                            // {
-                            //     if (name.length() <= 1) {
-                            //         name = new String("");
-                            //     } else {
-                            //         name = new String(name.substring(0, name.length() - 2));
-                            //     }
-                            // }
+                    
+                    // if (IsKeyPressed(KEY_BACKSPACE))
+                    // {
+                    //     if (name.length() <= 1) {
+                    //         name = new String("");
+                    //     } else {
+                    //         name = new String(name.substring(0, name.length() - 2));
+                    //     }
+                    // }
 
-                            // if (name.length() < MAX_INPUT_CHARS)
-                            // {
-                            //     // Draw blinking underscore char
-                            //     if (((framesCounter/20)%2) == 0) DrawText("_", (int)textBoxName.x() + 8 + MeasureText(name, 40), (int)textBoxName.y() + 12, 40, MAROON);
-                            // }
-                            // else DrawText("Press BACKSPACE to delete chars...", 230, 300, 20, GRAY);
-                        }
-                        else
-                        {
-                            // SetMouseCursor(MOUSE_CURSOR_DEFAULT);
-                            // DrawRectangleLines((int)textBoxName.x(), (int)textBoxName.y(), (int)textBoxName.width(), (int)textBoxName.height(), DARKGRAY);
-                        }
-
-                        // DrawText(String.format("%s", name), (int)textBoxName.x() + 5, (int)textBoxName.y() + 8, 40, MAROON);
-                        // DrawText(String.format("INPUT CHARS: %f/%f", (float)name.length(), (float)MAX_INPUT_CHARS), 315, 250, 20, DARKGRAY);
-
-                        // System.out.println(name);
-
-                        Rectangle okayButton = new Rectangle((GetScreenWidth() / 2) - 105, ((GetScreenHeight() / 4) * 3) + 50, 200, 100);
-
-                        //okay button
-                        if (!CheckCollisionPointRec(GetMousePosition(), okayButton))
-                        {
-                            DrawRectangleRec(okayButton, BLACK);
-                            DrawRectangle((GetScreenWidth() / 2) - 95, ((GetScreenHeight() / 4) * 3) + 60, 180, 80, LIGHTGRAY);
-                            DrawRectangle((GetScreenWidth() / 2) - 100, ((GetScreenHeight() / 4) * 3) + 150, 195, 5, DARKGRAY);
-                            DrawRectangle((GetScreenWidth() / 2) + 95, ((GetScreenHeight() / 4) * 3) + 55, 5, 100, DARKGRAY);
-                            DrawText("Okay", ((GetScreenWidth() / 2) - 5) - (MeasureText("Okay", 60) / 2), ((GetScreenHeight() / 4) * 3) + 70, 60, BLACK);
-                        }
-                        else
-                        {
-                            if (!IsMouseButtonDown(0))
-                            {
-                                DrawRectangle((GetScreenWidth() / 2) - 105, ((GetScreenHeight() / 4) * 3) + 50, 200, 100, BLACK);
-                                DrawRectangle((GetScreenWidth() / 2) - 95, ((GetScreenHeight() / 4) * 3) + 60, 180, 80, GRAY);
-                                DrawRectangle((GetScreenWidth() / 2) - 100, ((GetScreenHeight() / 4) * 3) + 150, 195, 5, DARKGRAY);
-                                DrawRectangle((GetScreenWidth() / 2) + 95, ((GetScreenHeight() / 4) * 3) + 55, 5, 100, DARKGRAY);
-                                DrawText("Okay", ((GetScreenWidth() / 2) - 5) - (MeasureText("Okay", 60) / 2), ((GetScreenHeight() / 4) * 3) + 70, 60, BLACK);
-                            }
-                            else
-                            {
-                                DrawRectangle((GetScreenWidth() / 2) - 100, ((GetScreenHeight() / 4) * 3) + 55, 200, 100, BLACK);
-                                DrawRectangle((GetScreenWidth() / 2) - 90, ((GetScreenHeight() / 4) * 3) + 65, 180, 80, GRAY);
-                                DrawText("Okay", ((GetScreenWidth() / 2)) - (MeasureText("Okay", 60) / 2), ((GetScreenHeight() / 4) * 3) + 75, 60, BLACK);
-                            }
-                        
-                            if (IsMouseButtonReleased(0))
-                            {
-                                madeQuimbert = true;
-                            }
-                        }
-                        
-                        /*
-                        System.out.print(newLine + "Quimbert #" + (i + 1) + ": " + newLine + "Name: ");
-                        g = action.nextLine();
-
-                        System.out.print(newLine + "Owner: ");
-                        h = action.nextLine();
-
-                        System.out.print(newLine + "Color: ");
-                        c = action.nextLine();
-
-                        System.out.println(newLine + "You have " + points + " points to spend on the following stats: " +
-                        newLine + "Looks: helps with health" + newLine + "Smell: helps with sniff" + newLine + "Personality: helps with blocking" + 
-                        newLine + "Gumption: helps with successful item use" + newLine + "Length: helps with damage when using attack" + 
-                        newLine + newLine + "How many points would you like to spend your looks? Maximum 10 per stat.");
-
-                        while(!n)
-                        {
-                            try
-                            {
-                                a = Integer.valueOf(action.nextLine());
-                                n = true;
-                            }
-                            catch(Exception q)
-                            {
-                                System.out.println(newLine + "Invalid quantity of points assaigned. Please try again.");
-                            }
-                        }
-                        n = false;
-
-                        if (a > 10)
-                        {
-                            a = 10;
-                        }
-                        if (a < 0)
-                        {
-                            a = 0;
-                        }
-                        if (a > points)
-                        {
-                            a = points;
-                        }
-                        points -= a;
-
-                        System.out.println(newLine + a + " points awarded to looks! " + points + " points remaining." + newLine + 
-                        newLine + "How many points would you like to spend on your smell (sniffing ability not scent)?");
-
-                        while(!n)
-                        {
-                            try
-                            {
-                                b = Integer.valueOf(action.nextLine());
-                                n = true;
-                            }
-                            catch(Exception q)
-                            {
-                                System.out.println(newLine + "Invalid quantity of points assaigned. Please try again.");
-                            }
-                        }
-                        n = false;
-
-                        if (b > 10)
-                        {
-                            b = 10;
-                        }
-                        if (b < 0)
-                        {
-                            b = 0;
-                        }
-                        if (b > points)
-                        {
-                            b = points;
-                        }
-                        points -= b;
-
-                        System.out.println(newLine + b + " points awarded to smell! " + points + " points remaining." + newLine + newLine + 
-                        "How many points would you like to spend on your personality?");
-
-                        while(!n)
-                        {
-                            try
-                            {
-                                d = Integer.valueOf(action.nextLine());
-                                n = true;
-                            }
-                            catch(Exception q)
-                            {
-                                System.out.println(newLine + "Invalid quantity of points assaigned. Please try again.");
-                            }
-                        }
-                        n = false;
-
-                        if (d > 10)
-                        {
-                            d = 10;
-                        }
-                        if (d < 0)
-                        {
-                            d = 0;
-                        }
-                        if (d > points)
-                        {
-                            d = points;
-                        }
-                        points -= d;
-
-                        System.out.println(newLine + d + " points awarded to personality! " + points + " points remaining." + newLine +
-                        newLine + "How many points would you like to spend on your gumption?");
-
-                        while(!n)
-                        {
-                            try
-                            {
-                                e = Integer.valueOf(action.nextLine());
-                                n = true;
-                            }
-                            catch(Exception q)
-                            {
-                                System.out.println(newLine + "Invalid quantity of points assaigned. Please try again.");
-                            }
-                        }
-                        n = false;
-
-                        if (e > 10)
-                        {
-                            e = 10;
-                        }
-                        if (e < 0)
-                        {
-                            e = 0;
-                        }
-                        if (e > points)
-                        {
-                            e = points;
-                        }
-                        points -= e;
-
-                        System.out.println(newLine + e + " points awarded to gumption! " + points + " points remaining." + newLine + 
-                        newLine + "How many points would you like to spend on your length?");
-
-                        while(!n)
-                        {
-                            try
-                            {
-                                f = Integer.valueOf(action.nextLine());
-                                n = true;
-                            }
-                            catch(Exception q)
-                            {
-                                System.out.println(newLine + "Invalid quantity of points assaigned. Please try again.");
-                            }
-                        }
-                        n = false;
-
-                        if (f > 10)
-                        {
-                            f = 10;
-                        }
-                        if (f < 0)
-                        {
-                            f = 0;
-                        }
-                        if (f > points)
-                        {
-                            f = points;
-                        }
-                        points -= f;
-
-                        System.out.println(newLine + f + " points awarded to length! " + points + " points remaining." + newLine);
-
-                        quimberts.add(new Quimbert(a, b, c, d, e, f, g, h));
-
-                        quimberts.get(i).startingHealth = (randInt(3, 5) * quimberts.get(i).looks) / 2;
-                        quimberts.get(i).health = quimberts.get(i).startingHealth;
-                        
-                        if (quimberts.get(i).health < 1)
-                        {
-                            quimberts.get(i).health += 1;
-                            quimberts.get(i).startingHealth += 1;
-                        }
-                        */
-                    //}
+                    // if (name.length() < MAX_INPUT_CHARS)
+                    // {
+                    //     // Draw blinking underscore char
+                    //     if (((framesCounter/20)%2) == 0) DrawText("_", (int)textBoxName.x() + 8 + MeasureText(name, 40), (int)textBoxName.y() + 12, 40, MAROON);
+                    // }
+                    // else DrawText("Press BACKSPACE to delete chars...", 230, 300, 20, GRAY);
                 }
+                else
+                {
+                    // SetMouseCursor(MOUSE_CURSOR_DEFAULT);
+                    // DrawRectangleLines((int)textBoxName.x(), (int)textBoxName.y(), (int)textBoxName.width(), (int)textBoxName.height(), DARKGRAY);
+                }
+
+                // DrawText(String.format("%s", name), (int)textBoxName.x() + 5, (int)textBoxName.y() + 8, 40, MAROON);
+                // DrawText(String.format("INPUT CHARS: %f/%f", (float)name.length(), (float)MAX_INPUT_CHARS), 315, 250, 20, DARKGRAY);
+
+                // System.out.println(name);
+
+                Rectangle okayButton = new Rectangle((GetScreenWidth() / 2) - 105, ((GetScreenHeight() / 4) * 3) + 50, 200, 100);
+
+                //okay button
+                if (!CheckCollisionPointRec(GetMousePosition(), okayButton))
+                {
+                    DrawRectangleRec(okayButton, BLACK);
+                    DrawRectangle((GetScreenWidth() / 2) - 95, ((GetScreenHeight() / 4) * 3) + 60, 180, 80, LIGHTGRAY);
+                    DrawRectangle((GetScreenWidth() / 2) - 100, ((GetScreenHeight() / 4) * 3) + 150, 195, 5, DARKGRAY);
+                    DrawRectangle((GetScreenWidth() / 2) + 95, ((GetScreenHeight() / 4) * 3) + 55, 5, 100, DARKGRAY);
+                    DrawText("Okay", ((GetScreenWidth() / 2) - 5) - (MeasureText("Okay", 60) / 2), ((GetScreenHeight() / 4) * 3) + 70, 60, BLACK);
+                }
+                else
+                {
+                    if (!IsMouseButtonDown(0))
+                    {
+                        DrawRectangle((GetScreenWidth() / 2) - 105, ((GetScreenHeight() / 4) * 3) + 50, 200, 100, BLACK);
+                        DrawRectangle((GetScreenWidth() / 2) - 95, ((GetScreenHeight() / 4) * 3) + 60, 180, 80, GRAY);
+                        DrawRectangle((GetScreenWidth() / 2) - 100, ((GetScreenHeight() / 4) * 3) + 150, 195, 5, DARKGRAY);
+                        DrawRectangle((GetScreenWidth() / 2) + 95, ((GetScreenHeight() / 4) * 3) + 55, 5, 100, DARKGRAY);
+                        DrawText("Okay", ((GetScreenWidth() / 2) - 5) - (MeasureText("Okay", 60) / 2), ((GetScreenHeight() / 4) * 3) + 70, 60, BLACK);
+                    }
+                    else
+                    {
+                        DrawRectangle((GetScreenWidth() / 2) - 100, ((GetScreenHeight() / 4) * 3) + 55, 200, 100, BLACK);
+                        DrawRectangle((GetScreenWidth() / 2) - 90, ((GetScreenHeight() / 4) * 3) + 65, 180, 80, GRAY);
+                        DrawText("Okay", ((GetScreenWidth() / 2)) - (MeasureText("Okay", 60) / 2), ((GetScreenHeight() / 4) * 3) + 75, 60, BLACK);
+                    }
+                
+                    if (IsMouseButtonReleased(0))
+                    {
+                        madeQuimbert = true;
+                    }
+                }
+                
+                /*
+                System.out.print(newLine + "Quimbert #" + (i + 1) + ": " + newLine + "Name: ");
+                g = action.nextLine();
+
+                System.out.print(newLine + "Owner: ");
+                h = action.nextLine();
+
+                System.out.print(newLine + "Color: ");
+                c = action.nextLine();
+
+                System.out.println(newLine + "You have " + points + " points to spend on the following stats: " +
+                newLine + "Looks: helps with health" + newLine + "Smell: helps with sniff" + newLine + "Personality: helps with blocking" + 
+                newLine + "Gumption: helps with successful item use" + newLine + "Length: helps with damage when using attack" + 
+                newLine + newLine + "How many points would you like to spend your looks? Maximum 10 per stat.");
+
+                while(!n)
+                {
+                    try
+                    {
+                        a = Integer.valueOf(action.nextLine());
+                        n = true;
+                    }
+                    catch(Exception q)
+                    {
+                        System.out.println(newLine + "Invalid quantity of points assaigned. Please try again.");
+                    }
+                }
+                n = false;
+
+                if (a > 10)
+                {
+                    a = 10;
+                }
+                if (a < 0)
+                {
+                    a = 0;
+                }
+                if (a > points)
+                {
+                    a = points;
+                }
+                points -= a;
+
+                System.out.println(newLine + a + " points awarded to looks! " + points + " points remaining." + newLine + 
+                newLine + "How many points would you like to spend on your smell (sniffing ability not scent)?");
+
+                while(!n)
+                {
+                    try
+                    {
+                        b = Integer.valueOf(action.nextLine());
+                        n = true;
+                    }
+                    catch(Exception q)
+                    {
+                        System.out.println(newLine + "Invalid quantity of points assaigned. Please try again.");
+                    }
+                }
+                n = false;
+
+                if (b > 10)
+                {
+                    b = 10;
+                }
+                if (b < 0)
+                {
+                    b = 0;
+                }
+                if (b > points)
+                {
+                    b = points;
+                }
+                points -= b;
+
+                System.out.println(newLine + b + " points awarded to smell! " + points + " points remaining." + newLine + newLine + 
+                "How many points would you like to spend on your personality?");
+
+                while(!n)
+                {
+                    try
+                    {
+                        d = Integer.valueOf(action.nextLine());
+                        n = true;
+                    }
+                    catch(Exception q)
+                    {
+                        System.out.println(newLine + "Invalid quantity of points assaigned. Please try again.");
+                    }
+                }
+                n = false;
+
+                if (d > 10)
+                {
+                    d = 10;
+                }
+                if (d < 0)
+                {
+                    d = 0;
+                }
+                if (d > points)
+                {
+                    d = points;
+                }
+                points -= d;
+
+                System.out.println(newLine + d + " points awarded to personality! " + points + " points remaining." + newLine +
+                newLine + "How many points would you like to spend on your gumption?");
+
+                while(!n)
+                {
+                    try
+                    {
+                        e = Integer.valueOf(action.nextLine());
+                        n = true;
+                    }
+                    catch(Exception q)
+                    {
+                        System.out.println(newLine + "Invalid quantity of points assaigned. Please try again.");
+                    }
+                }
+                n = false;
+
+                if (e > 10)
+                {
+                    e = 10;
+                }
+                if (e < 0)
+                {
+                    e = 0;
+                }
+                if (e > points)
+                {
+                    e = points;
+                }
+                points -= e;
+
+                System.out.println(newLine + e + " points awarded to gumption! " + points + " points remaining." + newLine + 
+                newLine + "How many points would you like to spend on your length?");
+
+                while(!n)
+                {
+                    try
+                    {
+                        f = Integer.valueOf(action.nextLine());
+                        n = true;
+                    }
+                    catch(Exception q)
+                    {
+                        System.out.println(newLine + "Invalid quantity of points assaigned. Please try again.");
+                    }
+                }
+                n = false;
+
+                if (f > 10)
+                {
+                    f = 10;
+                }
+                if (f < 0)
+                {
+                    f = 0;
+                }
+                if (f > points)
+                {
+                    f = points;
+                }
+                points -= f;
+
+                System.out.println(newLine + f + " points awarded to length! " + points + " points remaining." + newLine);
+
+                quimberts.add(new Quimbert(a, b, c, d, e, f, g, h));
+
+                quimberts.get(i).startingHealth = (randInt(3, 5) * quimberts.get(i).looks) / 2;
+                quimberts.get(i).health = quimberts.get(i).startingHealth;
+                
+                if (quimberts.get(i).health < 1)
+                {
+                    quimberts.get(i).health += 1;
+                    quimberts.get(i).startingHealth += 1;
+                }
+                */
+                
             }
             EndDrawing();
         }
