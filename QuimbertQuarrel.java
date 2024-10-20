@@ -417,30 +417,43 @@ public class QuimbertQuarrel {
 
                 Rectangle colorButton = new Rectangle ((GetScreenWidth () / 2) + 20, 450, 75, 75);
 
-                if (!CheckCollisionPointRec(GetMousePosition(), colorButton)) {
-                    DrawRectangleRec(colorButton, BLACK);
-                    DrawRectangle((GetScreenWidth () / 2) + 30, 460, 55, 55, LIGHTGRAY);
-                    DrawRectangle((GetScreenWidth () / 2) + 95, 455, 5, 75, DARKGRAY);
-                    DrawRectangle((GetScreenWidth () / 2) + 25, 525, 70, 5, DARKGRAY);
-                } else {
-                    if (IsMouseButtonReleased(0))
+                if (displayColors) {
+                    DrawRectangle((GetScreenWidth () / 2) + 25, 455, 75, 75, BLACK);
+                    DrawRectangle((GetScreenWidth () / 2) + 35, 465, 55, 55, GRAY);
+
+                    if (CheckCollisionPointRec(GetMousePosition(), colorButton) && IsMouseButtonReleased(0))
                     {
-                        if (displayColors){
-                            displayColors = false;
-                        } else {
-                            displayColors = true;
-                        }
+                        displayColors = false;
                     }
-                    
-                    if (IsMouseButtonDown(0))
-                    {
-                        DrawRectangle((GetScreenWidth () / 2) + 25, 455, 75, 75, BLACK);
-                        DrawRectangle((GetScreenWidth () / 2) + 35, 465, 55, 55, GRAY);
+                } else {
+                    if (!CheckCollisionPointRec(GetMousePosition(), colorButton)) {
+                        if (!displayColors) {
+                            DrawRectangleRec(colorButton, BLACK);
+                            DrawRectangle((GetScreenWidth () / 2) + 30, 460, 55, 55, LIGHTGRAY);
+                            DrawRectangle((GetScreenWidth () / 2) + 95, 455, 5, 75, DARKGRAY);
+                            DrawRectangle((GetScreenWidth () / 2) + 25, 525, 70, 5, DARKGRAY);
+                        }
                     } else {
-                        DrawRectangleRec(colorButton, BLACK);
-                        DrawRectangle((GetScreenWidth () / 2) + 30, 460, 55, 55, GRAY);
-                        DrawRectangle((GetScreenWidth () / 2) + 95, 455, 5, 75, DARKGRAY);
-                        DrawRectangle((GetScreenWidth () / 2) + 25, 525, 70, 5, DARKGRAY);
+                        if (IsMouseButtonReleased(0))
+                        {
+                            displayColors = true;
+
+                            DrawRectangle((GetScreenWidth () / 2) + 25, 455, 75, 75, BLACK);
+                            DrawRectangle((GetScreenWidth () / 2) + 35, 465, 55, 55, GRAY);
+                        }
+                        
+                        if (!displayColors) {
+                            if (IsMouseButtonDown(0))
+                            {
+                                DrawRectangle((GetScreenWidth () / 2) + 25, 455, 75, 75, BLACK);
+                                DrawRectangle((GetScreenWidth () / 2) + 35, 465, 55, 55, GRAY);
+                            } else {
+                                DrawRectangleRec(colorButton, BLACK);
+                                DrawRectangle((GetScreenWidth () / 2) + 30, 460, 55, 55, GRAY);
+                                DrawRectangle((GetScreenWidth () / 2) + 95, 455, 5, 75, DARKGRAY);
+                                DrawRectangle((GetScreenWidth () / 2) + 25, 525, 70, 5, DARKGRAY);
+                            }
+                        }
                     }
                 }
 
@@ -451,11 +464,11 @@ public class QuimbertQuarrel {
                 textBoxOwner.render();
                 textBoxOwner.processTextInput();
 
-                Rectangle colorDisplay = new Rectangle((GetScreenWidth () / 2) + 110, 450, 500, 500);
+                Rectangle colorDisplay = new Rectangle((GetScreenWidth () / 2) + 110, 455, 500, 500);
 
                 if (displayColors) {
                     DrawRectangleRec(colorDisplay, BLACK);
-                    DrawRectangle((GetScreenWidth () / 2) + 120, 460, 480, 480, LIGHTGRAY);
+                    DrawRectangle((GetScreenWidth () / 2) + 120, 465, 480, 480, LIGHTGRAY);
                 }
 
                 Rectangle okayButton = new Rectangle((GetScreenWidth() / 2) - 105, ((GetScreenHeight() / 4) * 3) + 50, 200, 100);
