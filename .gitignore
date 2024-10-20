@@ -3,3 +3,6 @@
 ./*.log
 ./*.class
 QuimbertTextBox.class
+QuimbertQuarrel.class
+Quimbert.class
+.gitignore
