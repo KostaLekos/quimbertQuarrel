@@ -71,13 +71,15 @@ public class QuimbertQuarrel {
 
 
     // because im lazy, it is relative to center of screen
-    static int drawPlus(Rectangle rec, int posx, int posy, boolean isGreyedOut, int numToIncrement, int maxVal) {
+    static int drawPlus(Rectangle rec, int posx, int posy, boolean isGreyedOut, int numToIncrement, int maxVal, boolean isMinus) {
         if (!isGreyedOut) {
             if(!CheckCollisionPointRec(GetMousePosition(), rec)) {
                 DrawRectangleRec(rec, BLACK);
                 DrawRectangle((GetScreenWidth() / 2) + 80 + posx, (GetScreenHeight() / 2) + 50 + posy, 80, 80, LIGHTGRAY);
-                DrawRectangle((GetScreenWidth() / 2) + 115 + posx, (GetScreenHeight() / 2) + 65 + posy, 10, 50, BLACK);
-                // DrawRectangle((GetScreenWidth() / 2) + 95 + posx, (GetScreenHeight() / 2) + 85 + posy, 50, 10, BLACK);
+                if (!isMinus) {
+                    DrawRectangle((GetScreenWidth() / 2) + 115 + posx, (GetScreenHeight() / 2) + 65 + posy, 10, 50, BLACK);
+                }
+                DrawRectangle((GetScreenWidth() / 2) + 95 + posx, (GetScreenHeight() / 2) + 85 + posy, 50, 10, BLACK);
                 DrawRectangle((GetScreenWidth() / 2) + 75 + posx, (GetScreenHeight() / 2) + 140 + posy, 95, 5, DARKGRAY);
                 DrawRectangle((GetScreenWidth() / 2) + 170 + posx, (GetScreenHeight() / 2) + 45 + posy, 5, 100, DARKGRAY); 
             } else {
@@ -95,12 +97,16 @@ public class QuimbertQuarrel {
                 if (IsMouseButtonDown(0)) {
                     DrawRectangle((GetScreenWidth() / 2) + 75 + posx, (GetScreenHeight() / 2) + 45 + posy, 100, 100, BLACK);
                     DrawRectangle((GetScreenWidth() / 2) + 85 + posx, (GetScreenHeight() / 2) + 55 + posy, 80, 80, GRAY);
-                    DrawRectangle((GetScreenWidth() / 2) + 120 + posx, (GetScreenHeight() / 2) + 70 + posy, 10, 50, BLACK);
+                    if (!isMinus) {
+                        DrawRectangle((GetScreenWidth() / 2) + 120 + posx, (GetScreenHeight() / 2) + 70 + posy, 10, 50, BLACK);
+                    }
                     DrawRectangle((GetScreenWidth() / 2) + 100 + posx, (GetScreenHeight() / 2) + 90 + posy, 50, 10, BLACK);
                 } else if (numToIncrement < maxVal) {
                     DrawRectangle((GetScreenWidth() / 2) + 70 + posx, (GetScreenHeight() / 2) + 40 + posy, 100, 100, BLACK);
                     DrawRectangle((GetScreenWidth() / 2) + 80 + posx, (GetScreenHeight() / 2) + 50 + posy, 80, 80, GRAY);
-                    // DrawRectangle((GetScreenWidth() / 2) + 115 + posx, (GetScreenHeight() / 2) + 65 + posy, 10, 50, BLACK);
+                    if (!isMinus) {
+                        DrawRectangle((GetScreenWidth() / 2) + 115 + posx, (GetScreenHeight() / 2) + 65 + posy, 10, 50, BLACK); //correct
+                    }
                     DrawRectangle((GetScreenWidth() / 2) + 95 + posx, (GetScreenHeight() / 2) + 85 + posy, 50, 10, BLACK);
                     DrawRectangle((GetScreenWidth() / 2) + 75 + posx, (GetScreenHeight() / 2) + 140 + posy, 95, 5, DARKGRAY);
                     DrawRectangle((GetScreenWidth() / 2) + 170 + posx, (GetScreenHeight() / 2) + 45 + posy, 5, 100, DARKGRAY);
@@ -109,7 +115,9 @@ public class QuimbertQuarrel {
         } else {
             DrawRectangle((GetScreenWidth() / 2) + 75 + posx, (GetScreenHeight() / 2) + 45 + posy, 100, 100, BLACK);
             DrawRectangle((GetScreenWidth() / 2) + 85 + posx, (GetScreenHeight() / 2) + 55 + posy, 80, 80, DARKGRAY);
-            // DrawRectangle((GetScreenWidth() / 2) + 120 + posx, (GetScreenHeight() / 2) + 70 + posy, 10, 50, BLACK);
+            if (!isMinus) {
+                DrawRectangle((GetScreenWidth() / 2) + 120 + posx, (GetScreenHeight() / 2) + 70 + posy, 10, 50, BLACK);
+            }
             DrawRectangle((GetScreenWidth() / 2) + 100 + posx, (GetScreenHeight() / 2) + 90 + posy, 50, 10, BLACK);
         }
         return numToIncrement;
@@ -678,7 +686,7 @@ public class QuimbertQuarrel {
 
 
 
-                a = drawPlus(plusButton, posx, posy, (a > 9), a, 10);
+                a = drawPlus(plusButton, posx, posy, (a > 9), a, 10, false);
             }
 
             EndDrawing();
