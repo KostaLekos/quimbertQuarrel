@@ -68,7 +68,6 @@ public class QuimbertTextBox {
             }
         }
         else SetMouseCursor(MOUSE_CURSOR_DEFAULT);
-        System.out.println(text);
     }
 
     public void render () {
