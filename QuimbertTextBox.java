@@ -20,6 +20,7 @@ public class QuimbertTextBox {
     private boolean mouseOnText;
     com.raylib.Jaylib.Rectangle boundingBox;
     private int framesCounter;
+    public boolean needText = false;
 
     public void setCharLength (int charCount) {
         maxCharCount = charCount;
@@ -86,6 +87,9 @@ public class QuimbertTextBox {
         
         if (mouseOnText) {
             DrawRectangleRec(boundingBox, GRAY);
+            needText = false;
+        } else if (needText) {
+            DrawRectangleRec(boundingBox, MAROON);
         } else {
             DrawRectangleRec(boundingBox, LIGHTGRAY); 
         }
