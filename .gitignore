@@ -4,5 +4,8 @@
 ./*.class
 QuimbertTextBox.class
 QuimbertQuarrel.class
+<<<<<<< HEAD
 Quimbert.class
 .gitignore
+=======
+>>>>>>> 2e146c6799b06fdcd0f7329ee4f43dd516152c0b
