@@ -316,8 +316,7 @@ public class QuimbertQuarrel {
                     DrawRectangle((GetScreenWidth() / 2) - 145, (GetScreenHeight() / 2) + 90, 50, 10, BLACK);
                 }
             }
-            else if (layout.equals("createQuimbert"))
-            {
+            else if (layout.equals("createQuimbert")) {
                 BeginDrawing();
                 ClearBackground(RAYWHITE);
 
