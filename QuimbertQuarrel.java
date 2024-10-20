@@ -442,17 +442,6 @@ public class QuimbertQuarrel
                 textBoxOwner.render();
                 textBoxOwner.processTextInput();
 
-<<<<<<< HEAD
-=======
-
-
-
-                // System.out.println(textBoxName.getText());
-                // System.out.println(textBoxOwner.getText());
-
-                // DrawRectangleRec(textBoxName, BLACK);
-                // DrawRectangleRec(textBoxOwner, BLACK); // Migrate to QuimbertTextBox
->>>>>>> cbf76c22a23afdae9a1914f8316e29d1e14d4334
                 DrawRectangleRec(colorButton, BLACK);
                 
 
@@ -466,26 +455,20 @@ public class QuimbertQuarrel
                     DrawRectangle((GetScreenWidth() / 2) - 100, ((GetScreenHeight() / 4) * 3) + 150, 195, 5, DARKGRAY);
                     DrawRectangle((GetScreenWidth() / 2) + 95, ((GetScreenHeight() / 4) * 3) + 55, 5, 100, DARKGRAY);
                     DrawText("Okay", ((GetScreenWidth() / 2) - 5) - (MeasureText("Okay", 60) / 2), ((GetScreenHeight() / 4) * 3) + 70, 60, BLACK);
-                }
-                else
-                {
-                    if (!IsMouseButtonDown(0))
-                    {
+                } else {
+                    if (!IsMouseButtonDown(0)) {
                         DrawRectangle((GetScreenWidth() / 2) - 105, ((GetScreenHeight() / 4) * 3) + 50, 200, 100, BLACK);
                         DrawRectangle((GetScreenWidth() / 2) - 95, ((GetScreenHeight() / 4) * 3) + 60, 180, 80, GRAY);
                         DrawRectangle((GetScreenWidth() / 2) - 100, ((GetScreenHeight() / 4) * 3) + 150, 195, 5, DARKGRAY);
                         DrawRectangle((GetScreenWidth() / 2) + 95, ((GetScreenHeight() / 4) * 3) + 55, 5, 100, DARKGRAY);
                         DrawText("Okay", ((GetScreenWidth() / 2) - 5) - (MeasureText("Okay", 60) / 2), ((GetScreenHeight() / 4) * 3) + 70, 60, BLACK);
-                    }
-                    else
-                    {
+                    } else {
                         DrawRectangle((GetScreenWidth() / 2) - 100, ((GetScreenHeight() / 4) * 3) + 55, 200, 100, BLACK);
                         DrawRectangle((GetScreenWidth() / 2) - 90, ((GetScreenHeight() / 4) * 3) + 65, 180, 80, GRAY);
                         DrawText("Okay", ((GetScreenWidth() / 2)) - (MeasureText("Okay", 60) / 2), ((GetScreenHeight() / 4) * 3) + 75, 60, BLACK);
                     }
                 
-                    if (IsMouseButtonReleased(0))
-                    {
+                    if (IsMouseButtonReleased(0)) {
                         if (textBoxName.getText().length() > 0 && textBoxOwner.getText().length() > 0) {
                             g = textBoxName.getText();
                             h = textBoxOwner.getText();
