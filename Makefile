@@ -3,7 +3,8 @@
 # PLEASE DON'T EVER TOUCH THIS, THIS IS MY VERSION OF run.bat AND c.bat
 
 all:
-	javac -cp ./jaylib-5.0.0-0.jar ./QuimbertQuarrel.java ./Quimbert.java
+	javac -cp ./jaylib-5.0.0-0.jar ./QuimbertQuarrel.java ./Quimbert.java ./QuimbertTextBox.java
 
 run:
+	make all
 	java -cp jaylib-5.0.0-0.jar:. QuimbertQuarrel

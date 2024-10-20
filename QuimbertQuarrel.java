@@ -118,6 +118,14 @@ public class QuimbertQuarrel
         Camera2D camera = new Camera2D()
                 .target(new Vector2());
 
+
+        QuimbertTextBox textBoxName = new QuimbertTextBox (new Rectangle(GetScreenWidth () / 2 + 20, 250, 375, 75));
+        textBoxName.setCharLength(25);
+
+        QuimbertTextBox textBoxOwner = new QuimbertTextBox (new Rectangle(GetScreenWidth () / 2 + 20, 350, 375, 75));
+        textBoxOwner.setCharLength(25);
+
+        
         while (!WindowShouldClose())
         {
             
@@ -390,8 +398,10 @@ public class QuimbertQuarrel
                     if (IsMouseButtonReleased(0))
                     {
                         layout = "howManyQ";
-                    }
-                }
+                    }    
+                }    
+                
+                
 
                 for (int i = 0; i < quimbertQuantity; i++)
                 {
@@ -407,30 +417,37 @@ public class QuimbertQuarrel
                         DrawText("Owner:", ((GetScreenWidth() / 2) - MeasureText("Owner:", 72)) - 30, 340, 72, BLACK);
                         DrawText("Color:", ((GetScreenWidth() / 2) - MeasureText("Color:", 72)) - 30, 430, 72, BLACK);
 
-                        Rectangle textBoxName = new Rectangle((GetScreenWidth() / 2) + 20, 250, 375, 75);
-                        Rectangle textBoxOwner = new Rectangle((GetScreenWidth() / 2) + 20, 340, 375, 75);
 
-                        Rectangle colorButton = new Rectangle((GetScreenWidth() / 2) + 20, 430, 75, 75);
+                        Rectangle colorButton = new Rectangle ((GetScreenWidth () / 2) + 20, 430, 75, 75);
 
                         //Rectangle();
                         //Rectangle();
 
-                        DrawRectangleRec(textBoxName, BLACK);
-                        DrawRectangleRec(textBoxOwner, BLACK);
+                        textBoxName.render();
+                        textBoxName.processTextInput();
+                        textBoxOwner.render();
+                        textBoxOwner.processTextInput();
+
+
+                        // System.out.println(textBoxName.getText());
+                        // System.out.println(textBoxOwner.getText());
+
+                        // DrawRectangleRec(textBoxName, BLACK);
+                        // DrawRectangleRec(textBoxOwner, BLACK); // Migrate to QuimbertTextBox
                         DrawRectangleRec(colorButton, BLACK);
                         
-                        DrawRectangle((GetScreenWidth() / 2) + 30, 260, 355, 55, LIGHTGRAY);
-                        DrawRectangle((GetScreenWidth() / 2) + 30, 350, 355, 55, LIGHTGRAY);
-                        DrawRectangle((GetScreenWidth() / 2) + 30, 440, 55, 55, WHITE);
+                        // DrawRectangle((GetScreenWidth() / 2) + 30, 260, 355, 55, LIGHTGRAY);
+                        // DrawRectangle((GetScreenWidth() / 2) + 30, 350, 355, 55, LIGHTGRAY);
+                        // DrawRectangle((GetScreenWidth() / 2) + 30, 440, 55, 55, WHITE); // ???
 
-                        if (CheckCollisionPointRec(GetMousePosition(), textBoxName))
-                        {
-                            isTextBoxName = true;
-                        }
-                        else
-                        {
-                            isTextBoxName = false;
-                        }
+                        // if (CheckCollisionPointRec(GetMousePosition(), textBoxName))
+                        // {
+                        //     isTextBoxName = true;
+                        // }
+                        // else
+                        // {
+                        //     isTextBoxName = false;
+                        // }
 
                         if (isTextBoxName)
                         {
