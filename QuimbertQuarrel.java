@@ -237,6 +237,15 @@ public class QuimbertQuarrel {
                         layout = "howManyQ";
                     }
                 }
+
+                Rectangle exitButton = new Rectangle(GetScreenWidth() - 130, 10, 120, 120);
+
+                //Exit Button
+                if (!CheckCollisionPointRec(GetMousePosition(), localButton)) {
+                    DrawRectangleRec(exitButton, BLACK);
+                    DrawRectangle(GetScreenWidth() - 120, 20, 100, 100, LIGHTGRAY);
+                }
+
                 DrawFPS(20, 20);
             } else if (layout.equals("howManyQ")) {
                 BeginDrawing();
