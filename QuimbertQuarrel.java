@@ -258,6 +258,8 @@ public class QuimbertQuarrel {
         Color sColor1 = new Color(230, 230, 230, 255);
         Color sColor2 = new Color(255, 255, 255, 255);
         Color sColor3;
+        String muteImage = "./Textures/unmuted.png";
+        boolean isMuted = false;
 
         SetConfigFlags(FLAG_WINDOW_RESIZABLE | FLAG_WINDOW_MAXIMIZED);
 
@@ -275,7 +277,7 @@ public class QuimbertQuarrel {
         Music mania = LoadMusicStream("Soundtrack/MenuMania.mp3");
         Music quimbertcall = LoadMusicStream("Quimbert's Call (Main Menu Theme).mp3");
 
-        // PlayMusicStream(blippy);
+        PlayMusicStream(blippy);
         SetMusicVolume(blippy, 0.25f);
         SetMusicVolume(ambient, 0.25f);
         SetMusicVolume(mania, 0.25f);
@@ -294,7 +296,11 @@ public class QuimbertQuarrel {
 
         
         while (!WindowShouldClose()) {
-            // UpdateMusicStream(blippy);
+            
+            if (!isMuted) {
+                UpdateMusicStream(blippy);
+            }
+
             if (layout.equals("start")) {
                 BeginDrawing();
                 ClearBackground(RAYWHITE);
@@ -330,9 +336,19 @@ public class QuimbertQuarrel {
                 }
 
                 //Exit Button
-                if (makeButtonImage(GetScreenWidth() - 85, 10, 70, 70, "./textures/exit.png", false))
-                {
-                    action.close();
+                if (makeButtonImage(GetScreenWidth() - 85, 10, 70, 70, "./textures/exit.png", false)) {
+                    CloseWindow();
+                }
+
+                //mute button
+                if (makeButtonImage(GetScreenWidth() - 175, 10, 70, 70, muteImage, false)) {
+                    if (isMuted) {
+                        isMuted = false;
+                        muteImage = "./Textures/unmuted.png";
+                    } else {
+                        isMuted = true;
+                        muteImage = "./Textures/muted.png";
+                    }
                 }
 
                 DrawFPS(20, 20);
