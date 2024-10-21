@@ -48,7 +48,7 @@ public class QuimbertQuarrel {
                 DrawRectangle(pos_x + size_x, pos_y + 5, 5, size_y, DARKGRAY);
                 DrawRectangle(pos_x + 5, pos_y + size_y, size_x, 5, DARKGRAY);
 
-                DrawText(text, pos_x + 20, pos_y + 20, fontSize, BLACK);
+                DrawText(text, pos_x + 20, pos_y + 20 - 20, fontSize, BLACK);
             } else {
                 if (!IsMouseButtonDown(0)) {
                     // same except dark interior
@@ -57,13 +57,13 @@ public class QuimbertQuarrel {
                     DrawRectangle(pos_x + size_x, pos_y + 5, 5, size_y, DARKGRAY);
                     DrawRectangle(pos_x + 5, pos_y + size_y, size_x, 5, DARKGRAY);
 
-                    DrawText(text, pos_x + 20, pos_y + 20, fontSize, BLACK);
+                    DrawText(text, pos_x + 20, pos_y + 20 - 20, fontSize, BLACK);
                 } else {
 
                     DrawRectangle(pos_x + 5, pos_y + 5, size_x, size_y, BLACK);
                     DrawRectangle(pos_x + 15, pos_y + 15, size_x - 20, size_y - 20, GRAY);
 
-                    DrawText(text, pos_x + 25, pos_y + 25, fontSize, BLACK);
+                    DrawText(text, pos_x + 25, pos_y + 25 - 20, fontSize, BLACK);
                 }
 
                 if (IsMouseButtonReleased(0)) {
@@ -73,6 +73,8 @@ public class QuimbertQuarrel {
         } else {
             DrawRectangle(pos_x + 5, pos_y + 5, size_x, size_y, BLACK);
             DrawRectangle(pos_x + 15, pos_y + 15, size_x - 20, size_y - 20, GRAY);
+            DrawText(text, pos_x + 25, pos_y + 25 - 20, fontSize, BLACK);
+
         }
         return false;
     }
@@ -920,7 +922,7 @@ public class QuimbertQuarrel {
 
 
                 int posx = 300;
-                int posy = -300;
+                int posy = -400;
 
 
                 // plus and minus buttons for a, / looks
@@ -939,6 +941,15 @@ public class QuimbertQuarrel {
                 }
 
 
+
+                if (makeButtonText(posx - 40, GetScreenHeight() / 2 + posy - 150, 120, 65, "++", 72, (a >= 10 || points <= 0))) {
+                    for (int i = 0; points > 0 && a < 10; i++) {
+                        points--;
+                        a++;
+                    }
+                }
+
+
                 // b / smell
                 int bOld = b;
                 DrawText("Smell: ", posx - 85, GetScreenHeight() / 2 + posy - 55, 72, BLACK);
@@ -952,6 +963,13 @@ public class QuimbertQuarrel {
                 
                 if (b != bOld) {
                     points += bOld - b;
+                }
+
+                if (makeButtonText(posx - 40, GetScreenHeight() / 2 + posy - 150, 120, 65, "++", 72, (b >= 10 || points <= 0))) {
+                    for (int i = 0; points > 0 && b < 10; i++) {
+                        points--;
+                        b++;
+                    }
                 }
                 
 
@@ -969,12 +987,17 @@ public class QuimbertQuarrel {
                     points += dOld - d;
                 }
 
-
+                if (makeButtonText(posx - 40, GetScreenHeight() / 2 + posy - 150, 120, 65, "++", 72, (d >= 10 || points <= 0))) {
+                    for (int i = 0; points > 0 && d < 10; i++) {
+                        points--;
+                        d++;
+                    }
+                }
 
 
                 // shift to right
                 posx += 500;
-                posy = -300;
+                posy = -400;
                 // e / gumption
                 int eOld = e;
                 DrawText("Gumption: ", posx - 135, GetScreenHeight() / 2 + posy - 55, 72, BLACK);
@@ -990,6 +1013,13 @@ public class QuimbertQuarrel {
                     points += eOld - e;
                 }
 
+                if (makeButtonText(posx - 40, GetScreenHeight() / 2 + posy - 150, 120, 65, "++", 72, (e >= 10 || points <= 0))) {
+                    for (int i = 0; points > 0 && e < 10; i++) {
+                        points--;
+                        e++;
+                    }
+                }
+
                 
                 // f / length
                 int fOld = f;
@@ -1000,15 +1030,22 @@ public class QuimbertQuarrel {
                 posx -= 210;
                 f = drawPlus(new Rectangle(70 + posx, (GetScreenHeight() / 2) + 40 + posy, 100, 100), posx, posy, (f <= 0), f, 0, true);
                 posx += 210;
-                posy -= 100;
+                posy += 300;
 
                 if (f != fOld) {
                     points += fOld - f;
                 }
+
+                if (makeButtonText(posx - 40, GetScreenHeight() / 2 + posy - 150, 120, 65, "++", 72, (f >= 10 || points <= 0))) {
+                    for (int i = 0; points > 0 && f < 10; i++) {
+                        points--;
+                        f++;
+                    }
+                }
                 
-                DrawText("Points: " + points, GetScreenWidth() / 2 + 500, GetScreenHeight() / 2 - 300, 72, BLACK);
-                DrawText("Information:\n", GetScreenWidth() / 2 + 500, GetScreenHeight() / 2 - 200, 72, BLACK);
-                DrawText("Each thing does things, you're welcome", GetScreenWidth() / 2 + 500, GetScreenHeight() / 2 - 120, 24, BLACK);
+                DrawText("Points: " + points, GetScreenWidth() - 600, GetScreenHeight() / 2 - 300, 72, BLACK);
+                DrawText("Information:\n", GetScreenWidth() - 600, GetScreenHeight() / 2 - 200, 72, BLACK);
+                DrawText("Each thing does things, you're welcome", GetScreenWidth() - 600, GetScreenHeight() / 2 - 120, 24, BLACK);
                 
             }
 
