@@ -259,7 +259,7 @@ public class QuimbertQuarrel {
         Color sColor1 = new Color(230, 230, 230, 255);
         Color sColor2 = new Color(255, 255, 255, 255);
         Color sColor3;
-        String muteImage = "./Textures/unmuted.png";
+        String muteImage = "./textures/unmuted.png";
         boolean isMuted = false;
 
         SetConfigFlags(FLAG_WINDOW_RESIZABLE | FLAG_WINDOW_MAXIMIZED);
@@ -273,9 +273,9 @@ public class QuimbertQuarrel {
         SetTargetFPS(60);
         InitAudioDevice();
 
-        Music blippy = LoadMusicStream("Soundtrack/BlippyBounce.mp3");
-        Music ambient = LoadMusicStream("Soundtrack/ambient.mp3");
-        Music mania = LoadMusicStream("Soundtrack/MenuMania.mp3");
+        Music blippy = LoadMusicStream("soundtrack/BlippyBounce.mp3");
+        Music ambient = LoadMusicStream("soundtrack/ambient.mp3");
+        Music mania = LoadMusicStream("soundtrack/MenuMania.mp3");
         Music quimbertcall = LoadMusicStream("Quimbert's Call (Main Menu Theme).mp3");
 
         PlayMusicStream(blippy);
@@ -345,10 +345,10 @@ public class QuimbertQuarrel {
                 if (makeButtonImage(GetScreenWidth() - 170, 10, 70, 70, muteImage, false)) {
                     if (isMuted) {
                         isMuted = false;
-                        muteImage = "./Textures/unmuted.png";
+                        muteImage = "./textures/unmuted.png";
                     } else {
                         isMuted = true;
-                        muteImage = "./Textures/muted.png";
+                        muteImage = "./textures/muted.png";
                     }
                 }
 
