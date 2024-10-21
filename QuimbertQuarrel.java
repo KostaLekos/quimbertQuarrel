@@ -171,12 +171,23 @@ public class QuimbertQuarrel {
 
         SetConfigFlags(FLAG_WINDOW_RESIZABLE | FLAG_WINDOW_MAXIMIZED);
 
+
         InitWindow(1840, 1000, "Quimbert Quarrel");
         SetWindowMinSize(600, 500); 
         SetWindowMaxSize(mWidth, mHeight);
         SetWindowPosition(40, 70);
         MaximizeWindow();
         SetTargetFPS(60);
+        InitAudioDevice();
+
+        Music blippy = LoadMusicStream("Soundtrack/BlippyBounce.mp3");
+        Music ambient = LoadMusicStream("Soundtrack/ambient.mp3");
+        Music mania = LoadMusicStream("Soundtrack/MenuMania.mp3");
+        Music quimbertcall = LoadMusicStream("Quimbert's Call (Main Menu Theme).mp3");
+
+        PlayMusicStream(blippy);
+
+
         Camera2D camera = new Camera2D()
                 .target(new Vector2());
 
@@ -190,7 +201,7 @@ public class QuimbertQuarrel {
 
         
         while (!WindowShouldClose()) {
-            
+            UpdateMusicStream(blippy);
             if (layout.equals("start")) {
                 BeginDrawing();
                 ClearBackground(RAYWHITE);
@@ -882,7 +893,11 @@ public class QuimbertQuarrel {
             }
 
             EndDrawing();
-        }    
+        }
+
+        UnloadMusicStream(blippy);   // Unload music stream buffers from RAM
+
+        CloseAudioDevice();         // Close audio device (music streaming is automatically stopped)
                 
 
         CloseWindow();
