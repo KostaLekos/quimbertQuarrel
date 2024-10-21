@@ -341,7 +341,7 @@ public class QuimbertQuarrel {
                 }
 
                 //mute button
-                if (makeButtonImage(GetScreenWidth() - 175, 10, 70, 70, muteImage, false)) {
+                if (makeButtonImage(GetScreenWidth() - 170, 10, 70, 70, muteImage, false)) {
                     if (isMuted) {
                         isMuted = false;
                         muteImage = "./Textures/unmuted.png";
