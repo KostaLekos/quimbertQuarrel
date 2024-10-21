@@ -870,7 +870,7 @@ public class QuimbertQuarrel {
                         if (points == 0 && makingQuimbert + 1 <= quimbertQuantity) {
                             if (makingQuimbert + 1 <= quimbertQuantity) {
                                 quimberts.add(new Quimbert(a, b, sColor2, d, e, f, g, h));
-                                quimberts.get(makingQuimbert).startingHealth = (randint(3, 5) * quimberts.get(makingQuimbert).looks) / 2;
+                                quimberts.get(makingQuimbert).startingHealth = (randInt(3, 5) * quimberts.get(makingQuimbert).looks) / 2;
                                 quimberts.get(makingQuimbert).health = quimberts.get(makingQuimbert).startingHealth;
                                 if (quimberts.get(makingQuimbert).health < 1) {
                                     quimberts.get(makingQuimbert).health++;
