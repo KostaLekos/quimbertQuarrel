@@ -329,10 +329,8 @@ public class QuimbertQuarrel {
                     }
                 }
 
-                Rectangle exitButton = new Rectangle(GetScreenWidth() - 130, 10, 120, 120);
-
                 //Exit Button
-                if (makeButtonImage(GetScreenWidth() - 130, 10, 120, 120, "./textures/exit.png");)
+                if (makeButtonImage(GetScreenWidth() - 85, 10, 70, 70, "./textures/exit.png", false))
                 {
                     action.close();
                 }
