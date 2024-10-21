@@ -141,7 +141,6 @@ public class QuimbertQuarrel {
         String newLine = System.getProperty("line.separator");
         int a = 0;
         int b = 0;
-        String c;
         int d = 0;
         int e = 0;
         int f = 0;
@@ -752,12 +751,11 @@ public class QuimbertQuarrel {
 
                     if (IsMouseButtonReleased(0) || IsKeyPressed(13)) {
                         if (points == 0) {
-                            quimberts.add(new Quimbert(a, b, new String("PLACEHOLDER COLOR"), d, e, f, g, h));
+                            quimberts.add(new Quimbert(a, b, sColor2, d, e, f, g, h));
                             if (makingQuimbert + 1 == quimbertQuantity) {
                                 layout = "createQuimbert";
                                 makingQuimbert++;
-                                a = 0; b = 0; d = 0; e = 0; f = 0;
-                                c = ""; g = ""; h = "";
+                                a = 0; b = 0; d = 0; e = 0; f = 0; g = ""; h = "";
                                 textBoxName.clear();
                                 textBoxOwner.clear();
                                 points = randInt(25, 35);
