@@ -241,9 +241,9 @@ public class QuimbertQuarrel {
                 Rectangle exitButton = new Rectangle(GetScreenWidth() - 130, 10, 120, 120);
 
                 //Exit Button
-                if (!CheckCollisionPointRec(GetMousePosition(), localButton)) {
-                    DrawRectangleRec(exitButton, BLACK);
-                    DrawRectangle(GetScreenWidth() - 120, 20, 100, 100, LIGHTGRAY);
+                if (makeButtonImage(GetScreenWidth() - 130, 10, 120, 120, "./textures/exit.png");)
+                {
+                    action.close();
                 }
 
                 DrawFPS(20, 20);
