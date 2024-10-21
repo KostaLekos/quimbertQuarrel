@@ -186,7 +186,10 @@ public class QuimbertQuarrel {
         Music quimbertcall = LoadMusicStream("Quimbert's Call (Main Menu Theme).mp3");
 
         PlayMusicStream(blippy);
-
+        SetMusicVolume(blippy, 0.25f);
+        SetMusicVolume(ambient, 0.25f);
+        SetMusicVolume(mania, 0.25f);
+        SetMusicVolume(quimbertcall, 0.25f);
 
         Camera2D camera = new Camera2D()
                 .target(new Vector2());
@@ -750,7 +753,7 @@ public class QuimbertQuarrel {
                     if (IsMouseButtonReleased(0) || IsKeyPressed(13)) {
                         if (points == 0) {
                             quimberts.add(new Quimbert(a, b, new String("PLACEHOLDER COLOR"), d, e, f, g, h));
-                            if (makingQuimbert + 1 < quimbertQuantity) {
+                            if (makingQuimbert + 1 == quimbertQuantity) {
                                 layout = "createQuimbert";
                                 makingQuimbert++;
                                 a = 0; b = 0; d = 0; e = 0; f = 0;
