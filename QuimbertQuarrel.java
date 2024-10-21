@@ -184,7 +184,7 @@ public class QuimbertQuarrel {
         Music mania = LoadMusicStream("Soundtrack/MenuMania.mp3");
         Music quimbertcall = LoadMusicStream("Quimbert's Call (Main Menu Theme).mp3");
 
-        PlayMusicStream(blippy);
+        // PlayMusicStream(blippy);
         SetMusicVolume(blippy, 0.25f);
         SetMusicVolume(ambient, 0.25f);
         SetMusicVolume(mania, 0.25f);
@@ -203,7 +203,7 @@ public class QuimbertQuarrel {
 
         
         while (!WindowShouldClose()) {
-            UpdateMusicStream(blippy);
+            // UpdateMusicStream(blippy);
             if (layout.equals("start")) {
                 BeginDrawing();
                 ClearBackground(RAYWHITE);
@@ -750,17 +750,19 @@ public class QuimbertQuarrel {
                     }
 
                     if (IsMouseButtonReleased(0) || IsKeyPressed(13)) {
-                        if (points == 0) {
-                            quimberts.add(new Quimbert(a, b, sColor2, d, e, f, g, h));
-                            if (makingQuimbert + 1 == quimbertQuantity) {
-                                layout = "createQuimbert";
-                                makingQuimbert++;
+                        if (points == 0 && makingQuimbert + 1 <= quimbertQuantity) {
+                            if (makingQuimbert + 1 <= quimbertQuantity) {
+                                quimberts.add(new Quimbert(a, b, sColor2, d, e, f, g, h));
                                 a = 0; b = 0; d = 0; e = 0; f = 0; g = ""; h = "";
                                 textBoxName.clear();
                                 textBoxOwner.clear();
                                 points = randInt(25, 35);
-                            } else {
-
+                                if (makingQuimbert + 1 < quimbertQuantity) {
+                                    layout = "createQuimbert";
+                                } else {
+                                    break; // REMOVE: temporary, replace with ```layout = "fightLayout"``` or equivilent when implemented
+                                }
+                                makingQuimbert++;
                             }
                         }
                     }
