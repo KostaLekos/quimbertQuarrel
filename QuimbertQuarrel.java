@@ -82,6 +82,7 @@ public class QuimbertQuarrel {
         Image img = LoadImage(path);
         ImageCrop(img, new Rectangle(pos_x + 10, pos_y + 10, size_x - 20, size_y - 20));
         Texture tex = LoadTextureFromImage(img);
+        UnloadImage(img);
 
         // background rectangle / collision rectangle
         Rectangle main = new Rectangle(pos_x, pos_y, size_x, size_y);
@@ -95,7 +96,7 @@ public class QuimbertQuarrel {
                 DrawRectangle(pos_x + size_x, pos_y + 5, 5, size_y, DARKGRAY);
                 DrawRectangle(pos_x + 5, pos_y + size_y, size_x, 5, DARKGRAY);
 
-                DrawTexture(tex, pos_x + 10, pos_y + 10, LIGHTGRAY);
+                DrawTexture(tex, pos_x + 10, pos_y + 10, WHITE);
             } else {
                 if (!IsMouseButtonDown(0)) {
                     // same except dark interior
@@ -104,13 +105,13 @@ public class QuimbertQuarrel {
                     DrawRectangle(pos_x + size_x, pos_y + 5, 5, size_y, DARKGRAY);
                     DrawRectangle(pos_x + 5, pos_y + size_y, size_x, 5, DARKGRAY);
 
-                    DrawTexture(tex, pos_x + 10, pos_y + 10, LIGHTGRAY);
+                    DrawTexture(tex, pos_x + 10, pos_y + 10, WHITE);
 
                 } else {
 
                     DrawRectangle(pos_x + 5, pos_y + 5, size_x, size_y, BLACK);
                     DrawRectangle(pos_x + 15, pos_y + 15, size_x - 20, size_y - 20, GRAY);
-                    DrawTexture(tex, pos_x + 15, pos_y + 15, GRAY);
+                    DrawTexture(tex, pos_x + 15, pos_y + 15, WHITE);
 
                 }
 
@@ -172,13 +173,13 @@ public class QuimbertQuarrel {
         if (!isGreyedOut) {
             if(!CheckCollisionPointRec(GetMousePosition(), rec)) {
                 DrawRectangleRec(rec, BLACK);
-                DrawRectangle((GetScreenWidth() / 2) + 80 + posx, (GetScreenHeight() / 2) + 50 + posy, 80, 80, LIGHTGRAY);
+                DrawRectangle(80 + posx, (GetScreenHeight() / 2) + 50 + posy, 80, 80, LIGHTGRAY);
                 if (!isMinus) {
-                    DrawRectangle((GetScreenWidth() / 2) + 115 + posx, (GetScreenHeight() / 2) + 65 + posy, 10, 50, BLACK);
+                    DrawRectangle(115 + posx, (GetScreenHeight() / 2) + 65 + posy, 10, 50, BLACK);
                 }
-                DrawRectangle((GetScreenWidth() / 2) + 95 + posx, (GetScreenHeight() / 2) + 85 + posy, 50, 10, BLACK);
-                DrawRectangle((GetScreenWidth() / 2) + 75 + posx, (GetScreenHeight() / 2) + 140 + posy, 95, 5, DARKGRAY);
-                DrawRectangle((GetScreenWidth() / 2) + 170 + posx, (GetScreenHeight() / 2) + 45 + posy, 5, 100, DARKGRAY); 
+                DrawRectangle(95 + posx, (GetScreenHeight() / 2) + 85 + posy, 50, 10, BLACK);
+                DrawRectangle(75 + posx, (GetScreenHeight() / 2) + 140 + posy, 95, 5, DARKGRAY);
+                DrawRectangle(170 + posx, (GetScreenHeight() / 2) + 45 + posy, 5, 100, DARKGRAY); 
             } else {
                 if (IsMouseButtonReleased(0)) {
                     if (!isMinus) {
@@ -188,38 +189,38 @@ public class QuimbertQuarrel {
                     }
 
                     if ((!isMinus) ? (numToIncrement <= maxMinVal) : (numToIncrement > maxMinVal)) {
-                        DrawRectangle((GetScreenWidth() / 2) + 75 + posx, (GetScreenHeight() / 2) + 45 + posy, 100, 100, BLACK);
-                        DrawRectangle((GetScreenWidth() / 2) + 85 + posx, (GetScreenHeight() / 2) + 55 + posy, 80, 80, DARKGRAY);
-                        DrawRectangle((GetScreenWidth() / 2) + 120 + posx, (GetScreenHeight() / 2) + 70 + posy, 10, 50, BLACK);
-                        DrawRectangle((GetScreenWidth() / 2) + 100 + posx, (GetScreenHeight() / 2) + 90 + posy, 50, 10, BLACK);
+                        DrawRectangle(75 + posx, (GetScreenHeight() / 2) + 45 + posy, 100, 100, BLACK);
+                        DrawRectangle(85 + posx, (GetScreenHeight() / 2) + 55 + posy, 80, 80, DARKGRAY);
+                        DrawRectangle(120 + posx, (GetScreenHeight() / 2) + 70 + posy, 10, 50, BLACK);
+                        DrawRectangle(100 + posx, (GetScreenHeight() / 2) + 90 + posy, 50, 10, BLACK);
                     }
                 }
 
                 if (IsMouseButtonDown(0)) {
-                    DrawRectangle((GetScreenWidth() / 2) + 75 + posx, (GetScreenHeight() / 2) + 45 + posy, 100, 100, BLACK);
-                    DrawRectangle((GetScreenWidth() / 2) + 85 + posx, (GetScreenHeight() / 2) + 55 + posy, 80, 80, GRAY);
+                    DrawRectangle(75 + posx, (GetScreenHeight() / 2) + 45 + posy, 100, 100, BLACK);
+                    DrawRectangle(85 + posx, (GetScreenHeight() / 2) + 55 + posy, 80, 80, GRAY);
                     if (!isMinus) {
-                        DrawRectangle((GetScreenWidth() / 2) + 120 + posx, (GetScreenHeight() / 2) + 70 + posy, 10, 50, BLACK);
+                        DrawRectangle(120 + posx, (GetScreenHeight() / 2) + 70 + posy, 10, 50, BLACK);
                     }
-                    DrawRectangle((GetScreenWidth() / 2) + 100 + posx, (GetScreenHeight() / 2) + 90 + posy, 50, 10, BLACK);
+                    DrawRectangle(100 + posx, (GetScreenHeight() / 2) + 90 + posy, 50, 10, BLACK);
                 } else if ((!isMinus) ? (numToIncrement < maxMinVal) : (numToIncrement >= maxMinVal)) {
-                    DrawRectangle((GetScreenWidth() / 2) + 70 + posx, (GetScreenHeight() / 2) + 40 + posy, 100, 100, BLACK);
-                    DrawRectangle((GetScreenWidth() / 2) + 80 + posx, (GetScreenHeight() / 2) + 50 + posy, 80, 80, GRAY);
+                    DrawRectangle(70 + posx, (GetScreenHeight() / 2) + 40 + posy, 100, 100, BLACK);
+                    DrawRectangle(80 + posx, (GetScreenHeight() / 2) + 50 + posy, 80, 80, GRAY);
                     if (!isMinus) {
-                        DrawRectangle((GetScreenWidth() / 2) + 115 + posx, (GetScreenHeight() / 2) + 65 + posy, 10, 50, BLACK); //correct
+                        DrawRectangle(115 + posx, (GetScreenHeight() / 2) + 65 + posy, 10, 50, BLACK); //correct
                     }
-                    DrawRectangle((GetScreenWidth() / 2) + 95 + posx, (GetScreenHeight() / 2) + 85 + posy, 50, 10, BLACK);
-                    DrawRectangle((GetScreenWidth() / 2) + 75 + posx, (GetScreenHeight() / 2) + 140 + posy, 95, 5, DARKGRAY);
-                    DrawRectangle((GetScreenWidth() / 2) + 170 + posx, (GetScreenHeight() / 2) + 45 + posy, 5, 100, DARKGRAY);
+                    DrawRectangle(95 + posx, (GetScreenHeight() / 2) + 85 + posy, 50, 10, BLACK);
+                    DrawRectangle(75 + posx, (GetScreenHeight() / 2) + 140 + posy, 95, 5, DARKGRAY);
+                    DrawRectangle(170 + posx, (GetScreenHeight() / 2) + 45 + posy, 5, 100, DARKGRAY);
                 }
             }
         } else {
-            DrawRectangle((GetScreenWidth() / 2) + 75 + posx, (GetScreenHeight() / 2) + 45 + posy, 100, 100, BLACK);
-            DrawRectangle((GetScreenWidth() / 2) + 85 + posx, (GetScreenHeight() / 2) + 55 + posy, 80, 80, DARKGRAY);
+            DrawRectangle(75 + posx, (GetScreenHeight() / 2) + 45 + posy, 100, 100, BLACK);
+            DrawRectangle(85 + posx, (GetScreenHeight() / 2) + 55 + posy, 80, 80, DARKGRAY);
             if (!isMinus) {
-                DrawRectangle((GetScreenWidth() / 2) + 120 + posx, (GetScreenHeight() / 2) + 70 + posy, 10, 50, BLACK);
+                DrawRectangle(120 + posx, (GetScreenHeight() / 2) + 70 + posy, 10, 50, BLACK);
             }
-            DrawRectangle((GetScreenWidth() / 2) + 100 + posx, (GetScreenHeight() / 2) + 90 + posy, 50, 10, BLACK);
+            DrawRectangle(100 + posx, (GetScreenHeight() / 2) + 90 + posy, 50, 10, BLACK);
         }
         return numToIncrement;
     }
@@ -918,18 +919,18 @@ public class QuimbertQuarrel {
 
 
 
-                int posx = -750;
+                int posx = 300;
                 int posy = -300;
 
 
                 // plus and minus buttons for a, / looks
                 int aOld = a;
-                DrawText("Looks: ", GetScreenWidth() / 2 + posx - 85, GetScreenHeight() / 2 + posy - 55, 72, BLACK);
-                a = drawPlus(new Rectangle((GetScreenWidth() / 2) + 70 + posx, (GetScreenHeight() / 2) + 40 + posy, 100, 100), posx, posy, (a > 9 || points < 1), a, 10, false);
-                DrawText("" + a, GetScreenWidth() / 2 + posx - 10, GetScreenHeight() / 2 + posy + 45, 72, BLACK);
+                DrawText("Looks: ", posx - 85, GetScreenHeight() / 2 + posy - 55, 72, BLACK);
+                a = drawPlus(new Rectangle(70 + posx, (GetScreenHeight() / 2) + 40 + posy, 100, 100), posx, posy, (a > 9 || points < 1), a, 10, false);
+                DrawText("" + a, posx - 10, GetScreenHeight() / 2 + posy + 45, 72, BLACK);
 
                 posx -= 210;
-                a = drawPlus(new Rectangle((GetScreenWidth() / 2) + 70 + posx, (GetScreenHeight() / 2) + 40 + posy, 100, 100), posx, posy, (a <= 0), a, 0, true);
+                a = drawPlus(new Rectangle(70 + posx, (GetScreenHeight() / 2) + 40 + posy, 100, 100), posx, posy, (a <= 0), a, 0, true);
                 posx += 210;
                 posy += 300;
 
@@ -937,18 +938,15 @@ public class QuimbertQuarrel {
                     points += aOld - a;
                 }
 
-                // makeButtonText(1000, 200, 200, 100, "text", 72, false);
-                makeButtonImage(100, 200, 200, 100, "textures/mute.png", false);
-                
 
                 // b / smell
                 int bOld = b;
-                DrawText("Smell: ", GetScreenWidth() / 2 + posx - 85, GetScreenHeight() / 2 + posy - 55, 72, BLACK);
-                b = drawPlus(new Rectangle((GetScreenWidth() / 2) + 70 + posx, (GetScreenHeight() / 2) + 40 + posy, 100, 100), posx, posy, (b > 9 || points < 1), b, 10, false);
-                DrawText("" + b, GetScreenWidth() / 2 + posx - 10, GetScreenHeight() / 2 + posy + 45, 72, BLACK);
+                DrawText("Smell: ", posx - 85, GetScreenHeight() / 2 + posy - 55, 72, BLACK);
+                b = drawPlus(new Rectangle(70 + posx, (GetScreenHeight() / 2) + 40 + posy, 100, 100), posx, posy, (b > 9 || points < 1), b, 10, false);
+                DrawText("" + b, posx - 10, GetScreenHeight() / 2 + posy + 45, 72, BLACK);
 
                 posx -= 210;
-                b = drawPlus(new Rectangle((GetScreenWidth() / 2) + 70 + posx, (GetScreenHeight() / 2) + 40 + posy, 100, 100), posx, posy, (b <= 0), b, 0, true);
+                b = drawPlus(new Rectangle(70 + posx, (GetScreenHeight() / 2) + 40 + posy, 100, 100), posx, posy, (b <= 0), b, 0, true);
                 posx += 210;
                 posy += 300;
                 
@@ -959,12 +957,12 @@ public class QuimbertQuarrel {
 
                 // d / personality
                 int dOld = d;
-                DrawText("Personality: ", GetScreenWidth() / 2 + posx - 135, GetScreenHeight() / 2 + posy - 55, 72, BLACK);
-                d = drawPlus(new Rectangle((GetScreenWidth() / 2) + 70 + posx, (GetScreenHeight() / 2) + 40 + posy, 100, 100), posx, posy, (d > 9 || points < 1), d, 10, false);
-                DrawText("" + d, GetScreenWidth() / 2 + posx - 10, GetScreenHeight() / 2 + posy + 45, 72, BLACK);
+                DrawText("Personality: ", posx - 135, GetScreenHeight() / 2 + posy - 55, 72, BLACK);
+                d = drawPlus(new Rectangle(70 + posx, (GetScreenHeight() / 2) + 40 + posy, 100, 100), posx, posy, (d > 9 || points < 1), d, 10, false);
+                DrawText("" + d, posx - 10, GetScreenHeight() / 2 + posy + 45, 72, BLACK);
 
                 posx -= 210;
-                d = drawPlus(new Rectangle(200 + posx, (GetScreenHeight() / 2) + 40 + posy, 100, 100), posx, posy, (d <= 0), d, 0, true);
+                d = drawPlus(new Rectangle(70 + posx, (GetScreenHeight() / 2) + 40 + posy, 100, 100), posx, posy, (d <= 0), d, 0, true);
                 posx += 210;
                 posy += 300;
                 if (d != dOld) {
@@ -975,16 +973,16 @@ public class QuimbertQuarrel {
 
 
                 // shift to right
-                posx += 700;
+                posx += 500;
                 posy = -300;
                 // e / gumption
                 int eOld = e;
-                DrawText("Gumption: ", GetScreenWidth() / 2 + posx - 135, GetScreenHeight() / 2 + posy - 55, 72, BLACK);
-                e = drawPlus(new Rectangle((GetScreenWidth() / 2) + 70 + posx, (GetScreenHeight() / 2) + 40 + posy, 100, 100), posx, posy, (e > 9 || points < 1), e, 10, false);
-                DrawText("" + e, GetScreenWidth() / 2 + posx - 10, GetScreenHeight() / 2 + posy + 45, 72, BLACK);
+                DrawText("Gumption: ", posx - 135, GetScreenHeight() / 2 + posy - 55, 72, BLACK);
+                e = drawPlus(new Rectangle(70 + posx, (GetScreenHeight() / 2) + 40 + posy, 100, 100), posx, posy, (e > 9 || points < 1), e, 10, false);
+                DrawText("" + e, posx - 10, GetScreenHeight() / 2 + posy + 45, 72, BLACK);
 
                 posx -= 210;
-                e = drawPlus(new Rectangle((GetScreenWidth() / 2) + 70 + posx, (GetScreenHeight() / 2) + 40 + posy, 100, 100), posx, posy, (e <= 0), e, 0, true);
+                e = drawPlus(new Rectangle(70 + posx, (GetScreenHeight() / 2) + 40 + posy, 100, 100), posx, posy, (e <= 0), e, 0, true);
                 posx += 210;
                 posy += 300;
 
@@ -995,12 +993,12 @@ public class QuimbertQuarrel {
                 
                 // f / length
                 int fOld = f;
-                DrawText("Length: ", GetScreenWidth() / 2 + posx - 105, GetScreenHeight() / 2 + posy - 55, 72, BLACK);
-                f = drawPlus(new Rectangle((GetScreenWidth() / 2) + 70 + posx, (GetScreenHeight() / 2) + 40 + posy, 100, 100), posx, posy, (f > 9 || points < 1), f, 10, false);
-                DrawText("" + f, GetScreenWidth() / 2 + posx - 10, GetScreenHeight() / 2 + posy + 45, 72, BLACK);
+                DrawText("Length: ", posx - 105, GetScreenHeight() / 2 + posy - 55, 72, BLACK);
+                f = drawPlus(new Rectangle(70 + posx, (GetScreenHeight() / 2) + 40 + posy, 100, 100), posx, posy, (f > 9 || points < 1), f, 10, false);
+                DrawText("" + f, posx - 10, GetScreenHeight() / 2 + posy + 45, 72, BLACK);
 
                 posx -= 210;
-                f = drawPlus(new Rectangle((GetScreenWidth() / 2) + 70 + posx, (GetScreenHeight() / 2) + 40 + posy, 100, 100), posx, posy, (f <= 0), f, 0, true);
+                f = drawPlus(new Rectangle(70 + posx, (GetScreenHeight() / 2) + 40 + posy, 100, 100), posx, posy, (f <= 0), f, 0, true);
                 posx += 210;
                 posy -= 100;
 
