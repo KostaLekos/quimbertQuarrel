@@ -285,7 +285,7 @@ public class QuimbertQuarrel {
         SetMusicVolume(quimbertcall, 0.25f);
 
         Camera2D camera = new Camera2D()
-                .target(new Vector2());
+            .target(new Vector2());
 
 
         QuimbertTextBox textBoxName = new QuimbertTextBox (new Rectangle(GetScreenWidth () / 2 + 20, 250, 375, 75));
