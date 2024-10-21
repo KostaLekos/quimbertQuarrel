@@ -2,11 +2,11 @@ import java.util.Random;
 import java.util.ArrayList;
 import static com.raylib.Raylib.*;
 
-public class Quimbert extends QuimbertQuarrel
+public class Quimbert
 {
     public int looks;
     public int smell;
-    private String color;
+    private Color color;
     public int personality;
     public int gumption;
     public int length;
@@ -27,7 +27,7 @@ public class Quimbert extends QuimbertQuarrel
     public int orangeFlowers = 0;
     public int redFlowers = 0;
     
-    public Quimbert(int l, int s, String c, int p, int g, int L, String n, String o)
+    public Quimbert(int l, int s, Color c, int p, int g, int L, String n, String o)
     {
         looks = l;
         smell = s;
