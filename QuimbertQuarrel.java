@@ -77,6 +77,54 @@ public class QuimbertQuarrel {
         return false;
     }
 
+    private static boolean makeButtonImage(int pos_x, int pos_y, int size_x, int size_y, String path, boolean isDisabled) {
+        // load image
+        Image img = LoadImage(path);
+        ImageCrop(img, new Rectangle(pos_x + 10, pos_y + 10, size_x - 20, size_y - 20));
+        Texture tex = LoadTextureFromImage(img);
+
+        // background rectangle / collision rectangle
+        Rectangle main = new Rectangle(pos_x, pos_y, size_x, size_y);
+        if (!isDisabled) {
+            if (!CheckCollisionPointRec(GetMousePosition(), main)) {
+                // background / button bounding box / outline
+                DrawRectangleRec(main, BLACK);
+                // inner body color
+                DrawRectangle(pos_x + 10, pos_y + 10, size_x - 20, size_y - 20, LIGHTGRAY);
+                // drop shadow
+                DrawRectangle(pos_x + size_x, pos_y + 5, 5, size_y, DARKGRAY);
+                DrawRectangle(pos_x + 5, pos_y + size_y, size_x, 5, DARKGRAY);
+
+                DrawTexture(tex, pos_x + 10, pos_y + 10, LIGHTGRAY);
+            } else {
+                if (!IsMouseButtonDown(0)) {
+                    // same except dark interior
+                    DrawRectangleRec(main, BLACK);
+                    DrawRectangle(pos_x + 10, pos_y + 10, size_x - 20, size_y - 20, GRAY);
+                    DrawRectangle(pos_x + size_x, pos_y + 5, 5, size_y, DARKGRAY);
+                    DrawRectangle(pos_x + 5, pos_y + size_y, size_x, 5, DARKGRAY);
+
+                    DrawTexture(tex, pos_x + 10, pos_y + 10, LIGHTGRAY);
+
+                } else {
+
+                    DrawRectangle(pos_x + 5, pos_y + 5, size_x, size_y, BLACK);
+                    DrawRectangle(pos_x + 15, pos_y + 15, size_x - 20, size_y - 20, GRAY);
+                    DrawTexture(tex, pos_x + 15, pos_y + 15, GRAY);
+
+                }
+
+                if (IsMouseButtonReleased(0)) {
+                    return true;
+                }
+            }
+        } else {
+            DrawRectangle(pos_x + 5, pos_y + 5, size_x, size_y, BLACK);
+            DrawRectangle(pos_x + 15, pos_y + 15, size_x - 20, size_y - 20, GRAY);
+        }
+        return false;
+    }
+
 
     public String sniff(Quimbert currentQuimbert) {
         String itemFound;
@@ -875,7 +923,8 @@ public class QuimbertQuarrel {
                     points += aOld - a;
                 }
 
-                makeButtonText(1000, 200, 200, 100, "text", 72, false);
+                // makeButtonText(1000, 200, 200, 100, "text", 72, false);
+                makeButtonImage(100, 200, 200, 100, "textures/mute.png", false);
                 
 
                 // b / smell
