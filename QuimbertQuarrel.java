@@ -338,7 +338,7 @@ public class QuimbertQuarrel {
 
                 //Exit Button
                 if (makeButtonImage(GetScreenWidth() - 85, 10, 70, 70, "./textures/exit.png", false)) {
-                    CloseWindow();
+                    break;
                 }
 
                 //mute button
