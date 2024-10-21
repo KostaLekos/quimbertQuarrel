@@ -35,6 +35,49 @@ public class QuimbertQuarrel {
         return randomNum;
     }
 
+    private static boolean makeButtonText(int pos_x, int pos_y, int size_x, int size_y, String text, int fontSize, boolean isDisabled) {
+        // background rectangle / collision rectangle
+        Rectangle main = new Rectangle(pos_x, pos_y, size_x, size_y);
+        if (!isDisabled) {
+            if (!CheckCollisionPointRec(GetMousePosition(), main)) {
+                // background / button bounding box / outline
+                DrawRectangleRec(main, BLACK);
+                // inner body color
+                DrawRectangle(pos_x + 10, pos_y + 10, size_x - 20, size_y - 20, LIGHTGRAY);
+                // drop shadow
+                DrawRectangle(pos_x + size_x, pos_y + 5, 5, size_y, DARKGRAY);
+                DrawRectangle(pos_x + 5, pos_y + size_y, size_x, 5, DARKGRAY);
+
+                DrawText(text, pos_x + 20, pos_y + 20, fontSize, BLACK);
+            } else {
+                if (!IsMouseButtonDown(0)) {
+                    // same except dark interior
+                    DrawRectangleRec(main, BLACK);
+                    DrawRectangle(pos_x + 10, pos_y + 10, size_x - 20, size_y - 20, GRAY);
+                    DrawRectangle(pos_x + size_x, pos_y + 5, 5, size_y, DARKGRAY);
+                    DrawRectangle(pos_x + 5, pos_y + size_y, size_x, 5, DARKGRAY);
+
+                    DrawText(text, pos_x + 20, pos_y + 20, fontSize, BLACK);
+                } else {
+
+                    DrawRectangle(pos_x + 5, pos_y + 5, size_x, size_y, BLACK);
+                    DrawRectangle(pos_x + 15, pos_y + 15, size_x - 20, size_y - 20, GRAY);
+
+                    DrawText(text, pos_x + 25, pos_y + 25, fontSize, BLACK);
+                }
+
+                if (IsMouseButtonReleased(0)) {
+                    return true;
+                }
+            }
+        } else {
+            DrawRectangle(pos_x + 5, pos_y + 5, size_x, size_y, BLACK);
+            DrawRectangle(pos_x + 15, pos_y + 15, size_x - 20, size_y - 20, GRAY);
+        }
+        return false;
+    }
+
+
     public String sniff(Quimbert currentQuimbert) {
         String itemFound;
         String toReturn;
@@ -831,6 +874,8 @@ public class QuimbertQuarrel {
                 if (a != aOld) {
                     points += aOld - a;
                 }
+
+                makeButtonText(1000, 200, 200, 100, "text", 72, false);
                 
 
                 // b / smell
@@ -856,12 +901,14 @@ public class QuimbertQuarrel {
                 DrawText("" + d, GetScreenWidth() / 2 + posx - 10, GetScreenHeight() / 2 + posy + 45, 72, BLACK);
 
                 posx -= 210;
-                d = drawPlus(new Rectangle((GetScreenWidth() / 2) + 70 + posx, (GetScreenHeight() / 2) + 40 + posy, 100, 100), posx, posy, (d <= 0), d, 0, true);
+                d = drawPlus(new Rectangle(200 + posx, (GetScreenHeight() / 2) + 40 + posy, 100, 100), posx, posy, (d <= 0), d, 0, true);
                 posx += 210;
                 posy += 300;
                 if (d != dOld) {
                     points += dOld - d;
                 }
+
+
 
 
                 // shift to right
