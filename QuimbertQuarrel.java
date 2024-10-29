@@ -323,10 +323,20 @@ public class QuimbertQuarrel {
         final Color LIGHTGRAY = new Color(200, 200, 200, 255);
         final Color GRAY = new Color(130, 130, 130, 255);
         final Color PINK = new Color(255, 109, 194, 255);
-        final Color MAGENTA = new Color(255, 0, 255, 255);
+        final Color MAGENTA = new Color(255, 82, 183, 255);
         Color sColor1 = OFFWHITE;
         Color sColor2 = WHITE;
         Color sColor3;
+        boolean color0Taken = false;
+        boolean color1Taken = false;
+        boolean color2Taken = false;
+        boolean color3Taken = false;
+        boolean color4Taken = false;
+        boolean color5Taken = false;
+        boolean color6Taken = false;
+        boolean color7Taken = false;
+        boolean color8Taken = false;
+        boolean color9Taken = false;
 
         SetConfigFlags(FLAG_WINDOW_RESIZABLE | FLAG_WINDOW_MAXIMIZED);
 
@@ -640,7 +650,7 @@ public class QuimbertQuarrel {
                     //Colors: Red, Orange, Yellow, Green, Blue, DarkBlue, Purple, Black, Gray, Pink
 
                     //Red
-                    if (makeButtonColor((GetScreenWidth() / 2) + 130, 475, 60, 60, RED, MAROON, false)) {
+                    if (makeButtonColor((GetScreenWidth() / 2) + 130, 475, 60, 60, RED, MAROON, color0Taken)) {
                         sColor2 = RED;
                         sColor1 = MAROON;
                         c = "Red";
@@ -648,7 +658,7 @@ public class QuimbertQuarrel {
                     }
                     
                     //Orange
-                    if (makeButtonColor((GetScreenWidth() / 2) + 205, 475, 60, 60, ORANGE, DARKORANGE, false)) {
+                    if (makeButtonColor((GetScreenWidth() / 2) + 205, 475, 60, 60, ORANGE, DARKORANGE, color1Taken)) {
                         sColor2 = ORANGE;
                         sColor1 = DARKORANGE;
                         c = "Orange";
@@ -656,7 +666,7 @@ public class QuimbertQuarrel {
                     }
 
                     //Yellow
-                    if (makeButtonColor((GetScreenWidth() / 2) + 280, 475, 60, 60, YELLOW, GOLD, false)) {
+                    if (makeButtonColor((GetScreenWidth() / 2) + 280, 475, 60, 60, YELLOW, GOLD, color2Taken)) {
                         sColor2 = YELLOW;
                         sColor1 = GOLD;
                         c = "Yellow";
@@ -664,7 +674,7 @@ public class QuimbertQuarrel {
                     }
 
                     //Green
-                    if (makeButtonColor((GetScreenWidth() / 2) + 355, 475, 60, 60, GREEN, LIME, false)) {
+                    if (makeButtonColor((GetScreenWidth() / 2) + 355, 475, 60, 60, GREEN, LIME, color3Taken)) {
                         sColor2 = GREEN;
                         sColor1 = LIME;
                         c = "Green";
@@ -672,7 +682,7 @@ public class QuimbertQuarrel {
                     }
 
                     //Light Blue
-                    if (makeButtonColor((GetScreenWidth() / 2) + 430, 475, 60, 60, LIGHTBLUE, DARKLIGHTBLUE, false)) {
+                    if (makeButtonColor((GetScreenWidth() / 2) + 430, 475, 60, 60, LIGHTBLUE, DARKLIGHTBLUE, color4Taken)) {
                         sColor2 = LIGHTBLUE;
                         sColor1 = DARKLIGHTBLUE;
                         c = "Light Blue";
@@ -680,7 +690,7 @@ public class QuimbertQuarrel {
                     }
 
                     //Blue
-                    if (makeButtonColor((GetScreenWidth() / 2) + 130, 550, 60, 60, BLUE, DARKBLUE, false)) {
+                    if (makeButtonColor((GetScreenWidth() / 2) + 130, 550, 60, 60, BLUE, DARKBLUE, color5Taken)) {
                         sColor2 = BLUE;
                         sColor1 = DARKBLUE;
                         c = "Blue";
@@ -688,7 +698,7 @@ public class QuimbertQuarrel {
                     }
 
                     //Purple
-                    if (makeButtonColor((GetScreenWidth() / 2) + 205, 550, 60, 60, PURPLE, VIOLET, false)) {
+                    if (makeButtonColor((GetScreenWidth() / 2) + 205, 550, 60, 60, PURPLE, VIOLET, color6Taken)) {
                         sColor2 = PURPLE;
                         sColor1 = VIOLET;
                         c = "Purple";
@@ -696,7 +706,7 @@ public class QuimbertQuarrel {
                     }
 
                     //Black
-                    if (makeButtonColor((GetScreenWidth() / 2) + 280, 550, 60, 60, DARKGRAY, LIGHTBLACK, false)) {
+                    if (makeButtonColor((GetScreenWidth() / 2) + 280, 550, 60, 60, DARKGRAY, LIGHTBLACK, color7Taken)) {
                         sColor2 = DARKGRAY;
                         sColor1 = LIGHTBLACK;
                         c = "Black";
@@ -704,7 +714,7 @@ public class QuimbertQuarrel {
                     }
 
                     //Gray
-                    if (makeButtonColor((GetScreenWidth() / 2) + 355, 550, 60, 60, LIGHTGRAY, GRAY, false)) {
+                    if (makeButtonColor((GetScreenWidth() / 2) + 355, 550, 60, 60, LIGHTGRAY, GRAY, color8Taken)) {
                         sColor2 = LIGHTGRAY;
                         sColor1 = GRAY;
                         c = "Gray";
@@ -712,7 +722,7 @@ public class QuimbertQuarrel {
                     }
 
                     //Pink
-                    if (makeButtonColor((GetScreenWidth() / 2) + 430, 550, 60, 60, PINK, MAGENTA, false)) {
+                    if (makeButtonColor((GetScreenWidth() / 2) + 430, 550, 60, 60, PINK, MAGENTA, color9Taken)) {
                         sColor2 = PINK;
                         sColor1 = MAGENTA;
                         c = "Pink";
@@ -1019,11 +1029,35 @@ public class QuimbertQuarrel {
                                 quimberts.add(new Quimbert(a, b, c, d, e, f, g, h));
                                 quimberts.get(makingQuimbert).startingHealth = (randInt(3, 5) * quimberts.get(makingQuimbert).looks) / 2;
                                 quimberts.get(makingQuimbert).health = quimberts.get(makingQuimbert).startingHealth;
+
                                 if (quimberts.get(makingQuimbert).health < 1) {
                                     quimberts.get(makingQuimbert).health++;
                                     quimberts.get(makingQuimbert).startingHealth++;
                                 }
-                                a = 0; b = 0; d = 0; e = 0; f = 0; g = ""; h = "";
+
+                                if (c == "Red") {
+                                    color0Taken = true;
+                                } else if (c == "Orange") {
+                                    color1Taken = true;
+                                } else if (c == "Yellow") {
+                                    color2Taken = true;
+                                } else if (c == "Green") {
+                                    color3Taken = true;
+                                } else if (c == "Light Blue") {
+                                    color4Taken = true;
+                                } else if (c == "Blue") {
+                                    color5Taken = true;
+                                } else if (c == "Purple") {
+                                    color6Taken = true;
+                                } else if (c == "Black") {
+                                    color7Taken = true;
+                                } else if (c == "Gray") {
+                                    color8Taken = true;
+                                } else if (c == "Pink") {
+                                    color9Taken = true;
+                                }
+
+                                a = 0; b = 0; d = 0; c = ""; e = 0; f = 0; g = ""; h = "";
                                 textBoxName.clear();
                                 textBoxOwner.clear();
                                 points = randInt(25, 35);
