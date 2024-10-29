@@ -2,17 +2,11 @@ import java.util.Scanner;
 import java.util.Random;
 import java.util.ArrayList;
 import static com.raylib.Jaylib.*;
-import static com.raylib.Raylib.*;
 
-/*Kosta
+/*
  * Make sure to have a BeginDrawing(); before calling .render()
  * You have made this codebase in a way that requires so
  */
-
-
-
-
-
 
 public class QuimbertTextBox {
     private String text;
@@ -34,13 +28,13 @@ public class QuimbertTextBox {
         text = "";
     }
 
-    public QuimbertTextBox (com.raylib.Jaylib.Rectangle bound) {
+    public QuimbertTextBox (Rectangle bound) {
         boundingBox = bound;
 
         text = "";
     }
 
-    public void setPos(com.raylib.Jaylib.Rectangle boundingBox) {
+    public void setPos(Rectangle boundingBox) {
         this.boundingBox = boundingBox;
     }
 
@@ -97,7 +91,7 @@ public class QuimbertTextBox {
 
 
         if (mouseOnText) {
-            DrawText(String.format("INPUT CHARS: %d/%d", text.length(), maxCharCount), 315, 250, 20, DARKGRAY);
+            DrawText(String.format("INPUT CHARS: %d/%d", text.length(), maxCharCount), GetScreenWidth () / 2 + 30, 329, 20, DARKGRAY);
         }
         
         

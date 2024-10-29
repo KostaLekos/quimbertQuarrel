@@ -337,6 +337,7 @@ public class QuimbertQuarrel {
         boolean color7Taken = false;
         boolean color8Taken = false;
         boolean color9Taken = false;
+        boolean needColor = false;
 
         SetConfigFlags(FLAG_WINDOW_RESIZABLE | FLAG_WINDOW_MAXIMIZED);
 
@@ -633,10 +634,20 @@ public class QuimbertQuarrel {
                     //Color button
                     if (CheckCollisionPointRec(GetMousePosition(), colorButton)) {
                         DrawRectangle((GetScreenWidth () / 2) + 25, 455, 75, 75, BLACK);
-                        DrawRectangle((GetScreenWidth () / 2) + 35, 465, 55, 55, sColor1);
+
+                        if (!needColor) {
+                            DrawRectangle((GetScreenWidth () / 2) + 35, 465, 55, 55, sColor1);
+                        } else {
+                            DrawRectangle((GetScreenWidth () / 2) + 35, 465, 55, 55, MAROON);
+                        }
 
                         if (IsMouseButtonReleased(0)) {
                             displayColors = false;
+
+                            if (needColor) {
+                                needColor = false;
+                                sColor2 = WHITE;
+                            }
                         }
                     } else {
                         DrawRectangle((GetScreenWidth () / 2) + 25, 455, 75, 75, BLACK);
@@ -741,20 +752,41 @@ public class QuimbertQuarrel {
                     } else {
                         if (IsMouseButtonReleased(0))
                         {
+                            if (needColor) {
+                                needColor = false;
+                                sColor2 = WHITE;
+                            }
+
                             displayColors = true;
 
                             DrawRectangle((GetScreenWidth () / 2) + 25, 455, 75, 75, BLACK);
-                            DrawRectangle((GetScreenWidth () / 2) + 35, 465, 55, 55, sColor1);
+
+                            if (!needColor) {
+                                DrawRectangle((GetScreenWidth () / 2) + 30, 460, 55, 55, sColor1);
+                            } else {
+                                DrawRectangle((GetScreenWidth () / 2) + 30, 460, 55, 55, MAROON);
+                            }
                         }
                         
                         if (!displayColors) {
                             if (IsMouseButtonDown(0))
                             {
                                 DrawRectangle((GetScreenWidth () / 2) + 25, 455, 75, 75, BLACK);
-                                DrawRectangle((GetScreenWidth () / 2) + 35, 465, 55, 55, sColor1);
+
+                                if (!needColor) {
+                                    DrawRectangle((GetScreenWidth () / 2) + 35, 465, 55, 55, sColor1);
+                                } else {
+                                    DrawRectangle((GetScreenWidth () / 2) + 35, 465, 55, 55, MAROON);
+                                }
                             } else {
                                 DrawRectangleRec(colorButton, BLACK);
-                                DrawRectangle((GetScreenWidth () / 2) + 30, 460, 55, 55, sColor1);
+                                
+                                if (!needColor) {
+                                    DrawRectangle((GetScreenWidth () / 2) + 30, 460, 55, 55, sColor1);
+                                } else {
+                                    DrawRectangle((GetScreenWidth () / 2) + 30, 460, 55, 55, MAROON);
+                                }
+
                                 DrawRectangle((GetScreenWidth () / 2) + 95, 455, 5, 75, DARKGRAY);
                                 DrawRectangle((GetScreenWidth () / 2) + 25, 525, 70, 5, DARKGRAY);
                             }
@@ -808,7 +840,8 @@ public class QuimbertQuarrel {
                             }
 
                             if (sColor1 == OFFWHITE) {
-
+                                sColor2 = MAROON;
+                                needColor = true;
                             }
                         }
                     }
