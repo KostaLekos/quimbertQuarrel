@@ -1,6 +1,6 @@
 @echo off
 title Run
 
-"H:\Registries\java\bin\javac.exe" -cp .\jaylib-5.0.0-0.jar .\QuimbertQuarrel.java .\Quimbert.java .\QuimbertTextBox.java
-"H:\Registries\java\bin\java.exe" -cp jaylib-5.0.0-0.jar;. QuimbertQuarrel
+make WindowsAll
+java -cp .\target\QuimbertQuarrel-1.0-SNAPSHOT.jar;.\lib\jaylib-5.0.0-0.jar com.quimbertco.QuimbertQuarrel.QuimbertQuarrel
 pause
