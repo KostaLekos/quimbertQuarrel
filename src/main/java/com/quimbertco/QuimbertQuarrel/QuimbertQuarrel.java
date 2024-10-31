@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import static com.raylib.Jaylib.*;
 
 /*
+src\main\java\com\quimbertco\QuimbertQuarrel\
+
 D:\Apps\git\Git\bin\git.exe
 
  * git pull
@@ -208,10 +210,8 @@ public class QuimbertQuarrel {
         return keyPressed;
     }
 
-
-    // because im lazy, it is relative to center of screen FIXED
-    public static int drawPlus(Rectangle rec, int posx, int posy, boolean isGreyedOut, int numToIncrement, int maxMinVal, boolean isMinus) {
-        if (!isGreyedOut) {
+    public static int drawPlus(Rectangle rec, int posx, int posy, boolean isGrayedOut, int numToIncrement, int maxMinVal, boolean isMinus) {
+        if (!isGrayedOut) {
             if(!CheckCollisionPointRec(GetMousePosition(), rec)) {
                 DrawRectangleRec(rec, BLACK);
                 DrawRectangle(80 + posx, 50 + posy, 80, 80, LIGHTGRAY);
@@ -229,10 +229,12 @@ public class QuimbertQuarrel {
                         numToIncrement--;
                     }
 
-                    if ((!isMinus) ? (numToIncrement <= maxMinVal) : (numToIncrement > maxMinVal)) {
+                    if ((!isMinus) ? (numToIncrement <= maxMinVal) : (numToIncrement >= maxMinVal)) {
                         DrawRectangle(75 + posx, 45 + posy, 100, 100, BLACK);
                         DrawRectangle(85 + posx, 55 + posy, 80, 80, DARKGRAY);
-                        DrawRectangle(120 + posx, 70 + posy, 10, 50, BLACK);
+                        if (!isMinus) {
+                            DrawRectangle(120 + posx, 70 + posy, 10, 50, BLACK);
+                        }
                         DrawRectangle(100 + posx, 90 + posy, 50, 10, BLACK);
                     }
                 }
@@ -244,7 +246,7 @@ public class QuimbertQuarrel {
                         DrawRectangle(120 + posx, 70 + posy, 10, 50, BLACK);
                     }
                     DrawRectangle(100 + posx, 90 + posy, 50, 10, BLACK);
-                } else if ((!isMinus) ? (numToIncrement < maxMinVal) : (numToIncrement >= maxMinVal)) {
+                } else if ((!isMinus) ? (numToIncrement < maxMinVal) : (numToIncrement > maxMinVal)) {
                     DrawRectangle(70 + posx, 40 + posy, 100, 100, BLACK);
                     DrawRectangle(80 + posx, 50 + posy, 80, 80, GRAY);
                     if (!isMinus) {
@@ -298,7 +300,7 @@ public class QuimbertQuarrel {
         int framesCounter = 0;
         boolean isTextBoxName = false;
         boolean displayColors = false;
-        String muteImage = "../resources/textures/unmuted.png";
+        String muteImage = "./resources/textures/unmuted.png";
         boolean isMuted = false;
         final Color RAYWHITE = new Color(245, 245, 245, 255);
         final Color OFFWHITE = new Color(230, 230, 230, 255);
@@ -351,10 +353,10 @@ public class QuimbertQuarrel {
         SetTargetFPS(60);
         InitAudioDevice();
 
-        Music blippy = LoadMusicStream("../resources/soundtrack/BlippyBounce.mp3");
-        Music ambient = LoadMusicStream("../resources/soundtrack/ambient.mp3");
-        Music mania = LoadMusicStream("../resources/soundtrack/MenuMania.mp3");
-        Music quimbertcall = LoadMusicStream("../resources/soundtrack/Quimbert's Call (Main Menu Theme).mp3");
+        Music blippy = LoadMusicStream("./resources/soundtrack/BlippyBounce.mp3");
+        Music ambient = LoadMusicStream("./resources/soundtrack/ambient.mp3");
+        Music mania = LoadMusicStream("./resources/soundtrack/MenuMania.mp3");
+        Music quimbertcall = LoadMusicStream("./resources/soundtrack/Quimbert's Call (Main Menu Theme).mp3");
 
         PlayMusicStream(blippy);
         SetMusicVolume(blippy, 0.25f);
@@ -415,7 +417,7 @@ public class QuimbertQuarrel {
                 }
 
                 //Exit Button
-                if (makeButtonImage(GetScreenWidth() - 85, 10, 70, 70, "../resources/textures/exit.png", false)) {
+                if (makeButtonImage(GetScreenWidth() - 85, 10, 70, 70, "./resources/textures/exit.png", false)) {
                     break;
                 }
 
@@ -423,10 +425,10 @@ public class QuimbertQuarrel {
                 if (makeButtonImage(GetScreenWidth() - 170, 10, 70, 70, muteImage, false)) {
                     if (isMuted) {
                         isMuted = false;
-                        muteImage = "../resources/textures/unmuted.png";
+                        muteImage = "./resources/textures/unmuted.png";
                     } else {
                         isMuted = true;
-                        muteImage = "../resources/textures/muted.png";
+                        muteImage = "./resources/textures/muted.png";
                     }
                 }
 
@@ -1150,11 +1152,11 @@ public class QuimbertQuarrel {
                 // plus and minus buttons for a, / looks
                 int aOld = a;
                 DrawText("Looks: ", posx - 85,  + posy - 55, 72, BLACK);
-                a = drawPlus(new Rectangle(70 + posx, 40 + posy, 100, 100), posx, posy, (a > 9 || points < 1), a, 10, false);
+                a = drawPlus(new Rectangle(70 + posx, 40 + posy, 100, 100), posx, posy, (a > 9), a, 10, false);
                 DrawText("" + a, posx - 10,  + posy + 45, 72, BLACK);
 
                 posx -= 210;
-                a = drawPlus(new Rectangle(70 + posx, 40 + posy, 100, 100), posx, posy, (a <= 0), a, 0, true);
+                a = drawPlus(new Rectangle(70 + posx, 40 + posy, 100, 100), posx, posy, (a < 1), a, 0, true);
                 posx += 210;
                 posy += 300;
 
@@ -1164,7 +1166,7 @@ public class QuimbertQuarrel {
 
 
 
-                if (makeButtonText(posx - 40,  + posy - 150, 120, 65, "++", 72, (a >= 10 || points <= 0))) {
+                if (makeButtonText(posx - 40,  + posy - 150, 120, 65, "++", 72, (a >9))) {
                     for (int i = 0; points > 0 && a < 10; i++) {
                         points--;
                         a++;
@@ -1175,11 +1177,11 @@ public class QuimbertQuarrel {
                 // b / smell
                 int bOld = b;
                 DrawText("Smell: ", posx - 85,  + posy - 55, 72, BLACK);
-                b = drawPlus(new Rectangle(70 + posx, 40 + posy, 100, 100), posx, posy, (b > 9 || points < 1), b, 10, false);
+                b = drawPlus(new Rectangle(70 + posx, 40 + posy, 100, 100), posx, posy, (b > 9), b, 10, false);
                 DrawText("" + b, posx - 10,  + posy + 45, 72, BLACK);
 
                 posx -= 210;
-                b = drawPlus(new Rectangle(70 + posx, 40 + posy, 100, 100), posx, posy, (b <= 0), b, 0, true);
+                b = drawPlus(new Rectangle(70 + posx, 40 + posy, 100, 100), posx, posy, (b < 1), b, 0, true);
                 posx += 210;
                 posy += 300;
                 
@@ -1187,7 +1189,7 @@ public class QuimbertQuarrel {
                     points += bOld - b;
                 }
 
-                if (makeButtonText(posx - 40,  + posy - 150, 120, 65, "++", 72, (b >= 10 || points <= 0))) {
+                if (makeButtonText(posx - 40,  + posy - 150, 120, 65, "++", 72, (b > 9))) {
                     for (int i = 0; points > 0 && b < 10; i++) {
                         points--;
                         b++;
@@ -1202,18 +1204,18 @@ public class QuimbertQuarrel {
                 // d / personality
                 int dOld = d;
                 DrawText("Personality: ", posx - 175,  + posy - 55, 72, BLACK);
-                d = drawPlus(new Rectangle(70 + posx, 40 + posy, 100, 100), posx, posy, (d > 9 || points < 1), d, 10, false);
+                d = drawPlus(new Rectangle(70 + posx, 40 + posy, 100, 100), posx, posy, (d > 9), d, 10, false);
                 DrawText("" + d, posx - 10,  + posy + 45, 72, BLACK);
 
                 posx -= 210;
-                d = drawPlus(new Rectangle(70 + posx, 40 + posy, 100, 100), posx, posy, (d <= 0), d, 0, true);
+                d = drawPlus(new Rectangle(70 + posx, 40 + posy, 100, 100), posx, posy, (d < 1), d, 0, true);
                 posx += 210;
                 posy += 300;
                 if (d != dOld) {
                     points += dOld - d;
                 }
 
-                if (makeButtonText(posx - 40,  + posy - 150, 120, 65, "++", 72, (d >= 10 || points <= 0))) {
+                if (makeButtonText(posx - 40,  + posy - 150, 120, 65, "++", 72, (d > 9))) {
                     for (int i = 0; points > 0 && d < 10; i++) {
                         points--;
                         d++;
@@ -1223,11 +1225,11 @@ public class QuimbertQuarrel {
                 // e / gumption
                 int eOld = e;
                 DrawText("Gumption: ", posx - 135,  + posy - 55, 72, BLACK);
-                e = drawPlus(new Rectangle(70 + posx, 40 + posy, 100, 100), posx, posy, (e > 9 || points < 1), e, 10, false);
+                e = drawPlus(new Rectangle(70 + posx, 40 + posy, 100, 100), posx, posy, (e > 9), e, 10, false);
                 DrawText("" + e, posx - 10,  + posy + 45, 72, BLACK);
 
                 posx -= 210;
-                e = drawPlus(new Rectangle(70 + posx, 40 + posy, 100, 100), posx, posy, (e <= 0), e, 0, true);
+                e = drawPlus(new Rectangle(70 + posx, 40 + posy, 100, 100), posx, posy, (e < 1), e, 0, true);
                 posx += 210;
                 posy += 300;
 
@@ -1235,7 +1237,7 @@ public class QuimbertQuarrel {
                     points += eOld - e;
                 }
 
-                if (makeButtonText(posx - 40,  + posy - 150, 120, 65, "++", 72, (e >= 10 || points <= 0))) {
+                if (makeButtonText(posx - 40,  + posy - 150, 120, 65, "++", 72, (e > 9))) {
                     for (int i = 0; points > 0 && e < 10; i++) {
                         points--;
                         e++;
@@ -1251,11 +1253,11 @@ public class QuimbertQuarrel {
                 // f / length
                 int fOld = f;
                 DrawText("Length: ", posx - 105,  + posy - 55, 72, BLACK);
-                f = drawPlus(new Rectangle(70 + posx, 40 + posy, 100, 100), posx, posy, (f > 9 || points < 1), f, 10, false);
+                f = drawPlus(new Rectangle(70 + posx, 40 + posy, 100, 100), posx, posy, (f > 9), f, 10, false);
                 DrawText("" + f, posx - 10,  + posy + 45, 72, BLACK);
 
                 posx -= 210;
-                f = drawPlus(new Rectangle(70 + posx, 40 + posy, 100, 100), posx, posy, (f <= 0), f, 0, true);
+                f = drawPlus(new Rectangle(70 + posx, 40 + posy, 100, 100), posx, posy, (f < 1), f, 0, true);
                 posx += 210;
                 posy += 300;
 
@@ -1263,7 +1265,7 @@ public class QuimbertQuarrel {
                     points += fOld - f;
                 }
 
-                if (makeButtonText(posx - 40,  + posy - 150, 120, 65, "++", 72, (f >= 10 || points <= 0))) {
+                if (makeButtonText(posx - 40,  + posy - 150, 120, 65, "++", 72, (f > 9))) {
                     for (int i = 0; points > 0 && f < 10; i++) {
                         points--;
                         f++;
