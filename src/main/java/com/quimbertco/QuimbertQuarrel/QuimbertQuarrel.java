@@ -28,9 +28,9 @@ D:\Apps\git\Git\bin\git.exe
 
 /*
 compile it: cmd +
-"E:\Actually Useful\NonZips\java\jdk-21.0.4+7\bin\javac.exe" -cp .\jaylib-5.0.0-0.jar .\QuimbertQuarrel.java .\Quimbert.java
+"D:\Registries\java\bin\javac.exe" -cp .\lib\jaylib-5.0.0-0.jar .\QuimbertQuarrel.java .\Quimbert.java
 run it: cmd +
-"E:\Actually Useful\NonZips\java\jdk-21.0.4+7\bin\java.exe" -cp jaylib-5.0.0-0.jar;. QuimbertQuarrel
+"D:\Registries\java\bin\java.exe" -cp .\lib\jaylib-5.0.0-0.jar;. QuimbertQuarrel
 */
 public class QuimbertQuarrel {
     private static int randInt(int min, int max) {
@@ -1147,14 +1147,14 @@ public class QuimbertQuarrel {
 
 
                 int posx = 300;
-                int posy = 75;
+                int posy = 175;
 
 
                 // plus and minus buttons for a, / looks
                 int aOld = a;
-                DrawText("Looks: ", posx - 85,  + posy - 55, 72, BLACK);
+                DrawText("Looks: ", posx + 40 - (MeasureText("Looks: ", 72) / 2),  + posy - 55, 72, BLACK);
                 a = drawPlus(new Rectangle(70 + posx, 40 + posy, 100, 100), posx, posy, (a > 9 || points < 1), a, 10, false);
-                DrawText("" + a, posx - 10,  + posy + 45, 72, BLACK);
+                DrawText("" + a, posx + 18 - (MeasureText(Integer.toString(a), 72) / 2),  + posy + 55, 72, BLACK);
 
                 posx -= 210;
                 a = drawPlus(new Rectangle(70 + posx, 40 + posy, 100, 100), posx, posy, (a < 1), a, 0, true);
@@ -1173,42 +1173,17 @@ public class QuimbertQuarrel {
                 }
 
 
-                // b / smell
-                int bOld = b;
-                DrawText("Smell: ", posx - 85,  + posy - 55, 72, BLACK);
-                b = drawPlus(new Rectangle(70 + posx, 40 + posy, 100, 100), posx, posy, (b > 9 || points < 1), b, 10, false);
-                DrawText("" + b, posx - 10,  + posy + 45, 72, BLACK);
-
-                posx -= 210;
-                b = drawPlus(new Rectangle(70 + posx, 40 + posy, 100, 100), posx, posy, (b < 1), b, 0, true);
-                posx += 210;
-                posy += 300;
-                
-                if (b != bOld) {
-                    points += bOld - b;
-                }
-
-                if (makeButtonText(posx - 40,  + posy - 150, 120, 65, "++", 72, (b > 9 || points < 1))) {
-                    for (int i = 0; points > 0 && b < 10; i++) {
-                        points--;
-                        b++;
-                    }
-                }
-                
-                // shift to right
-                posx = GetScreenWidth() / 2;
-                posy = 75;
-
                 // d / personality
                 int dOld = d;
-                DrawText("Personality: ", posx - 175,  + posy - 55, 72, BLACK);
+                DrawText("Personality: ", posx + 40 - (MeasureText("Personality: ", 72) / 2),  + posy - 55, 72, BLACK);
                 d = drawPlus(new Rectangle(70 + posx, 40 + posy, 100, 100), posx, posy, (d > 9 || points < 1), d, 10, false);
-                DrawText("" + d, posx - 10,  + posy + 45, 72, BLACK);
+                DrawText("" + d, posx + 18 - (MeasureText(Integer.toString(d), 72) / 2),  + posy + 55, 72, BLACK);
 
                 posx -= 210;
                 d = drawPlus(new Rectangle(70 + posx, 40 + posy, 100, 100), posx, posy, (d < 1), d, 0, true);
                 posx += 210;
                 posy += 300;
+                
                 if (d != dOld) {
                     points += dOld - d;
                 }
@@ -1219,12 +1194,39 @@ public class QuimbertQuarrel {
                         d++;
                     }
                 }
+                
+                // shift to right
+                posx = GetScreenWidth() / 2;
+                posy = 175;
+
+                // b / smell
+                int bOld = b;
+                DrawText("Smell: ", posx + 52 - (MeasureText("Smell:  ", 72) / 2),  + posy - 55, 72, BLACK);
+                b = drawPlus(new Rectangle(70 + posx, 40 + posy, 100, 100), posx, posy, (b > 9 || points < 1), b, 10, false);
+                DrawText("" + b, posx + 18 - (MeasureText(Integer.toString(b), 72) / 2),  + posy + 55, 72, BLACK);
+
+                posx -= 210;
+                b = drawPlus(new Rectangle(70 + posx, 40 + posy, 100, 100), posx, posy, (b < 1), b, 0, true);
+                posx += 210;
+                posy += 300;
+                if (b != bOld) {
+                    points += bOld - b;
+                }
+
+                if (makeButtonText(posx - 40,  + posy - 150, 120, 65, "++", 72, (b > 9 || points < 1))) {
+                    for (int i = 0; points > 0 && b < 10; i++) {
+                        points--;
+                        b++;
+                    }
+                }
+
+                posx = GetScreenWidth() - 300;
 
                 // e / gumption
                 int eOld = e;
-                DrawText("Gumption: ", posx - 135,  + posy - 55, 72, BLACK);
+                DrawText("Gumption: ", posx + 52 - (MeasureText("Gumption:  ", 72) / 2),  + posy - 55, 72, BLACK);
                 e = drawPlus(new Rectangle(70 + posx, 40 + posy, 100, 100), posx, posy, (e > 9 || points < 1), e, 10, false);
-                DrawText("" + e, posx - 10,  + posy + 45, 72, BLACK);
+                DrawText("" + e, posx + 18 - (MeasureText(Integer.toString(e), 72) / 2),  + posy + 55, 72, BLACK);
 
                 posx -= 210;
                 e = drawPlus(new Rectangle(70 + posx, 40 + posy, 100, 100), posx, posy, (e < 1), e, 0, true);
@@ -1243,16 +1245,15 @@ public class QuimbertQuarrel {
                 }
 
         
-                // shift to right
-                posx = GetScreenWidth() - 300;
-                posy = 75;
+                // shift down
+                posy = 175;
 
                 
                 // f / length
                 int fOld = f;
-                DrawText("Length: ", posx - 105,  + posy - 55, 72, BLACK);
+                DrawText("Length: ", posx + 52 - (MeasureText("Length:  ", 72) / 2),  + posy - 55, 72, BLACK);
                 f = drawPlus(new Rectangle(70 + posx, 40 + posy, 100, 100), posx, posy, (f > 9 || points < 1), f, 10, false);
-                DrawText("" + f, posx - 10,  + posy + 45, 72, BLACK);
+                DrawText("" + f, posx + 18 - (MeasureText(Integer.toString(f), 72) / 2),  + posy + 55, 72, BLACK);
 
                 posx -= 210;
                 f = drawPlus(new Rectangle(70 + posx, 40 + posy, 100, 100), posx, posy, (f < 1), f, 0, true);
@@ -1270,9 +1271,9 @@ public class QuimbertQuarrel {
                     }
                 }
                 
-                DrawText("Points: " + points, GetScreenWidth() - 475, 120 + 200, 72, BLACK);
-                DrawText("Information:\n", GetScreenWidth() - 475, 200 + 200, 72, BLACK);
-                DrawText("Each thing does things, you're welcome", GetScreenWidth() - 475, 300 + 200, 24, BLACK);
+                posx = GetScreenWidth() / 2;
+
+                DrawText("Points: " + points, posx - (MeasureText("Points:  ", 72) / 2), 20, 72, BLACK);
                 
             }
 
