@@ -7,6 +7,8 @@ import static com.raylib.Jaylib.*;
 /*
 src\main\java\com\quimbertco\QuimbertQuarrel\
 
+path = ("D:\Registries\microsoft-jdk-21.0.4-windows-x64\jdk-21.0.4+7\bin;D:\Registries\apache-maven-3.9.9-bin\apache-maven-3.9.9\bin;D:\Apps\w64devkit\w64devkit\bin;D:\Registries\git\Git\bin;$env:path")
+
 D:\Apps\git\Git\bin\git.exe
 
  * git pull
@@ -300,7 +302,7 @@ public class QuimbertQuarrel {
         int framesCounter = 0;
         boolean isTextBoxName = false;
         boolean displayColors = false;
-        String muteImage = "./resources/textures/unmuted.png";
+        String muteImage = "./resources/textures/UI/unmuted.png";
         boolean isMuted = false;
         final Color RAYWHITE = new Color(245, 245, 245, 255);
         final Color OFFWHITE = new Color(230, 230, 230, 255);
@@ -417,7 +419,7 @@ public class QuimbertQuarrel {
                 }
 
                 //Exit Button
-                if (makeButtonImage(GetScreenWidth() - 85, 10, 70, 70, "./resources/textures/exit.png", false)) {
+                if (makeButtonImage(GetScreenWidth() - 85, 10, 70, 70, "./resources/textures/UI/exit.png", false)) {
                     break;
                 }
 
@@ -425,10 +427,10 @@ public class QuimbertQuarrel {
                 if (makeButtonImage(GetScreenWidth() - 170, 10, 70, 70, muteImage, false)) {
                     if (isMuted) {
                         isMuted = false;
-                        muteImage = "./resources/textures/unmuted.png";
+                        muteImage = "./resources/textures/UI/unmuted.png";
                     } else {
                         isMuted = true;
-                        muteImage = "./resources/textures/muted.png";
+                        muteImage = "./resources/textures/UI/muted.png";
                     }
                 }
 
@@ -443,29 +445,29 @@ public class QuimbertQuarrel {
                 DrawRectangle((GetScreenWidth() / 2) - 50, (GetScreenHeight() / 2) + 30, 100, 130, LIGHTGRAY);
                 DrawText(Integer.toString(quimbertQuantity), (GetScreenWidth() / 2) - (MeasureText(Integer.toString(quimbertQuantity), 108) / 2), (GetScreenHeight() / 2) + 45, 108, BLACK);
                 
-                Rectangle backButton = new Rectangle(25, 25, 120, 80);
+                Rectangle backButton = new Rectangle(20, 20, 120, 80);
 
                 //back button
                 if (!CheckCollisionPointRec(GetMousePosition(), backButton)) {
                     DrawRectangleRec(backButton, BLACK);
-                    DrawRectangle(35, 35, 100, 60, LIGHTGRAY);
-                    DrawLineEx(new Vector2().x(120).y(65), new Vector2().x(65).y(65), 15, BLACK);
-                    DrawTriangle(new Vector2().x(50).y(65), new Vector2().x(75).y(85), new Vector2().x(75).y(45), BLACK);
-                    DrawRectangle(145, 30, 5, 80, DARKGRAY);
-                    DrawRectangle(30, 105, 115, 5, DARKGRAY);
+                    DrawRectangle(30, 30, 100, 60, LIGHTGRAY);
+                    DrawLineEx(new Vector2().x(115).y(60), new Vector2().x(60).y(60), 15, BLACK);
+                    DrawTriangle(new Vector2().x(45).y(60), new Vector2().x(70).y(80), new Vector2().x(70).y(40), BLACK);
+                    DrawRectangle(140, 25, 5, 80, DARKGRAY);
+                    DrawRectangle(25, 100, 115, 5, DARKGRAY);
                 } else {
                     if (!IsMouseButtonDown(0)) {
+                        DrawRectangle(20, 20, 120, 80, BLACK);
+                        DrawRectangle(30, 30, 100, 60, GRAY);
+                        DrawLineEx(new Vector2().x(115).y(60), new Vector2().x(60).y(60), 15, BLACK);
+                        DrawTriangle(new Vector2().x(45).y(60), new Vector2().x(70).y(80), new Vector2().x(70).y(40), BLACK);
+                        DrawRectangle(140, 25, 5, 80, DARKGRAY);
+                        DrawRectangle(25, 100, 115, 5, DARKGRAY);
+                    } else {
                         DrawRectangle(25, 25, 120, 80, BLACK);
                         DrawRectangle(35, 35, 100, 60, GRAY);
                         DrawLineEx(new Vector2().x(120).y(65), new Vector2().x(65).y(65), 15, BLACK);
                         DrawTriangle(new Vector2().x(50).y(65), new Vector2().x(75).y(85), new Vector2().x(75).y(45), BLACK);
-                        DrawRectangle(145, 30, 5, 80, DARKGRAY);
-                        DrawRectangle(30, 105, 115, 5, DARKGRAY);
-                    } else {
-                        DrawRectangle(30, 30, 120, 80, BLACK);
-                        DrawRectangle(40, 40, 100, 60, GRAY);
-                        DrawLineEx(new Vector2().x(125).y(70), new Vector2().x(70).y(70), 15, BLACK);
-                        DrawTriangle(new Vector2().x(55).y(70), new Vector2().x(80).y(90), new Vector2().x(80).y(50), BLACK);
                     }
 
                     if (IsMouseButtonReleased(0) || IsKeyPressed(27)) {
@@ -473,26 +475,26 @@ public class QuimbertQuarrel {
                     }
                 }
 
-                Rectangle okayButton = new Rectangle((GetScreenWidth() / 2) - 105, ((GetScreenHeight() / 4) * 3) + 50, 200, 100);
+                Rectangle nextButton = new Rectangle((GetScreenWidth() / 2) - 105, ((GetScreenHeight() / 4) * 3) + 50, 200, 100);
 
-                //okay button
-                if (!CheckCollisionPointRec(GetMousePosition(), okayButton)) {
-                    DrawRectangleRec(okayButton, BLACK);
+                //next button
+                if (!CheckCollisionPointRec(GetMousePosition(), nextButton)) {
+                    DrawRectangleRec(nextButton, BLACK);
                     DrawRectangle((GetScreenWidth() / 2) - 95, ((GetScreenHeight() / 4) * 3) + 60, 180, 80, LIGHTGRAY);
                     DrawRectangle((GetScreenWidth() / 2) - 100, ((GetScreenHeight() / 4) * 3) + 150, 195, 5, DARKGRAY);
                     DrawRectangle((GetScreenWidth() / 2) + 95, ((GetScreenHeight() / 4) * 3) + 55, 5, 100, DARKGRAY);
-                    DrawText("Okay", ((GetScreenWidth() / 2) - 5) - (MeasureText("Okay", 60) / 2), ((GetScreenHeight() / 4) * 3) + 70, 60, BLACK);
+                    DrawText("Next", ((GetScreenWidth() / 2) - 5) - (MeasureText("Next", 60) / 2), ((GetScreenHeight() / 4) * 3) + 70, 60, BLACK);
                 } else {
                     if (!IsMouseButtonDown(0)) {
                         DrawRectangle((GetScreenWidth() / 2) - 105, ((GetScreenHeight() / 4) * 3) + 50, 200, 100, BLACK);
                         DrawRectangle((GetScreenWidth() / 2) - 95, ((GetScreenHeight() / 4) * 3) + 60, 180, 80, GRAY);
                         DrawRectangle((GetScreenWidth() / 2) - 100, ((GetScreenHeight() / 4) * 3) + 150, 195, 5, DARKGRAY);
                         DrawRectangle((GetScreenWidth() / 2) + 95, ((GetScreenHeight() / 4) * 3) + 55, 5, 100, DARKGRAY);
-                        DrawText("Okay", ((GetScreenWidth() / 2) - 5) - (MeasureText("Okay", 60) / 2), ((GetScreenHeight() / 4) * 3) + 70, 60, BLACK);
+                        DrawText("Next", ((GetScreenWidth() / 2) - 5) - (MeasureText("Next", 60) / 2), ((GetScreenHeight() / 4) * 3) + 70, 60, BLACK);
                     } else {
                         DrawRectangle((GetScreenWidth() / 2) - 100, ((GetScreenHeight() / 4) * 3) + 55, 200, 100, BLACK);
                         DrawRectangle((GetScreenWidth() / 2) - 90, ((GetScreenHeight() / 4) * 3) + 65, 180, 80, GRAY);
-                        DrawText("Okay", ((GetScreenWidth() / 2)) - (MeasureText("Okay", 60) / 2), ((GetScreenHeight() / 4) * 3) + 75, 60, BLACK);
+                        DrawText("Next", ((GetScreenWidth() / 2)) - (MeasureText("Next", 60) / 2), ((GetScreenHeight() / 4) * 3) + 75, 60, BLACK);
                     }
 
                     if (IsMouseButtonReleased(0) || IsKeyPressed(13)) {
@@ -591,29 +593,29 @@ public class QuimbertQuarrel {
                 BeginDrawing();
                 ClearBackground(RAYWHITE);
 
-                Rectangle backButton = new Rectangle(25, 25, 120, 80);
+                Rectangle backButton = new Rectangle(20, 20, 120, 80);
 
                 //back button
                 if (!CheckCollisionPointRec(GetMousePosition(), backButton)) {
                     DrawRectangleRec(backButton, BLACK);
-                    DrawRectangle(35, 35, 100, 60, LIGHTGRAY);
-                    DrawLineEx(new Vector2().x(120).y(65), new Vector2().x(65).y(65), 15, BLACK);
-                    DrawTriangle(new Vector2().x(50).y(65), new Vector2().x(75).y(85), new Vector2().x(75).y(45), BLACK);
-                    DrawRectangle(145, 30, 5, 80, DARKGRAY);
-                    DrawRectangle(30, 105, 115, 5, DARKGRAY);
+                    DrawRectangle(30, 30, 100, 60, LIGHTGRAY);
+                    DrawLineEx(new Vector2().x(115).y(60), new Vector2().x(60).y(60), 15, BLACK);
+                    DrawTriangle(new Vector2().x(45).y(60), new Vector2().x(70).y(80), new Vector2().x(70).y(40), BLACK);
+                    DrawRectangle(140, 25, 5, 80, DARKGRAY);
+                    DrawRectangle(25, 100, 115, 5, DARKGRAY);
                 } else {
                     if (!IsMouseButtonDown(0)) {
+                        DrawRectangle(20, 20, 120, 80, BLACK);
+                        DrawRectangle(30, 30, 100, 60, GRAY);
+                        DrawLineEx(new Vector2().x(115).y(60), new Vector2().x(60).y(60), 15, BLACK);
+                        DrawTriangle(new Vector2().x(45).y(60), new Vector2().x(70).y(80), new Vector2().x(70).y(40), BLACK);
+                        DrawRectangle(140, 25, 5, 80, DARKGRAY);
+                        DrawRectangle(25, 100, 115, 5, DARKGRAY);
+                    } else {
                         DrawRectangle(25, 25, 120, 80, BLACK);
                         DrawRectangle(35, 35, 100, 60, GRAY);
                         DrawLineEx(new Vector2().x(120).y(65), new Vector2().x(65).y(65), 15, BLACK);
                         DrawTriangle(new Vector2().x(50).y(65), new Vector2().x(75).y(85), new Vector2().x(75).y(45), BLACK);
-                        DrawRectangle(145, 30, 5, 80, DARKGRAY);
-                        DrawRectangle(30, 105, 115, 5, DARKGRAY);
-                    } else {
-                        DrawRectangle(30, 30, 120, 80, BLACK);
-                        DrawRectangle(40, 40, 100, 60, GRAY);
-                        DrawLineEx(new Vector2().x(125).y(70), new Vector2().x(70).y(70), 15, BLACK);
-                        DrawTriangle(new Vector2().x(55).y(70), new Vector2().x(80).y(90), new Vector2().x(80).y(50), BLACK);
                     }
 
                     if (IsMouseButtonReleased(0) || IsKeyPressed(27)) {
@@ -805,26 +807,26 @@ public class QuimbertQuarrel {
                 textBoxOwner.render();
                 textBoxOwner.processTextInput();
 
-                Rectangle okayButton = new Rectangle((GetScreenWidth() / 2) - 105, ((GetScreenHeight() / 4) * 3) + 50, 200, 100);
+                Rectangle nextButton = new Rectangle((GetScreenWidth() / 2) - 105, ((GetScreenHeight() / 4) * 3) + 50, 200, 100);
 
-                //okay button
-                if (!CheckCollisionPointRec(GetMousePosition(), okayButton)) {
-                    DrawRectangleRec(okayButton, BLACK);
+                //Next button
+                if (!CheckCollisionPointRec(GetMousePosition(), nextButton)) {
+                    DrawRectangleRec(nextButton, BLACK);
                     DrawRectangle((GetScreenWidth() / 2) - 95, ((GetScreenHeight() / 4) * 3) + 60, 180, 80, LIGHTGRAY);
                     DrawRectangle((GetScreenWidth() / 2) - 100, ((GetScreenHeight() / 4) * 3) + 150, 195, 5, DARKGRAY);
                     DrawRectangle((GetScreenWidth() / 2) + 95, ((GetScreenHeight() / 4) * 3) + 55, 5, 100, DARKGRAY);
-                    DrawText("Okay", ((GetScreenWidth() / 2) - 5) - (MeasureText("Okay", 60) / 2), ((GetScreenHeight() / 4) * 3) + 70, 60, BLACK);
+                    DrawText("Next", ((GetScreenWidth() / 2) - 5) - (MeasureText("Next", 60) / 2), ((GetScreenHeight() / 4) * 3) + 70, 60, BLACK);
                 } else {
                     if (!IsMouseButtonDown(0)) {
                         DrawRectangle((GetScreenWidth() / 2) - 105, ((GetScreenHeight() / 4) * 3) + 50, 200, 100, BLACK);
                         DrawRectangle((GetScreenWidth() / 2) - 95, ((GetScreenHeight() / 4) * 3) + 60, 180, 80, GRAY);
                         DrawRectangle((GetScreenWidth() / 2) - 100, ((GetScreenHeight() / 4) * 3) + 150, 195, 5, DARKGRAY);
                         DrawRectangle((GetScreenWidth() / 2) + 95, ((GetScreenHeight() / 4) * 3) + 55, 5, 100, DARKGRAY);
-                        DrawText("Okay", ((GetScreenWidth() / 2) - 5) - (MeasureText("Okay", 60) / 2), ((GetScreenHeight() / 4) * 3) + 70, 60, BLACK);
+                        DrawText("Next", ((GetScreenWidth() / 2) - 5) - (MeasureText("Next", 60) / 2), ((GetScreenHeight() / 4) * 3) + 70, 60, BLACK);
                     } else {
                         DrawRectangle((GetScreenWidth() / 2) - 100, ((GetScreenHeight() / 4) * 3) + 55, 200, 100, BLACK);
                         DrawRectangle((GetScreenWidth() / 2) - 90, ((GetScreenHeight() / 4) * 3) + 65, 180, 80, GRAY);
-                        DrawText("Okay", ((GetScreenWidth() / 2)) - (MeasureText("Okay", 60) / 2), ((GetScreenHeight() / 4) * 3) + 75, 60, BLACK);
+                        DrawText("Next", ((GetScreenWidth() / 2)) - (MeasureText("Next", 60) / 2), ((GetScreenHeight() / 4) * 3) + 75, 60, BLACK);
                     }
                 
                     if (IsMouseButtonReleased(0) || IsKeyPressed(13)) {
@@ -849,213 +851,34 @@ public class QuimbertQuarrel {
                     }
                 }
                 
-                /*
-                System.out.print(newLine + "Quimbert #" + (i + 1) + ": " + newLine + "Name: ");
-                g = action.nextLine();
-
-                System.out.print(newLine + "Owner: ");
-                h = action.nextLine();
-
-                System.out.print(newLine + "Color: ");
-                c = action.nextLine();
-
-                System.out.println(newLine + "You have " + points + " points to spend on the following stats: " +
-                newLine + "Looks: helps with health" + newLine + "Smell: helps with sniff" + newLine + "Personality: helps with blocking" + 
-                newLine + "Gumption: helps with successful item use" + newLine + "Length: helps with damage when using attack" + 
-                newLine + newLine + "How many points would you like to spend your looks? Maximum 10 per stat.");
-
-                while(!n)
-                {
-                    try
-                    {
-                        a = Integer.valueOf(action.nextLine());
-                        n = true;
-                    }
-                    catch(Exception q)
-                    {
-                        System.out.println(newLine + "Invalid quantity of points assaigned. Please try again.");
-                    }
-                }
-                n = false;
-
-                if (a > 10)
-                {
-                    a = 10;
-                }
-                if (a < 0)
-                {
-                    a = 0;
-                }
-                if (a > points)
-                {
-                    a = points;
-                }
-                points -= a;
-
-                System.out.println(newLine + a + " points awarded to looks! " + points + " points remaining." + newLine + 
-                newLine + "How many points would you like to spend on your smell (sniffing ability not scent)?");
-
-                while(!n)
-                {
-                    try
-                    {
-                        b = Integer.valueOf(action.nextLine());
-                        n = true;
-                    }
-                    catch(Exception q)
-                    {
-                        System.out.println(newLine + "Invalid quantity of points assaigned. Please try again.");
-                    }
-                }
-                n = false;
-
-                if (b > 10)
-                {
-                    b = 10;
-                }
-                if (b < 0)
-                {
-                    b = 0;
-                }
-                if (b > points)
-                {
-                    b = points;
-                }
-                points -= b;
-
-                System.out.println(newLine + b + " points awarded to smell! " + points + " points remaining." + newLine + newLine + 
-                "How many points would you like to spend on your personality?");
-
-                while(!n)
-                {
-                    try
-                    {
-                        d = Integer.valueOf(action.nextLine());
-                        n = true;
-                    }
-                    catch(Exception q)
-                    {
-                        System.out.println(newLine + "Invalid quantity of points assaigned. Please try again.");
-                    }
-                }
-                n = false;
-
-                if (d > 10)
-                {
-                    d = 10;
-                }
-                if (d < 0)
-                {
-                    d = 0;
-                }
-                if (d > points)
-                {
-                    d = points;
-                }
-                points -= d;
-
-                System.out.println(newLine + d + " points awarded to personality! " + points + " points remaining." + newLine +
-                newLine + "How many points would you like to spend on your gumption?");
-
-                while(!n)
-                {
-                    try
-                    {
-                        e = Integer.valueOf(action.nextLine());
-                        n = true;
-                    }
-                    catch(Exception q)
-                    {
-                        System.out.println(newLine + "Invalid quantity of points assaigned. Please try again.");
-                    }
-                }
-                n = false;
-
-                if (e > 10)
-                {
-                    e = 10;
-                }
-                if (e < 0)
-                {
-                    e = 0;
-                }
-                if (e > points)
-                {
-                    e = points;
-                }
-                points -= e;
-
-                System.out.println(newLine + e + " points awarded to gumption! " + points + " points remaining." + newLine + 
-                newLine + "How many points would you like to spend on your length?");
-
-                while(!n)
-                {
-                    try
-                    {
-                        f = Integer.valueOf(action.nextLine());
-                        n = true;
-                    }
-                    catch(Exception q)
-                    {
-                        System.out.println(newLine + "Invalid quantity of points assaigned. Please try again.");
-                    }
-                }
-                n = false;
-
-                if (f > 10)
-                {
-                    f = 10;
-                }
-                if (f < 0)
-                {
-                    f = 0;
-                }
-                if (f > points)
-                {
-                    f = points;
-                }
-                points -= f;
-
-                System.out.println(newLine + f + " points awarded to length! " + points + " points remaining." + newLine);
-
-                quimberts.add(new Quimbert(a, b, c, d, e, f, g, h));
-
-                quimberts.get(i).startingHealth = (randInt(3, 5) * quimberts.get(i).looks) / 2;
-                quimberts.get(i).health = quimberts.get(i).startingHealth;
-                
-                if (quimberts.get(i).health < 1)
-                {
-                    quimberts.get(i).health += 1;
-                    quimberts.get(i).startingHealth += 1;
-                }
-                */
-                
             } else if (layout.equals("createQuimbert2")) {
                 BeginDrawing();
                 ClearBackground(RAYWHITE);
 
 
-                Rectangle okayButton = new Rectangle((GetScreenWidth() / 2) - 105, ((GetScreenHeight() / 4) * 3) + 50, 200, 100);
+                Rectangle createButton = new Rectangle(GetScreenWidth() - 225, 20, 200, 100);
 
-
-                //okay button
-                if (!CheckCollisionPointRec(GetMousePosition(), okayButton)) {
-                    DrawRectangleRec(okayButton, BLACK);
-                    DrawRectangle((GetScreenWidth() / 2) - 95, ((GetScreenHeight() / 4) * 3) + 60, 180, 80, LIGHTGRAY);
-                    DrawRectangle((GetScreenWidth() / 2) - 100, ((GetScreenHeight() / 4) * 3) + 150, 195, 5, DARKGRAY);
-                    DrawRectangle((GetScreenWidth() / 2) + 95, ((GetScreenHeight() / 4) * 3) + 55, 5, 100, DARKGRAY);
-                    DrawText("Okay", ((GetScreenWidth() / 2) - 5) - (MeasureText("Okay", 60) / 2), ((GetScreenHeight() / 4) * 3) + 70, 60, BLACK);
+                //Create Quimbert button
+                if (!CheckCollisionPointRec(GetMousePosition(), createButton)) {
+                    DrawRectangleRec(createButton, BLACK);
+                    DrawRectangle(GetScreenWidth() - 215, 30, 180, 80, LIGHTGRAY);
+                    DrawRectangle(GetScreenWidth() - 220, 120, 195, 5, DARKGRAY);
+                    DrawRectangle(GetScreenWidth() - 25, 25, 5, 100, DARKGRAY);
+                    DrawText("Create", (GetScreenWidth() - 125) - (MeasureText("Create", 36) / 2), 35, 36, BLACK);
+                    DrawText("Quimbert", (GetScreenWidth() - 125) - (MeasureText("Quimbert", 36) / 2), 65, 36, BLACK);
                 } else {
                     if (!IsMouseButtonDown(0)) {
-                        DrawRectangle((GetScreenWidth() / 2) - 105, ((GetScreenHeight() / 4) * 3) + 50, 200, 100, BLACK);
-                        DrawRectangle((GetScreenWidth() / 2) - 95, ((GetScreenHeight() / 4) * 3) + 60, 180, 80, GRAY);
-                        DrawRectangle((GetScreenWidth() / 2) - 100, ((GetScreenHeight() / 4) * 3) + 150, 195, 5, DARKGRAY);
-                        DrawRectangle((GetScreenWidth() / 2) + 95, ((GetScreenHeight() / 4) * 3) + 55, 5, 100, DARKGRAY);
-                        DrawText("Okay", ((GetScreenWidth() / 2) - 5) - (MeasureText("Okay", 60) / 2), ((GetScreenHeight() / 4) * 3) + 70, 60, BLACK);
+                        DrawRectangleRec(createButton, BLACK);
+                        DrawRectangle(GetScreenWidth() - 215, 30, 180, 80, GRAY);
+                        DrawRectangle(GetScreenWidth() - 220, 120, 195, 5, DARKGRAY);
+                        DrawRectangle(GetScreenWidth() - 25, 25, 5, 100, DARKGRAY);
+                        DrawText("Create", (GetScreenWidth() - 125) - (MeasureText("Create", 36) / 2), 35, 36, BLACK);
+                        DrawText("Quimbert", (GetScreenWidth() - 125) - (MeasureText("Quimbert", 36) / 2), 65, 36, BLACK);
                     } else {
-                        DrawRectangle((GetScreenWidth() / 2) - 100, ((GetScreenHeight() / 4) * 3) + 55, 200, 100, BLACK);
-                        DrawRectangle((GetScreenWidth() / 2) - 90, ((GetScreenHeight() / 4) * 3) + 65, 180, 80, GRAY);
-                        DrawText("Okay", ((GetScreenWidth() / 2)) - (MeasureText("Okay", 60) / 2), ((GetScreenHeight() / 4) * 3) + 75, 60, BLACK);
+                        DrawRectangle(GetScreenWidth() - 220, 25, 200, 100, BLACK);
+                        DrawRectangle(GetScreenWidth() - 210, 35, 180, 80, GRAY);
+                        DrawText("Create", (GetScreenWidth() - 120) - (MeasureText("Create", 36) / 2), 40, 36, BLACK);
+                        DrawText("Quimbert", (GetScreenWidth() - 120) - (MeasureText("Quimbert", 36) / 2), 70, 36, BLACK);
                     }
 
                     if (IsMouseButtonReleased(0) || IsKeyPressed(13)) {
@@ -1110,33 +933,29 @@ public class QuimbertQuarrel {
                     }
                 }
 
-            
-
-
-
-                Rectangle backButton = new Rectangle(25, 25, 120, 80);
+                Rectangle backButton = new Rectangle(20, 20, 120, 80);
 
                 //back button
                 if (!CheckCollisionPointRec(GetMousePosition(), backButton)) {
                     DrawRectangleRec(backButton, BLACK);
-                    DrawRectangle(35, 35, 100, 60, LIGHTGRAY);
-                    DrawLineEx(new Vector2().x(120).y(65), new Vector2().x(65).y(65), 15, BLACK);
-                    DrawTriangle(new Vector2().x(50).y(65), new Vector2().x(75).y(85), new Vector2().x(75).y(45), BLACK);
-                    DrawRectangle(145, 30, 5, 80, DARKGRAY);
-                    DrawRectangle(30, 105, 115, 5, DARKGRAY);
+                    DrawRectangle(30, 30, 100, 60, LIGHTGRAY);
+                    DrawLineEx(new Vector2().x(115).y(60), new Vector2().x(60).y(60), 15, BLACK);
+                    DrawTriangle(new Vector2().x(45).y(60), new Vector2().x(70).y(80), new Vector2().x(70).y(40), BLACK);
+                    DrawRectangle(140, 25, 5, 80, DARKGRAY);
+                    DrawRectangle(25, 100, 115, 5, DARKGRAY);
                 } else {
                     if (!IsMouseButtonDown(0)) {
+                        DrawRectangle(20, 20, 120, 80, BLACK);
+                        DrawRectangle(30, 30, 100, 60, GRAY);
+                        DrawLineEx(new Vector2().x(115).y(60), new Vector2().x(60).y(60), 15, BLACK);
+                        DrawTriangle(new Vector2().x(45).y(60), new Vector2().x(70).y(80), new Vector2().x(70).y(40), BLACK);
+                        DrawRectangle(140, 25, 5, 80, DARKGRAY);
+                        DrawRectangle(25, 100, 115, 5, DARKGRAY);
+                    } else {
                         DrawRectangle(25, 25, 120, 80, BLACK);
                         DrawRectangle(35, 35, 100, 60, GRAY);
                         DrawLineEx(new Vector2().x(120).y(65), new Vector2().x(65).y(65), 15, BLACK);
                         DrawTriangle(new Vector2().x(50).y(65), new Vector2().x(75).y(85), new Vector2().x(75).y(45), BLACK);
-                        DrawRectangle(145, 30, 5, 80, DARKGRAY);
-                        DrawRectangle(30, 105, 115, 5, DARKGRAY);
-                    } else {
-                        DrawRectangle(30, 30, 120, 80, BLACK);
-                        DrawRectangle(40, 40, 100, 60, GRAY);
-                        DrawLineEx(new Vector2().x(125).y(70), new Vector2().x(70).y(70), 15, BLACK);
-                        DrawTriangle(new Vector2().x(55).y(70), new Vector2().x(80).y(90), new Vector2().x(80).y(50), BLACK);
                     }
 
                     if (IsMouseButtonReleased(0) || IsKeyPressed(27)) {
