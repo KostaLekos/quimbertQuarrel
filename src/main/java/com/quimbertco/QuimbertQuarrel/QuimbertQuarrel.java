@@ -11,22 +11,21 @@ path = ("D:\Registries\microsoft-jdk-21.0.4-windows-x64\jdk-21.0.4+7\bin;D:\Regi
 
 D:\Apps\git\Git\bin\git.exe
 
- * git pull
- * 
- * git add <changed files>
- * git commit -m "message"
- * 
- * git pull --rebase
- * 
- * git push --set-upstream origin main (only do set upstream if first time you run)
- * 
- * to esc from weird console app thing
- * 
- * i
- * enter
- * :wq
- */
+git pull
 
+git add <changed files>
+git commit -m "message"
+
+git pull --rebase
+
+git push --set-upstream origin main (only do set upstream if first time you run)
+
+to esc from weird console app thing
+
+i
+enter
+:wq
+*/
 
 /*
 compile it: cmd +
@@ -34,6 +33,7 @@ compile it: cmd +
 run it: cmd +
 "D:\Registries\java\bin\java.exe" -cp .\lib\jaylib-5.0.0-0.jar;. QuimbertQuarrel
 */
+
 public class QuimbertQuarrel {
     private static int randInt(int min, int max) {
         Random rand = new Random();
