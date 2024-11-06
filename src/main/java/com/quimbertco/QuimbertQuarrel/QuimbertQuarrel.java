@@ -1,8 +1,60 @@
 package com.quimbertco.QuimbertQuarrel;
 import java.util.Scanner;
+
+import com.raylib.Jaylib.Color;
+import com.raylib.Jaylib.Rectangle;
+import com.raylib.Jaylib.Vector2;
+import com.raylib.Raylib.Camera2D;
+import com.raylib.Raylib.Image;
+import com.raylib.Raylib.Music;
+import com.raylib.Raylib.Texture;
+
 import java.util.Random;
 import java.util.ArrayList;
 import static com.raylib.Jaylib.*;
+import static com.raylib.Raylib.BeginDrawing;
+import static com.raylib.Raylib.CheckCollisionPointRec;
+import static com.raylib.Raylib.ClearBackground;
+import static com.raylib.Raylib.CloseAudioDevice;
+import static com.raylib.Raylib.CloseWindow;
+import static com.raylib.Raylib.DrawFPS;
+import static com.raylib.Raylib.DrawLineEx;
+import static com.raylib.Raylib.DrawRectangle;
+import static com.raylib.Raylib.DrawRectangleRec;
+import static com.raylib.Raylib.DrawText;
+import static com.raylib.Raylib.DrawTexture;
+import static com.raylib.Raylib.DrawTriangle;
+import static com.raylib.Raylib.EndDrawing;
+import static com.raylib.Raylib.FLAG_WINDOW_MAXIMIZED;
+import static com.raylib.Raylib.FLAG_WINDOW_RESIZABLE;
+import static com.raylib.Raylib.GetKeyPressed;
+import static com.raylib.Raylib.GetMonitorHeight;
+import static com.raylib.Raylib.GetMonitorWidth;
+import static com.raylib.Raylib.GetMousePosition;
+import static com.raylib.Raylib.GetScreenHeight;
+import static com.raylib.Raylib.GetScreenWidth;
+import static com.raylib.Raylib.ImageCrop;
+import static com.raylib.Raylib.InitAudioDevice;
+import static com.raylib.Raylib.InitWindow;
+import static com.raylib.Raylib.IsKeyPressed;
+import static com.raylib.Raylib.IsMouseButtonDown;
+import static com.raylib.Raylib.IsMouseButtonReleased;
+import static com.raylib.Raylib.LoadImage;
+import static com.raylib.Raylib.LoadMusicStream;
+import static com.raylib.Raylib.LoadTextureFromImage;
+import static com.raylib.Raylib.MaximizeWindow;
+import static com.raylib.Raylib.MeasureText;
+import static com.raylib.Raylib.PlayMusicStream;
+import static com.raylib.Raylib.SetConfigFlags;
+import static com.raylib.Raylib.SetMusicVolume;
+import static com.raylib.Raylib.SetTargetFPS;
+import static com.raylib.Raylib.SetWindowMaxSize;
+import static com.raylib.Raylib.SetWindowMinSize;
+import static com.raylib.Raylib.SetWindowPosition;
+import static com.raylib.Raylib.UnloadImage;
+import static com.raylib.Raylib.UnloadMusicStream;
+import static com.raylib.Raylib.UpdateMusicStream;
+import static com.raylib.Raylib.WindowShouldClose;
 
 /*
 src\main\java\com\quimbertco\QuimbertQuarrel\
@@ -1096,6 +1148,8 @@ public class QuimbertQuarrel {
                 posx = GetScreenWidth() / 2;
 
                 DrawText("Points: " + points, posx - (MeasureText("Points:  ", 72) / 2), 20, 72, BLACK);
+                
+            } else if (layout.equals("game")) {
                 
             }
 
