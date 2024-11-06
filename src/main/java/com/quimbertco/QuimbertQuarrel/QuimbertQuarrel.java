@@ -856,81 +856,84 @@ public class QuimbertQuarrel {
                 ClearBackground(RAYWHITE);
 
 
-                Rectangle createButton = new Rectangle(GetScreenWidth() - 225, 20, 200, 100);
+                Rectangle doneButton = new Rectangle(GetScreenWidth() - 175, 20, 150, 80);
 
                 //Create Quimbert button
-                if (!CheckCollisionPointRec(GetMousePosition(), createButton)) {
-                    DrawRectangleRec(createButton, BLACK);
-                    DrawRectangle(GetScreenWidth() - 215, 30, 180, 80, LIGHTGRAY);
-                    DrawRectangle(GetScreenWidth() - 220, 120, 195, 5, DARKGRAY);
-                    DrawRectangle(GetScreenWidth() - 25, 25, 5, 100, DARKGRAY);
-                    DrawText("Create", (GetScreenWidth() - 125) - (MeasureText("Create", 36) / 2), 35, 36, BLACK);
-                    DrawText("Quimbert", (GetScreenWidth() - 125) - (MeasureText("Quimbert", 36) / 2), 65, 36, BLACK);
-                } else {
-                    if (!IsMouseButtonDown(0)) {
-                        DrawRectangleRec(createButton, BLACK);
-                        DrawRectangle(GetScreenWidth() - 215, 30, 180, 80, GRAY);
-                        DrawRectangle(GetScreenWidth() - 220, 120, 195, 5, DARKGRAY);
-                        DrawRectangle(GetScreenWidth() - 25, 25, 5, 100, DARKGRAY);
-                        DrawText("Create", (GetScreenWidth() - 125) - (MeasureText("Create", 36) / 2), 35, 36, BLACK);
-                        DrawText("Quimbert", (GetScreenWidth() - 125) - (MeasureText("Quimbert", 36) / 2), 65, 36, BLACK);
+                if (points < 1)) {
+                    if (!CheckCollisionPointRec(GetMousePosition(), doneButton)) {
+                        DrawRectangleRec(doneButton, BLACK);
+                        DrawRectangle(GetScreenWidth() - 165, 30, 130, 60, LIGHTGRAY);
+                        DrawRectangle(GetScreenWidth() - 170, 100, 145, 5, DARKGRAY);
+                        DrawRectangle(GetScreenWidth() - 25, 25, 5, 80, DARKGRAY);
+                        DrawText("Done", (GetScreenWidth() - 85) - (MeasureText("Done", 60) / 2), 37, 48, BLACK);
                     } else {
-                        DrawRectangle(GetScreenWidth() - 220, 25, 200, 100, BLACK);
-                        DrawRectangle(GetScreenWidth() - 210, 35, 180, 80, GRAY);
-                        DrawText("Create", (GetScreenWidth() - 120) - (MeasureText("Create", 36) / 2), 40, 36, BLACK);
-                        DrawText("Quimbert", (GetScreenWidth() - 120) - (MeasureText("Quimbert", 36) / 2), 70, 36, BLACK);
-                    }
+                        if (!IsMouseButtonDown(0)) {
+                            DrawRectangleRec(doneButton, BLACK);
+                            DrawRectangle(GetScreenWidth() - 165, 30, 130, 60, GRAY);
+                            DrawRectangle(GetScreenWidth() - 170, 100, 145, 5, DARKGRAY);
+                            DrawRectangle(GetScreenWidth() - 25, 25, 5, 80, DARKGRAY);
+                            DrawText("Done", (GetScreenWidth() - 85) - (MeasureText("Done", 60) / 2), 37, 48, BLACK);
+                        } else {
+                            DrawRectangle(GetScreenWidth() - 170, 25, 150, 80, BLACK);
+                            DrawRectangle(GetScreenWidth() - 160, 35, 130, 60, GRAY);
+                            DrawText("Done", (GetScreenWidth() - 80) - (MeasureText("Done", 60) / 2), 42, 48, BLACK);
+                        }
 
-                    if (IsMouseButtonReleased(0) || IsKeyPressed(13)) {
-                        if (points == 0 && makingQuimbert + 1 <= quimbertQuantity) {
-                            if (makingQuimbert + 1 <= quimbertQuantity) {
-                                quimberts.add(new Quimbert(a, b, c, d, e, f, g, h));
-                                quimberts.get(makingQuimbert).startingHealth = (randInt(3, 5) * quimberts.get(makingQuimbert).looks) / 2;
-                                quimberts.get(makingQuimbert).health = quimberts.get(makingQuimbert).startingHealth;
+                        if (IsMouseButtonReleased(0) || IsKeyPressed(13)) {
+                            if (points == 0 && makingQuimbert + 1 <= quimbertQuantity) {
+                                if (makingQuimbert + 1 <= quimbertQuantity) {
+                                    quimberts.add(new Quimbert(a, b, c, d, e, f, g, h));
+                                    quimberts.get(makingQuimbert).startingHealth = (randInt(3, 5) * quimberts.get(makingQuimbert).looks) / 2;
+                                    quimberts.get(makingQuimbert).health = quimberts.get(makingQuimbert).startingHealth;
 
-                                if (quimberts.get(makingQuimbert).health < 1) {
-                                    quimberts.get(makingQuimbert).health++;
-                                    quimberts.get(makingQuimbert).startingHealth++;
+                                    if (quimberts.get(makingQuimbert).health < 1) {
+                                        quimberts.get(makingQuimbert).health++;
+                                        quimberts.get(makingQuimbert).startingHealth++;
+                                    }
+
+                                    sColor1 = OFFWHITE;
+                                    sColor2 = WHITE;
+
+                                    if (c == "Red") {
+                                        color0Taken = true;
+                                    } else if (c == "Orange") {
+                                        color1Taken = true;
+                                    } else if (c == "Yellow") {
+                                        color2Taken = true;
+                                    } else if (c == "Green") {
+                                        color3Taken = true;
+                                    } else if (c == "Light Blue") {
+                                        color4Taken = true;
+                                    } else if (c == "Blue") {
+                                        color5Taken = true;
+                                    } else if (c == "Purple") {
+                                        color6Taken = true;
+                                    } else if (c == "Black") {
+                                        color7Taken = true;
+                                    } else if (c == "Gray") {
+                                        color8Taken = true;
+                                    } else if (c == "Pink") {
+                                        color9Taken = true;
+                                    }
+
+                                    a = 0; b = 0; d = 0; c = ""; e = 0; f = 0; g = ""; h = "";
+                                    textBoxName.clear();
+                                    textBoxOwner.clear();
+                                    points = randInt(25, 35);
+                                    if (makingQuimbert + 1 < quimbertQuantity) {
+                                        layout = "createQuimbert";
+                                    } else {
+                                        break; // REMOVE: temporary, replace with ```layout = "fightLayout"``` or equivilent when implemented
+                                    }
+                                    makingQuimbert++;
                                 }
-                                
-                                sColor1 = OFFWHITE;
-                                sColor2 = WHITE;
-
-                                if (c == "Red") {
-                                    color0Taken = true;
-                                } else if (c == "Orange") {
-                                    color1Taken = true;
-                                } else if (c == "Yellow") {
-                                    color2Taken = true;
-                                } else if (c == "Green") {
-                                    color3Taken = true;
-                                } else if (c == "Light Blue") {
-                                    color4Taken = true;
-                                } else if (c == "Blue") {
-                                    color5Taken = true;
-                                } else if (c == "Purple") {
-                                    color6Taken = true;
-                                } else if (c == "Black") {
-                                    color7Taken = true;
-                                } else if (c == "Gray") {
-                                    color8Taken = true;
-                                } else if (c == "Pink") {
-                                    color9Taken = true;
-                                }
-
-                                a = 0; b = 0; d = 0; c = ""; e = 0; f = 0; g = ""; h = "";
-                                textBoxName.clear();
-                                textBoxOwner.clear();
-                                points = randInt(25, 35);
-                                if (makingQuimbert + 1 < quimbertQuantity) {
-                                    layout = "createQuimbert";
-                                } else {
-                                    break; // REMOVE: temporary, replace with ```layout = "fightLayout"``` or equivilent when implemented
-                                }
-                                makingQuimbert++;
                             }
                         }
                     }
+                } else {
+                    DrawRectangle(GetScreenWidth() - 170, 25, 150, 80, BLACK);
+                    DrawRectangle(GetScreenWidth() - 160, 35, 130, 60, DARKGRAY);
+                    DrawText("Done", (GetScreenWidth() - 80) - (MeasureText("Done", 60) / 2), 42, 48, BLACK);
                 }
 
                 Rectangle backButton = new Rectangle(20, 20, 120, 80);
