@@ -61,7 +61,7 @@ src\main\java\com\quimbertco\QuimbertQuarrel\
 
 path = ("D:\Registries\microsoft-jdk-21.0.4-windows-x64\jdk-21.0.4+7\bin;D:\Registries\apache-maven-3.9.9-bin\apache-maven-3.9.9\bin;D:\Apps\w64devkit\w64devkit\bin;D:\Registries\git\Git\bin;$env:path")
 
-D:\Apps\git\Git\bin\git.exe
+D:\Registries\git\Git\bin\git.exe
 
 git pull
 
@@ -321,7 +321,6 @@ public class QuimbertQuarrel {
         }
         return numToIncrement;
     }
-
     
     public static void main(String[] args) {
         Scanner action = new Scanner(System.in);
@@ -395,6 +394,17 @@ public class QuimbertQuarrel {
         boolean color8Taken = false;
         boolean color9Taken = false;
         boolean needColor = false;
+        boolean isEnabled = true;
+        
+        Image info1 = LoadImage("./resources/textures/UI/infoButton1.png");
+        Image info2 = LoadImage("./resources/textures/UI/infoButton2.png");
+        Image info3 = LoadImage("./resources/textures/UI/infoButton3.png");
+        Texture infoButton1 = LoadTextureFromImage(info1);
+        Texture infoButton2 = LoadTextureFromImage(info2);
+        Texture infoButton3 = LoadTextureFromImage(info3);
+        UnloadImage(info1);
+        UnloadImage(info2);
+        UnloadImage(info3);
 
         SetConfigFlags(FLAG_WINDOW_RESIZABLE | FLAG_WINDOW_MAXIMIZED);
 
@@ -522,7 +532,7 @@ public class QuimbertQuarrel {
                         DrawTriangle(new Vector2().x(50).y(65), new Vector2().x(75).y(85), new Vector2().x(75).y(45), BLACK);
                     }
 
-                    if (IsMouseButtonReleased(0) || IsKeyPressed(27)) {
+                    if (IsMouseButtonReleased(0)) {
                         layout = "start";
                     }
                 }
@@ -549,7 +559,7 @@ public class QuimbertQuarrel {
                         DrawText("Next", ((GetScreenWidth() / 2)) - (MeasureText("Next", 60) / 2), ((GetScreenHeight() / 4) * 3) + 75, 60, BLACK);
                     }
 
-                    if (IsMouseButtonReleased(0) || IsKeyPressed(13)) {
+                    if (IsMouseButtonReleased(0)) {
                         layout = "createQuimbert";
                     }
                 }
@@ -670,7 +680,7 @@ public class QuimbertQuarrel {
                         DrawTriangle(new Vector2().x(50).y(65), new Vector2().x(75).y(85), new Vector2().x(75).y(45), BLACK);
                     }
 
-                    if (IsMouseButtonReleased(0) || IsKeyPressed(27)) {
+                    if (IsMouseButtonReleased(0)) {
                         layout = "howManyQ";
                     }    
                 }
@@ -881,7 +891,7 @@ public class QuimbertQuarrel {
                         DrawText("Next", ((GetScreenWidth() / 2)) - (MeasureText("Next", 60) / 2), ((GetScreenHeight() / 4) * 3) + 75, 60, BLACK);
                     }
                 
-                    if (IsMouseButtonReleased(0) || IsKeyPressed(13)) {
+                    if (IsMouseButtonReleased(0)) {
                         if (textBoxName.getText().length() > 0 && textBoxOwner.getText().length() > 0 && sColor1 != OFFWHITE) {
                             g = textBoxName.getText();
                             h = textBoxOwner.getText();
@@ -911,7 +921,7 @@ public class QuimbertQuarrel {
                 Rectangle doneButton = new Rectangle(GetScreenWidth() - 175, 20, 150, 80);
 
                 //Create Quimbert button
-                if (points < 1)) {
+                if (points < 1) {
                     if (!CheckCollisionPointRec(GetMousePosition(), doneButton)) {
                         DrawRectangleRec(doneButton, BLACK);
                         DrawRectangle(GetScreenWidth() - 165, 30, 130, 60, LIGHTGRAY);
@@ -931,7 +941,7 @@ public class QuimbertQuarrel {
                             DrawText("Done", (GetScreenWidth() - 80) - (MeasureText("Done", 60) / 2), 42, 48, BLACK);
                         }
 
-                        if (IsMouseButtonReleased(0) || IsKeyPressed(13)) {
+                        if (IsMouseButtonReleased(0)) {
                             if (points == 0 && makingQuimbert + 1 <= quimbertQuantity) {
                                 if (makingQuimbert + 1 <= quimbertQuantity) {
                                     quimberts.add(new Quimbert(a, b, c, d, e, f, g, h));
@@ -1013,7 +1023,7 @@ public class QuimbertQuarrel {
                         DrawTriangle(new Vector2().x(50).y(65), new Vector2().x(75).y(85), new Vector2().x(75).y(45), BLACK);
                     }
 
-                    if (IsMouseButtonReleased(0) || IsKeyPressed(27)) {
+                    if (IsMouseButtonReleased(0)) {
                         layout = "createQuimbert";
                     }    
                 }
@@ -1026,9 +1036,30 @@ public class QuimbertQuarrel {
 
                 // plus and minus buttons for a, / looks
                 int aOld = a;
-                DrawText("Looks: ", posx + 40 - (MeasureText("Looks: ", 72) / 2),  + posy - 55, 72, BLACK);
+                DrawText("Looks: ", posx + 40 - (MeasureText("Looks: ", 72) / 2), posy - 55, 72, BLACK);
                 a = drawPlus(new Rectangle(70 + posx, 40 + posy, 100, 100), posx, posy, (a > 9 || points < 1), a, 10, false);
                 DrawText("" + a, posx + 18 - (MeasureText(Integer.toString(a), 72) / 2),  + posy + 55, 72, BLACK);
+            
+                    Rectangle infoCollider = new Rectangle(posx + 165, posy - 55, 64, 64);
+                    
+                    if (isEnabled) {
+                        DrawTexture(infoButton3, posx + 165, posy - 55, WHITE);
+                        
+                        if (!CheckCollisionPointRec(GetMousePosition(), infoCollider) && IsMouseButtonReleased(0)) {
+                            isEnabled = false;
+                        }
+            
+                    } else {
+                        if (!CheckCollisionPointRec(GetMousePosition(), infoCollider)) {
+                            DrawTexture(infoButton1, posx + 165, posy - 55, WHITE);
+                        } else {
+                            DrawTexture(infoButton2, posx + 165, posy - 55, WHITE);
+            
+                            if (IsMouseButtonReleased(0)) {
+                                isEnabled = true;
+                            }
+                        }
+                    }
 
                 posx -= 210;
                 a = drawPlus(new Rectangle(70 + posx, 40 + posy, 100, 100), posx, posy, (a < 1), a, 0, true);
