@@ -4,7 +4,6 @@
 
 #include <string>
 #include <random>
-#include <vector>
 
 static std::mt19937_64::result_type randInt( int min, int max ) {
     std::random_device randomDev;
@@ -29,8 +28,5 @@ int main( int argc, char** argv, char** envv ) {
 
 
 
-    while(!WindowShouldClose()) {
-
-    }
 
 }

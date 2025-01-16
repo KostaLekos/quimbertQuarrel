@@ -7,7 +7,11 @@ me no like you
 
 # KOSTA MUST KNOWS
 
-
+- Know how headers and source files work
+- Learn c++ standard library
+- Learn c++ build process
+- Learn c++ class semantics
+- Learn c++ in general
 
 
 # BUILD
@@ -47,28 +51,28 @@ You will also need to run `git submodule init` and `git submodule update` if thi
 If you are cloning for the first time clone with `git clone --recurse-submodules https://github.com/HairyJade/quimbertquarrel`
 
 ## TODO
-- [x] Wrote quimbert.hpp
-- [ ] Write quimbert.cpp
-- - [x] Write Quimbert() 
-- - [x] Write randInt()
-- - [ ] Write sniff()
-- - [ ] Write block()
-- - [ ] Write getInventory()
-- - [ ] Write getHealth()
-- - [ ] Write infoOfItem()
-- - [ ] Write useItem()
-- - [ ] Write getStatsString()
-- - [ ] Write getStat()
-- [ ] Write textbox.hpp
-- [ ] Write textbox.cpp
-- [ ] Write main.cpp
-- - [x] Write randInt()
-- - [ ] Write drawButtonText()
-- - [ ] Write drawButtonColor()
-- - [ ] Write drawButtomImage()
-- - [ ] Write isLetterPressed()
-- - [ ] Write drawPlus()
-- - [ ] Write main()
-- [ ] Finish game
+- - [x] Wrote quimbert.hpp
+- - [ ] Write quimbert.cpp
+- - - [x] Write Quimbert() 
+- - - [x] Write randInt()
+- - - [ ] Write sniff()
+- - - [ ] Write block()
+- - - [ ] Write getInventory()
+- - - [ ] Write getHealth()
+- - - [ ] Write infoOfItem()
+- - - [ ] Write useItem()
+- - - [ ] Write getStatsString()
+- - - [ ] Write getStat()
+- - [ ] Write textbox.hpp
+- - [ ] Write textbox.cpp
+- - [ ] Write main.cpp
+- - - [x] Write randInt()
+- - - [ ] Write drawButtonText()
+- - - [ ] Write drawButtonColor()
+- - - [ ] Write drawButtomImage()
+- - - [ ] Write isLetterPressed()
+- - - [ ] Write drawPlus()
+- - - [ ] Write main()
+- - [ ] Finish game
 
 ## DONE
