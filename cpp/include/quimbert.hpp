@@ -12,13 +12,15 @@ public:
     
     /*
     ** Sniff gets an item and adds it to your inventory, or fails and does nothing
+    ** Returns true on sniff succeed, returns false on sniff fail
     */
-    std::string sniff();
+    bool sniff();
 
     /*
-    ** Block attack?
+    ** Gains a block or 2 or none
+    ** Returns number of blocks gained
     */
-    void block();
+    int gainBlock();
 
     /*
     ** Return inventory
@@ -38,7 +40,7 @@ public:
     /*
     ** Use an item from your inventory
     */
-    void useItem( std::string item );
+    bool useItem( std::string item );
 
     /*
     ** Get a string with your current stats
@@ -60,30 +62,30 @@ private:
     /*
     ** Point affected stats
     */
-    int looks;
-    int smell;
-    std::string color;
-    int personality;
-    int gumption;
-    int length;
-    std::string name;
-    std::string owner;
+    int _looks;
+    int _smell;
+    std::string _color;
+    int _personality;
+    int _gumption;
+    int _length;
+    std::string _name;
+    std::string _owner;
 
 
     /*
     ** Non point affected things
     */
-    int health;
-    int turns;
-    int toDeal;
-    int blocks;
-    int lives = 1;
-    int yellowFlowers;
-    int greenFlowers;
-    int purpleFlowers;
-    int orangeFlowers;
-    int redFlowers;
-    std::vector< std::string > Inventory;
+    int _health;
+    int _turns;
+    int _toDeal;
+    int _blocks;
+    int _lives = 1;
+    int _yellowFlowers;
+    int _greenFlowers;
+    int _purpleFlowers;
+    int _orangeFlowers;
+    int _redFlowers;
+    std::vector< std::string > _inventory;
 
     /*
     ** List of all possible items, there are redundant items because they are more commom than others
