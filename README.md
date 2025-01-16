@@ -73,6 +73,8 @@ If you are cloning for the first time clone with `git clone --recurse-submodules
 - - - [ ] Write isLetterPressed()
 - - - [ ] Write drawPlus()
 - - - [ ] Write main()
+- - - - [ ] Write main function globals
+- - - - [ ] Write everything else
 - - [ ] Finish game
 
 ## DONE
