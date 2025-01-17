@@ -52,7 +52,7 @@ If you are cloning for the first time clone with `git clone --recurse-submodules
 
 ## TODO
 - - [x] Wrote quimbert.hpp
-- - [ ] Write quimbert.cpp
+- - [x] Write quimbert.cpp
 - - - [x] Write Quimbert() 
 - - - [x] Write randInt()
 - - - [x] Write sniff()
@@ -60,9 +60,9 @@ If you are cloning for the first time clone with `git clone --recurse-submodules
 - - - [x] Write getInventory()
 - - - [x] Write getHealth()
 - - - [x] Write infoOfItem()
-- - - [ ] Write useItem()
-- - - [ ] Write getStatsString()
-- - - [ ] Write getStat()
+- - - [x] Write useItem()
+- - - [x] Write getStatsString()
+- - - [x] Write getStat()
 - - [ ] Write textbox.hpp
 - - [ ] Write textbox.cpp
 - - [ ] Write main.cpp

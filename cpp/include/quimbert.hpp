@@ -39,6 +39,7 @@ public:
 
     /*
     ** Use an item from your inventory
+    ** Returns true if succeeded, false if failed
     */
     bool useItem( std::string item );
 
