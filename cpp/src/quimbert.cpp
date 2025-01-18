@@ -2,6 +2,7 @@
 
 
 #include <random>
+#include <stdexcept>
 #include <vector>
 #include <string>
 #include <algorithm>
@@ -33,28 +34,28 @@ Quimbert::Quimbert( int looks, int smell, std::string color,
 /*
 ** Sniffs, returns true on success, and false otherwise
 */
-bool Quimbert::sniff() {
+void Quimbert::sniff() {
+    if ( _smell == 10 ) {
+        if ( 0 < _smell + randInt( -10, 10 ) ) {
+            _inventory.push_back( items[ randInt( 0, itemCount - 1 ) ] );
+        }
+    }
     if ( 0 < _smell + randInt( -10, 10 ) ) {
         _inventory.push_back( items[ randInt( 0, itemCount - 1 ) ] );
-        return true;
-    } else {
-        return false;
     }
 }
 
-int Quimbert::gainBlock() {
+void Quimbert::gainBlock() {
     if ( ( _personality + randInt( -7, 10 ) ) >= 10 ) {
         _blocks++;
-
+        
+        // Special for personality
         if ( _personality == 10 && randInt( 1, 4 ) == 4 ) {
             if ( ( _personality + randInt( -7, 10 ) ) >= 10 ) {
                 _blocks++;
-                return 2;
             }
         }
-        return 1;
     }
-    return 0;
 }
 
 std::vector< std::string > Quimbert::getInventory() {
@@ -246,15 +247,20 @@ std::string Quimbert::getStatsString() {
         "/10\nLength: " + std::to_string( _length ) + "/10\nOwner: " + _owner + "\n";
 }
 
-std::string Quimbert::getStat( std::string stat ) {
-    if ( stat == "looks") return std::to_string( _looks );
-    else if ( stat == "smell") return std::to_string( _smell );
-    else if ( stat == "personality") return std::to_string( _personality );
-    else if ( stat == "gumption") return std::to_string( _gumption );
-    else if ( stat == "length") return std::to_string( _length );
-    else if ( stat == "color") return _color;
+std::string Quimbert::getStrStat( std::string stat ) {
+    if ( stat == "color") return _color;
     else if ( stat == "name") return _name;
     else if ( stat == "owner") return _owner;
 
-    return "Invalid Stat";
+    throw std::runtime_error( "Invalid Stat" );
+}
+
+int Quimbert::getIntStat( std::string stat ) {
+    if ( stat == "looks") return _looks;
+    else if ( stat == "smell") return _smell;
+    else if ( stat == "personality") return _personality;
+    else if ( stat == "gumption") return _gumption;
+    else if ( stat == "length") return _length;
+
+    throw std::runtime_error( "Invalid Stat" );
 }

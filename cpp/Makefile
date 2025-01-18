@@ -1,7 +1,7 @@
 NAME = name
 
 CC = g++
-CCFLAGS = -Ithird/raylib/src
+CCFLAGS = -Ithird/raylib/src -std=c++20
 
 LINKFLAGS = -Lthird/raylib/src/libraylib.a -lraylib
 

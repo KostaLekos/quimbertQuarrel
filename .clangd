@@ -1,2 +1,2 @@
 CompileFlags:
-    Add: ["-Icpp/third/raylib/src", "-std=c++17"]
+    Add: ["-Icpp/third/raylib/src", "-std=c++20"]

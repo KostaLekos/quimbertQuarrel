@@ -12,6 +12,11 @@ me no like you
 - Learn c++ build process
 - Learn c++ class semantics
 - Learn c++ in general
+- Seriously, read the comments in *all* files, it is actually important you do this before you start development, because I have added hints in places on how to do things, as well as documented how things work.
+- Learn markdown (.md files), so you can add to this file todo's and mark them as complete, as well as add other notes
+- Don't ask me to help during lunch, but I will answer questions about my implemntation details, and if you do have a question, WRITE A COMMENT NEXT TO THE ISSUE EXPLAINING WHAT IT DOES
+- Also, WRITE SOME GODDAMN COMMENTS, it doesn't matter when you are working alone, but I am working with you on this and it is so annoying trying to figure what stuff does
+
 
 
 # BUILD
@@ -63,18 +68,34 @@ If you are cloning for the first time clone with `git clone --recurse-submodules
 - - - [x] Write useItem()
 - - - [x] Write getStatsString()
 - - - [x] Write getStat()
-- - [ ] Write textbox.hpp
-- - [ ] Write textbox.cpp
+- - [x] Write textbox.hpp
+- - [x] Write textbox.cpp
+- - - [x] Write QuimbertTextBox()
+- - - [x] Write setCharLength()
+- - - [x] Write getText()
+- - - [x] Write clear()
+- - - [x] Write setBox()
+- - - [x] Write processTextInput()
+- - - [x] Write render()
 - - [ ] Write main.cpp
 - - - [x] Write randInt()
-- - - [ ] Write drawButtonText()
-- - - [ ] Write drawButtonColor()
-- - - [ ] Write drawButtomImage()
-- - - [ ] Write isLetterPressed()
+- - - [x] Write drawButtonText()
+- - - [x] Write drawButtonColor()
+- - - [x] Write drawButtomImage()
+- - - [x] Write isLetterPressed()
 - - - [ ] Write drawPlus()
 - - - [ ] Write main()
 - - - - [ ] Write main function globals
 - - - - [ ] Write everything else
 - - [ ] Finish game
+- - - [x] Layout for game screen created
+- - - [ ] Write the layout
+- - - [ ] Adapt the CLI version bits to GUI version bits
 
-## DONE
+## Removed/added
+- REMOVED sniff() in QuimbertQuarrel.java (main.cpp) file, see header notes in quimert.hpp for `void sniff()`
+- REMOVED getRandomString() in Quimbert.java (quimbert.hpp/quimbert.cpp). Replaced functionality with an array of items and randint
+- REMOVED stats() in Quimbert.java (quimbert.hpp/quimbert.cpp) replaced with getStatsString()
+- ADDED getIntStat() in Quimbert.java (quimbert.hpp/quimbert.cpp) to get individual stat of type int
+- ADDED getStrStat() in Quimbert.java (quimbert.hpp/quimbert.cpp) to get individual stat of type std::string
+

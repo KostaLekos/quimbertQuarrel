@@ -12,15 +12,16 @@ public:
     
     /*
     ** Sniff gets an item and adds it to your inventory, or fails and does nothing
-    ** Returns true on sniff succeed, returns false on sniff fail
+    ** Hint, if you need to know how many items, get the inventory size, then call sniff, then get the size again.
+    ** If you need the items, then they are always the back one (or two) elements of the inventory vec
     */
-    bool sniff();
+    void sniff();
 
     /*
     ** Gains a block or 2 or none
-    ** Returns number of blocks gained
+    ** If you need the number, see Sniff() comments above
     */
-    int gainBlock();
+    void gainBlock();
 
     /*
     ** Return inventory
@@ -51,7 +52,8 @@ public:
     /*
     ** Return individual stat value
     */
-    std::string getStat( std::string stat );
+    std::string getStrStat( std::string stat );
+    int getIntStat( std::string stat );
 
     /*
     ** Returns a random integer min <= x <= max
