@@ -30,7 +30,7 @@ $env:path
 ```
 
 Make sure that it shows `DRIVELETTER:\path\to\apps\w64devkit\w64devkit\bin`, THIS IS CRUCIAL
-*Note, Must be before all of the `C:\` paths*
+*Note, Must be before all of the `C:\` paths, ideally the first one but not necessarily*
 
 ## Check current working directory
 
@@ -87,6 +87,7 @@ If you are cloning for the first time clone with `git clone --recurse-submodules
 - - - [ ] Write main()
 - - - - [ ] Write main function globals
 - - - - [ ] Write everything else
+- - - - - [ ] 
 - - [ ] Finish game
 - - - [x] Layout for game screen created
 - - - [ ] Write the layout

@@ -1,7 +1,8 @@
 
 #include "../include/quimbert.hpp"
+#include "../include/textbox.hpp"
 
-#include <raylib.h>
+#include "../third/raylib/src/raylib.h"
 
 
 #include <string>
@@ -23,7 +24,7 @@ std::mt19937_64::result_type randInt( int min, int max ) {
 bool makeButtonText( int pos_x, int pos_y, int size_x, int size_y,
     std::string text, int fontSize, bool isDisabled ) {
     
-    Rectangle main( pos_x, pos_y, size_x, size_y );
+    Rectangle main{ ( float ) pos_x, ( float ) pos_y, ( float ) size_x, ( float ) size_y };
 
     if ( !isDisabled ) {
         /*
@@ -89,7 +90,7 @@ bool makeButtonText( int pos_x, int pos_y, int size_x, int size_y,
 bool makeButtonColor( int pos_x, int pos_y, int size_x, int size_y, Color color1, Color color2, bool isDisabled ) {
     bool result = false;
     // background rectangle / collision rectangle
-    Rectangle main = Rectangle( pos_x, pos_y, size_x, size_y );
+    Rectangle main{ ( float ) pos_x, ( float ) pos_y, ( float ) size_x, ( float ) size_y };
     if ( !isDisabled ) {
         if ( !CheckCollisionPointRec( GetMousePosition(), main ) ) {
             // background / button bounding box / outline
@@ -126,17 +127,16 @@ bool makeButtonColor( int pos_x, int pos_y, int size_x, int size_y, Color color1
 
 /*
 ** Copy-pasted again
+** NOTE: Call with the "image" part as &someImg, and unload it after ( if desired )
 */
-bool makeButtonImage(int pos_x, int pos_y, int size_x, int size_y, std::string path, bool isDisabled) {
+bool makeButtonImage(int pos_x, int pos_y, int size_x, int size_y, Image* image, bool isDisabled) {
     // load image
-    Image img = LoadImage( path.c_str() );
-    ImageCrop( &img , Rectangle(pos_x + 10, pos_y + 10, size_x - 20, size_y - 20) );
-    Texture tex = LoadTextureFromImage(img);
-    UnloadImage(img);
+    ImageCrop( image , { ( float ) pos_x + 10, ( float ) pos_y + 10, ( float ) size_x - 20, ( float ) size_y - 20 } );
+    Texture tex = LoadTextureFromImage( *image );
     bool result = false;
 
     // background rectangle / collision rectangle
-    Rectangle main = Rectangle(pos_x, pos_y, size_x, size_y);
+    Rectangle main{ ( float ) pos_x, ( float ) pos_y, ( float ) size_x, ( float ) size_y };
     if (!isDisabled) {
         if (!CheckCollisionPointRec(GetMousePosition(), main)) {
             // background / button bounding box / outline
@@ -174,6 +174,7 @@ bool makeButtonImage(int pos_x, int pos_y, int size_x, int size_y, std::string p
         DrawRectangle(pos_x + 5, pos_y + 5, size_x, size_y, BLACK);
         DrawRectangle(pos_x + 15, pos_y + 15, size_x - 20, size_y - 20, GRAY);
     }
+    UnloadTexture( tex );
     return result;
 }
 
@@ -191,8 +192,16 @@ bool isAnyKeyPressed() {
 
 
 int main( int argc, char** argv, char** envv ) {
+
+    /*
+    ** IDK
+    */
     std::string choice;
-    int quimbertQuantity;
+    int quimbertQuantity = 2;
+
+    /*
+    ** Temp quimbert stats
+    */
     int looks;
     int smell;
     std::string color;
@@ -202,8 +211,88 @@ int main( int argc, char** argv, char** envv ) {
     std::string name;
     std::string owner;
 
+    int startingPoints = randInt( 25, 35 );
+    std::vector< Quimbert > quimbertArr;
+    bool gameDone;
+    bool isMusicMuted;
+    std::string gameLayout = "start";
+
+    int monitorWidth = GetMonitorWidth( 0 ), monitorHeight = GetMonitorHeight( 0 );
 
 
+    // Image info1 = LoadImage( "./resources/textures/UI/infoButton1.png" );
+    // Image info2 = LoadImage( "./resources/textures/UI/infoButton2.png" );
+    // Image info3 = LoadImage( "./resources/textures/UI/infoButton3.png" );
+    // Texture2D infoButton1 = LoadTexture( "./resources/textures/UI/infoButton1.png" );
+    // Texture2D infoButton2 = LoadTexture( "./resources/textures/UI/infoButton2.png" );
+    // Texture2D infoButton3 = LoadTexture( "./resources/textures/UI/infoButton3.png" );
+    // UnloadImage( info1 );
+    // UnloadImage( info2 );
+    // UnloadImage( info3 );
 
+    SetConfigFlags( FLAG_WINDOW_RESIZABLE | FLAG_WINDOW_MAXIMIZED );
 
+    InitWindow(1840, 1000, "Quimbert Quarrel");
+    //InitWindow(1366, 768, "Quimbert Quarrel");
+    SetWindowMinSize(600, 500); 
+    SetWindowMaxSize(monitorWidth, monitorHeight);
+    SetWindowPosition(40, 70);
+    MaximizeWindow();
+    SetTargetFPS(60);
+    InitAudioDevice();
+
+    Music blippy = LoadMusicStream("./resources/soundtrack/BlippyBounce.mp3");
+    Music ambient = LoadMusicStream("./resources/soundtrack/ambient.mp3");
+    Music mania = LoadMusicStream("./resources/soundtrack/MenuMania.mp3");
+    Music quimbertcall = LoadMusicStream("./resources/soundtrack/Quimbert's Call (Main Menu Theme).mp3");
+
+    PlayMusicStream(blippy);
+    SetMusicVolume(blippy, 0.25f);
+    SetMusicVolume(ambient, 0.25f);
+    SetMusicVolume(mania, 0.25f);
+    SetMusicVolume(quimbertcall, 0.25f);
+
+    QuimbertTextBox textBoxName( Rectangle{
+        ( float ) GetScreenWidth() / 2 + 20, 250, 375, 75 } );
+    textBoxName.setCharLength( 25 );
+
+    QuimbertTextBox textBoxOwner( Rectangle{
+        ( float ) GetScreenWidth() / 2 + 20, 350, 375, 75 } );
+    textBoxOwner.setCharLength( 25 );
+
+    Image exitImage = LoadImage( "./resources/textures/UI/exit.png" );
+    Image mutedImage = LoadImage( "./resources/textures/UI/muted.png");
+    Image unmutedImage = LoadImage( "./resources/textures/UI/unmuted.png");
+
+    while ( !WindowShouldClose() /* && !makeButtonImage( GetScreenWidth() - 85, 10, 70, 70, &exitImage, false ) */ ) {
+
+        if ( !isMusicMuted ) {
+            UpdateMusicStream( blippy );
+        }
+
+        if ( gameLayout == "start" ) {
+            BeginDrawing();
+            ClearBackground( RAYWHITE );
+
+            DrawText("Quimbert Quarrel", (GetScreenWidth() / 2) - (MeasureText("Quimbert Quarrel", 96) / 2), (GetScreenHeight() / 4), 96, BLACK);
+            DrawText("A Green Apple Game", (GetScreenWidth() / 2) - (MeasureText("A Green Apple Game", 36) / 2), (GetScreenHeight() / 4 + 100), 36, BLACK);
+
+            Rectangle localButton{ ( float ) GetScreenWidth() / 2 - 155, ( float ) GetScreenHeight() / 2, 300, 150 };
+
+            if ( makeButtonText( GetScreenWidth() / 2 - 155, GetScreenHeight() / 2, 300, 150, "Local", 80, false ) ) {
+                // gameLayout = "howManyQuimberts";
+            }
+
+            if ( makeButtonImage( GetScreenWidth() - 170, 10, 70, 70, &( isMusicMuted ? mutedImage : unmutedImage ), false ) ) {
+                isMusicMuted = !isMusicMuted;
+            }
+
+            DrawFPS( 20, 20 );
+            EndDrawing();
+        } else if ( gameLayout == "howManyQuimberts" ) {
+            BeginDrawing();
+            ClearBackground( RAYWHITE );
+
+        }
+    }
 }
