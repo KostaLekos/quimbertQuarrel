@@ -79,11 +79,11 @@ If you are cloning for the first time clone with `git clone --recurse-submodules
 - - - [x] Write render()
 - - [ ] Write main.cpp
 - - - [x] Write randInt()
-- - - [x] Write drawButtonText()
+- - - [x] Write drawButtonText() - NEEDS FIXING
 - - - [x] Write drawButtonColor()
-- - - [x] Write drawButtomImage()
+- - - [x] Write drawButtonImage()
 - - - [x] Write isLetterPressed()
-- - - [ ] Write drawPlus()
+- - - [x] Write drawPlus() - NEEDS FIXING
 - - - [ ] Write main()
 - - - - [ ] Write main function globals
 - - - - [ ] Write everything else

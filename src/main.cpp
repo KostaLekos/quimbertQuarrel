@@ -5,7 +5,9 @@
 #include "../third/raylib/src/raylib.h"
 
 
+#include <raylib.h>
 #include <string>
+#include <iostream>
 #include <random>
 
 std::mt19937_64::result_type randInt( int min, int max ) {
@@ -178,6 +180,67 @@ bool makeButtonImage(int pos_x, int pos_y, int size_x, int size_y, Image* image,
     return result;
 }
 
+/*
+** You guessed it! Copy-pasted
+*/
+int drawPlus(int posx, int posy, bool isGrayedOut, int numToIncrement, int maxMinVal, bool isMinus) {
+    Rectangle rec = { (float) posx, (float) posy, 100, 100 };
+    if (!isGrayedOut) {
+        if(!CheckCollisionPointRec(GetMousePosition(), rec)) {
+            DrawRectangleRec(rec, BLACK);
+            DrawRectangle(80 + posx, 50 + posy, 80, 80, LIGHTGRAY);
+            if (!isMinus) {
+                DrawRectangle(115 + posx, 65 + posy, 10, 50, BLACK);
+            }
+            DrawRectangle(95 + posx, 85 + posy, 50, 10, BLACK);
+            DrawRectangle(75 + posx, 140 + posy, 95, 5, DARKGRAY);
+            DrawRectangle(170 + posx, 45 + posy, 5, 100, DARKGRAY); 
+        } else {
+            if (IsMouseButtonReleased(0)) {
+                if (!isMinus) {
+                    numToIncrement++;
+                } else {
+                    numToIncrement--;
+                }
+
+                if ((!isMinus) ? (numToIncrement <= maxMinVal) : (numToIncrement >= maxMinVal)) {
+                    DrawRectangle(75 + posx, 45 + posy, 100, 100, BLACK);
+                    DrawRectangle(85 + posx, 55 + posy, 80, 80, DARKGRAY);
+                    if (!isMinus) {
+                        DrawRectangle(120 + posx, 70 + posy, 10, 50, BLACK);
+                    }
+                    DrawRectangle(100 + posx, 90 + posy, 50, 10, BLACK);
+                }
+            }
+
+            if (IsMouseButtonDown(0)) {
+                DrawRectangle(75 + posx, 45 + posy, 100, 100, BLACK);
+                DrawRectangle(85 + posx, 55 + posy, 80, 80, GRAY);
+                if (!isMinus) {
+                    DrawRectangle(120 + posx, 70 + posy, 10, 50, BLACK);
+                }
+                DrawRectangle(100 + posx, 90 + posy, 50, 10, BLACK);
+            } else if ((!isMinus) ? (numToIncrement < maxMinVal) : (numToIncrement > maxMinVal)) {
+                DrawRectangle(70 + posx, 40 + posy, 100, 100, BLACK);
+                DrawRectangle(80 + posx, 50 + posy, 80, 80, GRAY);
+                if (!isMinus) {
+                    DrawRectangle(115 + posx, 65 + posy, 10, 50, BLACK); //correct
+                }
+                DrawRectangle(95 + posx, 85 + posy, 50, 10, BLACK);
+                DrawRectangle(75 + posx, 140 + posy, 95, 5, DARKGRAY);
+                DrawRectangle(170 + posx, 45 + posy, 5, 100, DARKGRAY);
+            }
+        }
+    } else {
+        DrawRectangle(75 + posx, 45 + posy, 100, 100, BLACK);
+        DrawRectangle(85 + posx, 55 + posy, 80, 80, DARKGRAY);
+        if (!isMinus) {
+            DrawRectangle(120 + posx, 70 + posy, 10, 50, BLACK);
+        }
+        DrawRectangle(100 + posx, 90 + posy, 50, 10, BLACK);
+    }
+    return numToIncrement;
+}
 
 /*
 ** Checks if any printable characters are pressed
@@ -260,11 +323,11 @@ int main( int argc, char** argv, char** envv ) {
         ( float ) GetScreenWidth() / 2 + 20, 350, 375, 75 } );
     textBoxOwner.setCharLength( 25 );
 
-    Image exitImage = LoadImage( "./resources/textures/UI/exit.png" );
-    Image mutedImage = LoadImage( "./resources/textures/UI/muted.png");
-    Image unmutedImage = LoadImage( "./resources/textures/UI/unmuted.png");
+    Image exitImage = LoadImage( "resources/textures/UI/exit.png" );
+    Image mutedImage = LoadImage( "resources/textures/UI/muted.png");
+    Image unmutedImage = LoadImage( "resources/textures/UI/unmuted.png");
 
-    while ( !WindowShouldClose() /* && !makeButtonImage( GetScreenWidth() - 85, 10, 70, 70, &exitImage, false ) */ ) {
+    while ( !WindowShouldClose() ) {
 
         if ( !isMusicMuted ) {
             UpdateMusicStream( blippy );
@@ -280,7 +343,7 @@ int main( int argc, char** argv, char** envv ) {
             Rectangle localButton{ ( float ) GetScreenWidth() / 2 - 155, ( float ) GetScreenHeight() / 2, 300, 150 };
 
             if ( makeButtonText( GetScreenWidth() / 2 - 155, GetScreenHeight() / 2, 300, 150, "Local", 80, false ) ) {
-                // gameLayout = "howManyQuimberts";
+                gameLayout = "howManyQuimberts";
             }
 
             if ( makeButtonImage( GetScreenWidth() - 170, 10, 70, 70, &( isMusicMuted ? mutedImage : unmutedImage ), false ) ) {
@@ -290,9 +353,48 @@ int main( int argc, char** argv, char** envv ) {
             DrawFPS( 20, 20 );
             EndDrawing();
         } else if ( gameLayout == "howManyQuimberts" ) {
+            std::cout << "in hmq\n";
             BeginDrawing();
             ClearBackground( RAYWHITE );
+            DrawRectangle((GetScreenWidth() / 2) - 60, (GetScreenHeight() / 2) + 20, 120, 150, BLACK);
+            DrawRectangle((GetScreenWidth() / 2) - 50, (GetScreenHeight() / 2) + 30, 100, 130, LIGHTGRAY);
+            DrawText(std::to_string(quimbertQuantity).c_str(), (GetScreenWidth() / 2) - MeasureText(std::to_string(quimbertQuantity).c_str(), 108) / 2, (GetScreenHeight() / 2) + 45, 108, BLACK);
 
+            Rectangle backButton = {20, 20, 120, 80};
+
+            // Back button
+            if (!CheckCollisionPointRec(GetMousePosition(), backButton)) {
+                DrawRectangleRec(backButton, BLACK);
+                DrawRectangle(30, 30, 100, 60, LIGHTGRAY);
+                DrawLineEx( { 115, 60 }, { 60, 60 }, 15, BLACK);
+                DrawTriangle({ 45, 60 }, { 70, 80 }, { 70, 40 }, BLACK);
+                DrawRectangle(140, 25, 5, 80, DARKGRAY);
+                DrawRectangle(25, 100, 115, 5, DARKGRAY);
+            } else {
+                if (!IsMouseButtonDown(0)) {
+                    DrawRectangle(20, 20, 120, 80, BLACK);
+                    DrawRectangle(30, 30, 100, 60, GRAY);
+                    DrawLineEx( { 115, 60 }, { 60, 60 }, 15, BLACK);
+                    DrawTriangle( { 45, 60 }, { 70, 80 }, { 70, 40 }, BLACK);
+                    DrawRectangle(140, 25, 5, 80, DARKGRAY);
+                    DrawRectangle(25, 100, 115, 5, DARKGRAY);
+                } else {
+                    DrawRectangle(25, 25, 120, 80, BLACK);
+                    DrawRectangle(35, 35, 100, 60, GRAY);
+                    DrawLineEx( { 120, 65 }, { 65, 65 }, 15, BLACK);
+                    DrawTriangle( { 50, 45 }, { 75, 85 }, { 75, 45 }, BLACK);
+                }
+
+                if (IsMouseButtonReleased(0)) {
+                    gameLayout = "start";
+                }
+            }
+
+            makeButtonText( GetScreenWidth() / 2 - 105, GetScreenHeight() / 4 * 3 + 50, 190, 80, "Next", 60, false);
+            
+            drawPlus( GetScreenWidth() / 2 + 70, GetScreenHeight() / 2 + 40, false, quimbertQuantity, 8, false);
+            drawPlus( GetScreenWidth() / 2 - 175, GetScreenHeight() / 2 + 40, false, quimbertQuantity, 8, true);
+            EndDrawing();
         }
     }
 }
