@@ -6,6 +6,7 @@
 
 
 #include <raylib.h>
+#include <stdexcept>
 #include <string>
 #include <iostream>
 #include <random>
@@ -19,11 +20,57 @@ std::mt19937_64::result_type randInt( int min, int max ) {
 }
 
 
+
 /*
+** Rewrote makeButtonText, give position of top-left corner, text, fontsize, and whether or not to ignore input
+** Made better than the previous one!
+*/
+bool makeButtonText( int pos_x, int pos_y, std::string text, int fontSize, bool isDisabled ) {
+
+    Rectangle main = { ( float ) pos_x, ( float ) pos_y,
+        ( float ) MeasureText( text.c_str(), fontSize ) + 40, 
+        ( float ) MeasureTextEx( GetFontDefault(), text.c_str(), fontSize, ( float ) fontSize / 10 ).y + 40 };
+
+        bool buttonDown = isDisabled || CheckCollisionPointRec( GetMousePosition(), main ) && IsMouseButtonDown( MOUSE_LEFT_BUTTON );
+    if ( buttonDown ) {
+        main.x += 5; main.y += 5;
+    }
+
+    Rectangle inside = { main.x + 10, main.y + 10, main.width - 20, main.height - 20 };
+
+
+
+    DrawRectangleRec( main, BLACK ); // Draw black boarder
+    DrawRectangleRec( inside, CheckCollisionPointRec( GetMousePosition(), main ) ? DARKGRAY : GRAY ); // inside color
+
+    // Drop shaddow
+    if ( !buttonDown ) {
+        DrawRectangleRec( { main.x + main.width, main.y + 5, 5, main.height }, DARKGRAY );
+        DrawRectangleRec( { main.x + 5, main.y + main.height, main.width, 5 }, DARKGRAY );
+    }
+    DrawText( text.c_str(), main.x + 10 + 10, main.y + 10 + 10, fontSize, BLACK );
+
+    return IsMouseButtonReleased( MOUSE_LEFT_BUTTON ) && CheckCollisionPointRec( GetMousePosition(), main );
+
+}
+
+
+/*
+** Makes a button, but with the center at the coordinates listed
+*/
+bool makeButtonTextCenter( int pos_x, int pos_y, std::string text, int fontSize, bool isDisabled ) {
+    return makeButtonText( pos_x - 10 - 10 - MeasureText( text.c_str(), fontSize ) / 2,
+                               pos_y - 10 - 10 - MeasureTextEx( GetFontDefault(), text.c_str(), fontSize, ( float ) fontSize / 10 ).y,
+                               text, fontSize, isDisabled );
+}
+
+/*
+** DEPRECATED, DO NOT USE
+**
 ** Makes a button with text
 ** Source code is not well documented because i forget how it works
 */
-bool makeButtonText( int pos_x, int pos_y, int size_x, int size_y,
+bool makeButtonText_DEPRECATED( int pos_x, int pos_y, int size_x, int size_y,
     std::string text, int fontSize, bool isDisabled ) {
     
     Rectangle main{ ( float ) pos_x, ( float ) pos_y, ( float ) size_x, ( float ) size_y };
@@ -39,7 +86,7 @@ bool makeButtonText( int pos_x, int pos_y, int size_x, int size_y,
             DrawRectangleRec( main, BLACK );
             // Inside color
             DrawRectangle( pos_x + 10, pos_y + 10,
-                size_x - 10, size_y - 10, LIGHTGRAY);
+                size_x - 20, size_y - 20, LIGHTGRAY);
 
             // Drop shadow
             DrawRectangle( pos_x + size_x, pos_y + 5, 5,
@@ -85,11 +132,39 @@ bool makeButtonText( int pos_x, int pos_y, int size_x, int size_y,
     }
 }
 
+bool makeButtonColor( int pos_x, int pos_y, int size_x, int size_y, Color color1, Color color2, bool isDisabled ) {
+    Rectangle main = { ( float ) pos_x, ( float ) pos_y, ( float ) size_x, ( float ) size_y };
 
+    bool buttonDown = isDisabled || CheckCollisionPointRec( GetMousePosition(), main ) && IsMouseButtonDown( MOUSE_LEFT_BUTTON );
+    if ( buttonDown ) {
+        main.x += 5; main.y += 5;
+    }
+
+    Rectangle inside = { main.x + 10, main.y + 10, main.width - 20, main.height - 20 };
+
+
+
+    DrawRectangleRec( main, BLACK ); // Draw black boarder
+    DrawRectangleRec( inside, CheckCollisionPointRec( GetMousePosition(), main ) ? color2 : color1 ); // inside color
+
+    // Drop shaddow
+    if ( !buttonDown ) {
+        DrawRectangleRec( { main.x + main.width, main.y + 5, 5, main.height }, DARKGRAY );
+        DrawRectangleRec( { main.x + 5, main.y + main.height, main.width, 5 }, DARKGRAY );
+    }
+
+
+    return IsMouseButtonReleased( MOUSE_LEFT_BUTTON ) && CheckCollisionPointRec( GetMousePosition(), main );
+
+}
+
+bool makeButtonColorCenter( int pos_x, int pos_y, int size_x, int size_y, Color color1, Color color2, bool isDisabled ) {
+    return makeButtonColor( pos_x - size_x / 2, pos_y - size_y / 2, size_x, size_y, color1, color2, isDisabled );
+}
 /*
 ** Copy-pasted from Java verson
 */
-bool makeButtonColor( int pos_x, int pos_y, int size_x, int size_y, Color color1, Color color2, bool isDisabled ) {
+bool makeButtonColor_DEPRECATED( int pos_x, int pos_y, int size_x, int size_y, Color color1, Color color2, bool isDisabled ) {
     bool result = false;
     // background rectangle / collision rectangle
     Rectangle main{ ( float ) pos_x, ( float ) pos_y, ( float ) size_x, ( float ) size_y };
@@ -126,12 +201,46 @@ bool makeButtonColor( int pos_x, int pos_y, int size_x, int size_y, Color color1
     return result;
 }
 
+/*
+** NOTE: Call with the "image" part as &someImg, and unload it after ( if desired )
+*/
+bool makeButtonImage( int pos_x, int pos_y, int size_x, int size_y, Image *image, bool isDisabled ) {
+    if ( image == nullptr ) {
+        throw std::runtime_error( "makeButtonImage called with image equal to nullptr" );
+    }
 
+    Rectangle main = { ( float ) pos_x, ( float ) pos_y, ( float ) size_x, ( float ) size_y };
+    
+    bool buttonDown = isDisabled || CheckCollisionPointRec( GetMousePosition(), main ) && IsMouseButtonDown( MOUSE_LEFT_BUTTON );
+    if ( buttonDown ) {
+        main.x += 5; main.y += 5;
+    }
+    
+    Rectangle inside = { main.x + 10, main.y + 10, main.width - 20, main.height - 20 };
+    
+    DrawRectangleRec( main, BLACK ); // Draw black boarder
+    
+    ImageCrop( image, inside);
+    Texture2D texture = LoadTextureFromImage( *image );
+    DrawTexture( texture, inside.x, inside.y, WHITE );
+    UnloadTexture( texture );
+
+
+    // Drop shaddow
+    if ( !buttonDown ) {
+        DrawRectangleRec( { main.x + main.width, main.y + 5, 5, main.height }, DARKGRAY );
+        DrawRectangleRec( { main.x + 5, main.y + main.height, main.width, 5 }, DARKGRAY );
+    }
+
+
+    return IsMouseButtonReleased( MOUSE_LEFT_BUTTON ) && CheckCollisionPointRec( GetMousePosition(), main );
+
+}
 /*
 ** Copy-pasted again
 ** NOTE: Call with the "image" part as &someImg, and unload it after ( if desired )
 */
-bool makeButtonImage(int pos_x, int pos_y, int size_x, int size_y, Image* image, bool isDisabled) {
+bool makeButtonImage_DEPRACATED(int pos_x, int pos_y, int size_x, int size_y, Image* image, bool isDisabled) {
     // load image
     ImageCrop( image , { ( float ) pos_x + 10, ( float ) pos_y + 10, ( float ) size_x - 20, ( float ) size_y - 20 } );
     Texture tex = LoadTextureFromImage( *image );
@@ -342,7 +451,8 @@ int main( int argc, char** argv, char** envv ) {
 
             Rectangle localButton{ ( float ) GetScreenWidth() / 2 - 155, ( float ) GetScreenHeight() / 2, 300, 150 };
 
-            if ( makeButtonText( GetScreenWidth() / 2 - 155, GetScreenHeight() / 2, 300, 150, "Local", 80, false ) ) {
+
+            if ( makeButtonTextCenter( GetScreenWidth() / 2, GetScreenHeight() / 2, "Local", 80, false ) ) {
                 gameLayout = "howManyQuimberts";
             }
 
@@ -390,7 +500,7 @@ int main( int argc, char** argv, char** envv ) {
                 }
             }
 
-            makeButtonText( GetScreenWidth() / 2 - 105, GetScreenHeight() / 4 * 3 + 50, 190, 80, "Next", 60, false);
+            makeButtonTextCenter( GetScreenWidth() / 2, GetScreenHeight() / 4 * 3, "Next", 60, false);
             
             drawPlus( GetScreenWidth() / 2 + 70, GetScreenHeight() / 2 + 40, false, quimbertQuantity, 8, false);
             drawPlus( GetScreenWidth() / 2 - 175, GetScreenHeight() / 2 + 40, false, quimbertQuantity, 8, true);

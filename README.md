@@ -79,11 +79,11 @@ If you are cloning for the first time clone with `git clone --recurse-submodules
 - - - [x] Write render()
 - - [ ] Write main.cpp
 - - - [x] Write randInt()
-- - - [x] Write drawButtonText() - NEEDS FIXING
-- - - [x] Write drawButtonColor()
-- - - [x] Write drawButtonImage()
+- - - [x] Write makeButtonText() - Rewritten, read notes
+- - - [x] Write makeButtonColor()
+- - - [x] Write makeButtonImage() - Write the corrosponding center function
 - - - [x] Write isLetterPressed()
-- - - [x] Write drawPlus() - NEEDS FIXING
+- - - [x] Write drawPlus() - Needs full rewrite - Write the corrosponding center function
 - - - [ ] Write main()
 - - - - [ ] Write main function globals
 - - - - [ ] Write everything else
@@ -93,10 +93,13 @@ If you are cloning for the first time clone with `git clone --recurse-submodules
 - - - [ ] Write the layout
 - - - [ ] Adapt the CLI version bits to GUI version bits
 
-## Removed/added
+## Changes from java version
 - REMOVED sniff() in QuimbertQuarrel.java (main.cpp) file, see header notes in quimert.hpp for `void sniff()`
 - REMOVED getRandomString() in Quimbert.java (quimbert.hpp/quimbert.cpp). Replaced functionality with an array of items and randint
 - REMOVED stats() in Quimbert.java (quimbert.hpp/quimbert.cpp) replaced with getStatsString()
 - ADDED getIntStat() in Quimbert.java (quimbert.hpp/quimbert.cpp) to get individual stat of type int
 - ADDED getStrStat() in Quimbert.java (quimbert.hpp/quimbert.cpp) to get individual stat of type std::string
+- MODIFIED makeButtonText, now automatically determines the buttons width
+- ADDED makeButtonTextCenter, same as makeButtonText, but the given coords are the center of the button and not the top left corner
+- ADDED makeButtonColorCenter, figure it out
 
