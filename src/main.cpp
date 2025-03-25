@@ -4,8 +4,6 @@
 
 #include "../third/raylib/src/raylib.h"
 
-
-#include <raylib.h>
 #include <stdexcept>
 #include <string>
 #include <iostream>

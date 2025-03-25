@@ -3,15 +3,13 @@ NAME = QuimbertQuarrel
 CC = g++
 CCFLAGS = -Ithird/raylib/src --std=c++20 -g
 
-LINKFLAGS = 
+LINKFLAGS = third/raylib/src/libraylib.a
 
 ifeq ($(OS),Windows_NT)
 LINKFLAGS += -lgdi32 -lwinmm
 else
 LINKFLAGS += -lGL -lm -lpthread -ldl -lrt -lX11
 endif
-
-LINKFLAGS += third/raylib/src/libraylib.a
 
 BUILDDIR := build
 SRCDIR := src
