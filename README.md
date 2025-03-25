@@ -55,6 +55,7 @@ You will also need to run `git submodule init` and `git submodule update` if thi
 
 If you are cloning for the first time clone with `git clone --recurse-submodules https://github.com/HairyJade/quimbertquarrel`
 
+
 ## TODO
 - - [x] Wrote quimbert.hpp
 - - [x] Write quimbert.cpp
@@ -81,13 +82,16 @@ If you are cloning for the first time clone with `git clone --recurse-submodules
 - - - [x] Write randInt()
 - - - [x] Write makeButtonText() - Rewritten, read notes
 - - - [x] Write makeButtonColor()
-- - - [x] Write makeButtonImage() - Write the corrosponding center function
+- - - [x] Write makeButtonImage()
 - - - [x] Write isLetterPressed()
-- - - [x] Write drawPlus() - Needs full rewrite - Write the corrosponding center function
+- - - [x] Write drawPlus()
 - - - [ ] Write main()
-- - - - [ ] Write main function globals
+- - - - [x] Write main function globals
 - - - - [ ] Write everything else
-- - - - - [ ] 
+- - - - - [x] Start menu
+- - - - - [x] HMQ
+- - - - - [ ] Create Q: info
+- - - - - [ ] Create Q: stats
 - - [ ] Finish game
 - - - [x] Layout for game screen created
 - - - [ ] Write the layout
@@ -102,4 +106,4 @@ If you are cloning for the first time clone with `git clone --recurse-submodules
 - MODIFIED makeButtonText, now automatically determines the buttons width
 - ADDED makeButtonTextCenter, same as makeButtonText, but the given coords are the center of the button and not the top left corner
 - ADDED makeButtonColorCenter, figure it out
-
+- ADDED drawPlusCenter

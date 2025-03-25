@@ -28,8 +28,10 @@ bool makeButtonText( int pos_x, int pos_y, std::string text, int fontSize, bool 
     Rectangle main = { ( float ) pos_x, ( float ) pos_y,
         ( float ) MeasureText( text.c_str(), fontSize ) + 40, 
         ( float ) MeasureTextEx( GetFontDefault(), text.c_str(), fontSize, ( float ) fontSize / 10 ).y + 40 };
+    Rectangle coll = main;
+    coll.width += 5; coll.height += 5;
 
-        bool buttonDown = isDisabled || CheckCollisionPointRec( GetMousePosition(), main ) && IsMouseButtonDown( MOUSE_LEFT_BUTTON );
+        bool buttonDown = isDisabled || CheckCollisionPointRec( GetMousePosition(), coll ) && IsMouseButtonDown( MOUSE_LEFT_BUTTON );
     if ( buttonDown ) {
         main.x += 5; main.y += 5;
     }
@@ -39,7 +41,7 @@ bool makeButtonText( int pos_x, int pos_y, std::string text, int fontSize, bool 
 
 
     DrawRectangleRec( main, BLACK ); // Draw black boarder
-    DrawRectangleRec( inside, CheckCollisionPointRec( GetMousePosition(), main ) ? DARKGRAY : GRAY ); // inside color
+    DrawRectangleRec( inside, CheckCollisionPointRec( GetMousePosition(), coll ) ? DARKGRAY : GRAY ); // inside color
 
     // Drop shaddow
     if ( !buttonDown ) {
@@ -48,7 +50,7 @@ bool makeButtonText( int pos_x, int pos_y, std::string text, int fontSize, bool 
     }
     DrawText( text.c_str(), main.x + 10 + 10, main.y + 10 + 10, fontSize, BLACK );
 
-    return IsMouseButtonReleased( MOUSE_LEFT_BUTTON ) && CheckCollisionPointRec( GetMousePosition(), main );
+    return IsMouseButtonReleased( MOUSE_LEFT_BUTTON ) && CheckCollisionPointRec( GetMousePosition(), coll );
 
 }
 
@@ -132,8 +134,10 @@ bool makeButtonText_DEPRECATED( int pos_x, int pos_y, int size_x, int size_y,
 
 bool makeButtonColor( int pos_x, int pos_y, int size_x, int size_y, Color color1, Color color2, bool isDisabled ) {
     Rectangle main = { ( float ) pos_x, ( float ) pos_y, ( float ) size_x, ( float ) size_y };
+    Rectangle coll = main;
+    coll.width += 5; coll.height += 5;
 
-    bool buttonDown = isDisabled || CheckCollisionPointRec( GetMousePosition(), main ) && IsMouseButtonDown( MOUSE_LEFT_BUTTON );
+    bool buttonDown = isDisabled || CheckCollisionPointRec( GetMousePosition(), coll ) && IsMouseButtonDown( MOUSE_LEFT_BUTTON );
     if ( buttonDown ) {
         main.x += 5; main.y += 5;
     }
@@ -143,7 +147,7 @@ bool makeButtonColor( int pos_x, int pos_y, int size_x, int size_y, Color color1
 
 
     DrawRectangleRec( main, BLACK ); // Draw black boarder
-    DrawRectangleRec( inside, CheckCollisionPointRec( GetMousePosition(), main ) ? color2 : color1 ); // inside color
+    DrawRectangleRec( inside, CheckCollisionPointRec( GetMousePosition(), coll ) ? color2 : color1 ); // inside color
 
     // Drop shaddow
     if ( !buttonDown ) {
@@ -152,7 +156,7 @@ bool makeButtonColor( int pos_x, int pos_y, int size_x, int size_y, Color color1
     }
 
 
-    return IsMouseButtonReleased( MOUSE_LEFT_BUTTON ) && CheckCollisionPointRec( GetMousePosition(), main );
+    return IsMouseButtonReleased( MOUSE_LEFT_BUTTON ) && CheckCollisionPointRec( GetMousePosition(), coll );
 
 }
 
@@ -208,8 +212,10 @@ bool makeButtonImage( int pos_x, int pos_y, int size_x, int size_y, Image *image
     }
 
     Rectangle main = { ( float ) pos_x, ( float ) pos_y, ( float ) size_x, ( float ) size_y };
+    Rectangle coll = main;
+    coll.width += 5; coll.height += 5;
     
-    bool buttonDown = isDisabled || CheckCollisionPointRec( GetMousePosition(), main ) && IsMouseButtonDown( MOUSE_LEFT_BUTTON );
+    bool buttonDown = isDisabled || CheckCollisionPointRec( GetMousePosition(), coll ) && IsMouseButtonDown( MOUSE_LEFT_BUTTON );
     if ( buttonDown ) {
         main.x += 5; main.y += 5;
     }
@@ -231,9 +237,14 @@ bool makeButtonImage( int pos_x, int pos_y, int size_x, int size_y, Image *image
     }
 
 
-    return IsMouseButtonReleased( MOUSE_LEFT_BUTTON ) && CheckCollisionPointRec( GetMousePosition(), main );
+    return IsMouseButtonReleased( MOUSE_LEFT_BUTTON ) && CheckCollisionPointRec( GetMousePosition(), coll );
 
 }
+
+bool makeButtonImageCenter( int pos_x, int pos_y, int size_x, int size_y, Image *image, bool isDisabled ) {
+    return makeButtonImage( pos_x - size_x / 2, pos_y - size_y / 2, size_x, size_y, image, isDisabled );
+}
+
 /*
 ** Copy-pasted again
 ** NOTE: Call with the "image" part as &someImg, and unload it after ( if desired )
@@ -287,10 +298,55 @@ bool makeButtonImage_DEPRACATED(int pos_x, int pos_y, int size_x, int size_y, Im
     return result;
 }
 
+
+
+int drawPlus( int pos_x, int pos_y, bool canNotBePressed, int startNum, int maxOrMinVal, bool isMinus ) {
+    Rectangle main = { ( float ) pos_x, ( float ) pos_y, 100, 100 }; /* Main body (Black outline) */
+    Rectangle coll = main; /* Collision hitbox */
+    coll.width += 5; coll.height += 5; /* Update collision hitbox to include gray area, to prevent jankyness */
+    
+    canNotBePressed |= isMinus ? ( startNum <= maxOrMinVal ) : ( startNum >= maxOrMinVal ); /* update canBePressed if it is outside the bounds */
+
+    /* check if the button should be down, down if cant be pressed or mouse is down inside box */
+    /* button release added to prevent jankyness with the button flickering */
+    bool isDown = canNotBePressed || ( CheckCollisionPointRec( GetMousePosition(), coll ) && ( IsMouseButtonDown( MOUSE_LEFT_BUTTON ) || IsMouseButtonReleased( MOUSE_LEFT_BUTTON ) ) );
+
+    if ( isDown ) {
+        main.x += 5; main.y += 5;
+    }
+
+    /* gray / darkgray area inside the box */
+    Rectangle inside = { main.x + 10, main.y + 10, main.width - 20, main.height - 20 };
+
+    /* vert and hori bars of the plus or minus*/
+    Rectangle hBar = { main.x + 20, main.y + 45 , 60, 10 };
+    Rectangle vBar = { main.x + 45, main.y + 20, 10, 60 };
+
+    DrawRectangleRec( main, BLACK ); // draw black outling
+    DrawRectangleRec( inside, CheckCollisionPointRec( GetMousePosition(), coll ) ? DARKGRAY : GRAY ); // draw gray inside
+    DrawRectangleRec( hBar, BLACK ); // draw the minus sign
+    if ( !isMinus ) {
+        DrawRectangleRec( vBar, BLACK ); // turn into a plus if not a minus
+    }
+    if ( !isDown ) {
+        DrawRectangleRec( { main.x + main.width, main.y + 5, 5, main.height }, DARKGRAY ); // drop shadow if not down
+        DrawRectangleRec( { main.x + 5, main.y + main.height, main.width, 5 }, DARKGRAY );
+    }
+
+    if ( !canNotBePressed && CheckCollisionPointRec( GetMousePosition(), coll ) && IsMouseButtonReleased( MOUSE_LEFT_BUTTON ) ) { // can i haz increment??????
+        return startNum + ( isMinus ? -1 : 1 ); // yes
+    }
+    return startNum;
+}
+
+int drawPlusCenter( int pos_x, int pos_y, bool canNotBePressed, int startNum, int maxOrMinVal, bool isMinus ) {
+    return drawPlus( pos_x - 50, pos_y - 50, canNotBePressed, startNum, maxOrMinVal, isMinus );
+}
+
 /*
 ** You guessed it! Copy-pasted
 */
-int drawPlus(int posx, int posy, bool isGrayedOut, int numToIncrement, int maxMinVal, bool isMinus) {
+int drawPlus_DEPRECATED(int posx, int posy, bool isGrayedOut, int numToIncrement, int maxMinVal, bool isMinus) {
     Rectangle rec = { (float) posx, (float) posy, 100, 100 };
     if (!isGrayedOut) {
         if(!CheckCollisionPointRec(GetMousePosition(), rec)) {
@@ -461,7 +517,6 @@ int main( int argc, char** argv, char** envv ) {
             DrawFPS( 20, 20 );
             EndDrawing();
         } else if ( gameLayout == "howManyQuimberts" ) {
-            std::cout << "in hmq\n";
             BeginDrawing();
             ClearBackground( RAYWHITE );
             DrawRectangle((GetScreenWidth() / 2) - 60, (GetScreenHeight() / 2) + 20, 120, 150, BLACK);
@@ -479,7 +534,7 @@ int main( int argc, char** argv, char** envv ) {
                 DrawRectangle(140, 25, 5, 80, DARKGRAY);
                 DrawRectangle(25, 100, 115, 5, DARKGRAY);
             } else {
-                if (!IsMouseButtonDown(0)) {
+                if (!IsMouseButtonDown( MOUSE_LEFT_BUTTON )) {
                     DrawRectangle(20, 20, 120, 80, BLACK);
                     DrawRectangle(30, 30, 100, 60, GRAY);
                     DrawLineEx( { 115, 60 }, { 60, 60 }, 15, BLACK);
@@ -490,7 +545,7 @@ int main( int argc, char** argv, char** envv ) {
                     DrawRectangle(25, 25, 120, 80, BLACK);
                     DrawRectangle(35, 35, 100, 60, GRAY);
                     DrawLineEx( { 120, 65 }, { 65, 65 }, 15, BLACK);
-                    DrawTriangle( { 50, 45 }, { 75, 85 }, { 75, 45 }, BLACK);
+                    DrawTriangle( { 50, 65 }, { 75, 85 }, { 75, 45 }, BLACK);
                 }
 
                 if (IsMouseButtonReleased(0)) {
@@ -498,10 +553,18 @@ int main( int argc, char** argv, char** envv ) {
                 }
             }
 
-            makeButtonTextCenter( GetScreenWidth() / 2, GetScreenHeight() / 4 * 3, "Next", 60, false);
+            if ( makeButtonTextCenter( GetScreenWidth() / 2, GetScreenHeight() / 4 * 3, "Next", 60, false) ) {
+                gameLayout = "createQuimbertDetails";
+            }
             
-            drawPlus( GetScreenWidth() / 2 + 70, GetScreenHeight() / 2 + 40, false, quimbertQuantity, 8, false);
-            drawPlus( GetScreenWidth() / 2 - 175, GetScreenHeight() / 2 + 40, false, quimbertQuantity, 8, true);
+            quimbertQuantity = drawPlusCenter( GetScreenWidth() / 2 + 130, GetScreenHeight() / 2 + 90, false, quimbertQuantity, 8, false);
+            quimbertQuantity = drawPlusCenter( GetScreenWidth() / 2 - 130, GetScreenHeight() / 2 + 90, false, quimbertQuantity, 2, true);
+            EndDrawing();
+        } else if ( gameLayout == "createQuimbertDetails" ) {
+            BeginDrawing();
+            ClearBackground( RAYWHITE );
+
+
             EndDrawing();
         }
     }
