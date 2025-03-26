@@ -59,9 +59,9 @@ import static com.raylib.Raylib.WindowShouldClose;
 /*
 src\main\java\com\quimbertco\QuimbertQuarrel\
 
-path = ("D:\Registries\microsoft-jdk-21.0.4-windows-x64\jdk-21.0.4+7\bin;D:\Registries\apache-maven-3.9.9-bin\apache-maven-3.9.9\bin;D:\Apps\w64devkit\w64devkit\bin;D:\Registries\git\Git\bin;$env:path")
+path = ("D:\Registries\microsoft-jdk-21.0.4-windows-x64\jdk-21.0.4+7\bin;D:\Registries\apache-maven-3.9.9-bin\apache-maven-3.9.9\bin;D:\Apps\w64devkit\w64devkit\bin;D:\Apps\git\Git\bin;D:\Apps\git\Git\mingw64\etc\ssl\certs;$env:path")
 
-D:\Registries\git\Git\bin\git.exe
+D:\Apps\git\Git\bin\git.exe
 
 git pull
 
@@ -81,9 +81,9 @@ enter
 
 /*
 compile it: cmd +
-"D:\Registries\java\bin\javac.exe" -cp .\lib\jaylib-5.0.0-0.jar .\QuimbertQuarrel.java .\Quimbert.java
+"D:\Registries\java\bin\javac.exe" -cp .\lib\jaylib-5.0.0-0.jar .\src\main\java\com\quimbertco\QuimbertQuarrel\QuimbertQuarrel.java .\src\main\java\com\quimbertco\QuimbertQuarrel\Quimbert.java .\src\main\java\com\quimbertco\QuimbertQuarrel\QuimbertTextBox.java
 run it: cmd +
-"D:\Registries\java\bin\java.exe" -cp .\lib\jaylib-5.0.0-0.jar;. QuimbertQuarrel
+"D:\Registries\java\bin\java.exe" -cp .\lib\jaylib-5.0.0-0.jar;. .\target\classes\com\quimbertco\QuimbertQuarrel\QuimbertQuarrel.class
 */
 
 public class QuimbertQuarrel {
