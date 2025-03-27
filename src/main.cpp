@@ -206,12 +206,9 @@ bool makeButtonColor_DEPRECATED( int pos_x, int pos_y, int size_x, int size_y, C
 /*
 ** NOTE: Call with the "image" part as &someImg, and unload it after ( if desired )
 */
-bool makeButtonImage( int pos_x, int pos_y, int size_x, int size_y, Image *image, bool isDisabled ) {
-    if ( image == nullptr ) {
-        throw std::runtime_error( "makeButtonImage called with image equal to nullptr" );
-    }
+bool makeButtonImage( int pos_x, int pos_y, Texture2D tex, Color background, bool isDisabled ) {
 
-    Rectangle main = { ( float ) pos_x, ( float ) pos_y, ( float ) size_x, ( float ) size_y };
+    Rectangle main = { ( float ) pos_x, ( float ) pos_y, ( float ) tex.width + 20, ( float ) tex.height + 20 };
     Rectangle coll = main;
     coll.width += 5; coll.height += 5;
     
@@ -223,11 +220,9 @@ bool makeButtonImage( int pos_x, int pos_y, int size_x, int size_y, Image *image
     Rectangle inside = { main.x + 10, main.y + 10, main.width - 20, main.height - 20 };
     
     DrawRectangleRec( main, BLACK ); // Draw black boarder
+    DrawRectangleRec( inside, background ); // Draw grey inside
     
-    ImageCrop( image, inside);
-    Texture2D texture = LoadTextureFromImage( *image );
-    DrawTexture( texture, inside.x, inside.y, WHITE );
-    UnloadTexture( texture );
+    DrawTexture( tex, inside.x, inside.y, WHITE );
 
 
     // Drop shaddow
@@ -241,8 +236,8 @@ bool makeButtonImage( int pos_x, int pos_y, int size_x, int size_y, Image *image
 
 }
 
-bool makeButtonImageCenter( int pos_x, int pos_y, int size_x, int size_y, Image *image, bool isDisabled ) {
-    return makeButtonImage( pos_x - size_x / 2, pos_y - size_y / 2, size_x, size_y, image, isDisabled );
+bool makeButtonImageCenter( int pos_x, int pos_y, int size_x, int size_y, Texture2D tex, Color background, bool isDisabled ) {
+    return makeButtonImage( pos_x - ( tex.width + 40 ) / 2, pos_y - ( tex.height + 40 ) / 2, tex, background, isDisabled );
 }
 
 /*
@@ -486,9 +481,21 @@ int main( int argc, char** argv, char** envv ) {
         ( float ) GetScreenWidth() / 2 + 20, 350, 375, 75 } );
     textBoxOwner.setCharLength( 25 );
 
-    Image exitImage = LoadImage( "resources/textures/UI/exit.png" );
-    Image mutedImage = LoadImage( "resources/textures/UI/muted.png");
-    Image unmutedImage = LoadImage( "resources/textures/UI/unmuted.png");
+    Image exitImage = LoadImage( "./resources/textures/UI/exit.png" );
+    Texture2D exitTex = LoadTextureFromImage( exitImage );
+    UnloadImage( exitImage );
+
+    Image mutedImage = LoadImage( "./resources/textures/UI/muted.png");
+    ImageResize( &mutedImage, 70, 70 );
+    Texture2D mutedTex = LoadTextureFromImage( mutedImage );
+    UnloadImage( mutedImage );
+
+    Image unmutedImage = LoadImage( "./resources/textures/UI/unmuted.png");
+    ImageResize( &unmutedImage, 70, 70 );
+    Texture2D unmutedTex = LoadTextureFromImage( unmutedImage );
+    UnloadImage( unmutedImage );
+
+
 
     while ( !WindowShouldClose() ) {
 
@@ -510,7 +517,7 @@ int main( int argc, char** argv, char** envv ) {
                 gameLayout = "howManyQuimberts";
             }
 
-            if ( makeButtonImage( GetScreenWidth() - 170, 10, 70, 70, &( isMusicMuted ? mutedImage : unmutedImage ), false ) ) {
+            if ( makeButtonImage( GetScreenWidth() - 170, 10, ( isMusicMuted ? mutedTex : unmutedTex ), GRAY, false ) ) {
                 isMusicMuted = !isMusicMuted;
             }
 
@@ -564,6 +571,37 @@ int main( int argc, char** argv, char** envv ) {
             BeginDrawing();
             ClearBackground( RAYWHITE );
 
+            Rectangle backButton = {20, 20, 120, 80};
+
+            // Back button
+            if (!CheckCollisionPointRec(GetMousePosition(), backButton)) {
+                DrawRectangleRec(backButton, BLACK);
+                DrawRectangle(30, 30, 100, 60, LIGHTGRAY);
+                DrawLineEx( { 115, 60 }, { 60, 60 }, 15, BLACK);
+                DrawTriangle({ 45, 60 }, { 70, 80 }, { 70, 40 }, BLACK);
+                DrawRectangle(140, 25, 5, 80, DARKGRAY);
+                DrawRectangle(25, 100, 115, 5, DARKGRAY);
+            } else {
+                if (!IsMouseButtonDown( MOUSE_LEFT_BUTTON )) {
+                    DrawRectangle(20, 20, 120, 80, BLACK);
+                    DrawRectangle(30, 30, 100, 60, GRAY);
+                    DrawLineEx( { 115, 60 }, { 60, 60 }, 15, BLACK);
+                    DrawTriangle( { 45, 60 }, { 70, 80 }, { 70, 40 }, BLACK);
+                    DrawRectangle(140, 25, 5, 80, DARKGRAY);
+                    DrawRectangle(25, 100, 115, 5, DARKGRAY);
+                } else {
+                    DrawRectangle(25, 25, 120, 80, BLACK);
+                    DrawRectangle(35, 35, 100, 60, GRAY);
+                    DrawLineEx( { 120, 65 }, { 65, 65 }, 15, BLACK);
+                    DrawTriangle( { 50, 65 }, { 75, 85 }, { 75, 45 }, BLACK);
+                }
+
+                if (IsMouseButtonReleased(0)) {
+                    gameLayout = "howManyQuimberts";
+                }
+            }
+
+            bool madeQuimbert = false;
 
             EndDrawing();
         }
