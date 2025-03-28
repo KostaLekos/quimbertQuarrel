@@ -461,7 +461,7 @@ int main( int argc, char** argv, char** envv ) {
     int startingPoints = randInt( 25, 35 );
     std::vector< Quimbert > quimbertArr;
     bool gameDone;
-    bool isMusicMuted;
+    bool isMusicMuted = false;
     std::string gameLayout = "start";
     
     bool madeQuimbert = false;
@@ -656,11 +656,15 @@ int main( int argc, char** argv, char** envv ) {
             if ( makeButtonColor( GetScreenWidth() / 2 + 20, 450, 60, 60, currentColor, ColorTint( currentColor, DARKGRAY ), false ) ) {
                 showColorSelectionPanel = true;
             }
+
+
             
-            if ( showColorSelectionPanel ) {
-                Rectangle colorSelectionPanelMain = { ( float ) GetScreenWidth() / 2 + 60 + 20, 450, 80 * 5 + 20 * 2, 80 * 2 + 20 * 2 };
+            if ( showColorSelectionPanel ) {                
+                /*
+                ** The box that the color buttons are in
+                */
+                Rectangle colorSelectionPanelMain = { ( float ) GetScreenWidth() / 2 + 60 + 20 + 10, 450, 80 * 5 + 20 * 2, 80 * 2 + 20 * 2 };
                 Rectangle colorSelectionPanelInside = colorSelectionPanelMain;
-                
                 colorSelectionPanelInside.x += 10; colorSelectionPanelInside.y += 10; 
                 colorSelectionPanelInside.width -= 20; colorSelectionPanelInside.height -= 20;
 
@@ -677,49 +681,58 @@ int main( int argc, char** argv, char** envv ) {
 
                 if ( makeButtonColor( colorSelectionPanelInside.x + 80 * 0 + 10, colorSelectionPanelInside.y + 80 * 0 + 10, 60, 60, RED, ColorTint( RED, DARKGRAY ), false) ) {
                     color = "red";
+                    showColorSelectionPanel = false;
                 }
                 
                 if ( makeButtonColor( colorSelectionPanelInside.x + 80 * 1 + 10, colorSelectionPanelInside.y + 80 * 0 + 10, 60, 60, ORANGE, ColorTint( ORANGE, DARKGRAY ), false) ) {
                     color = "orange";
+                    showColorSelectionPanel = false;
                 }
                 
                 if ( makeButtonColor( colorSelectionPanelInside.x + 80 * 2 + 10, colorSelectionPanelInside.y + 80 * 0 + 10, 60, 60, YELLOW, ColorTint( YELLOW, DARKGRAY ), false) ) {
                     color = "yellow";
+                    showColorSelectionPanel = false;
                 }
                 
                 if ( makeButtonColor( colorSelectionPanelInside.x + 80 * 3 + 10, colorSelectionPanelInside.y + 80 * 0 + 10, 60, 60, GREEN, ColorTint( GREEN, DARKGRAY ), false) ) {
                     color = "green";
+                    showColorSelectionPanel = false;
                 }
                 
                 if ( makeButtonColor( colorSelectionPanelInside.x + 80 * 4 + 10, colorSelectionPanelInside.y + 80 * 0 + 10, 60, 60, BLUE, ColorTint( BLUE, DARKGRAY ), false) ) {
                     color = "blue";
+                    showColorSelectionPanel = false;
                 }
                 
                 if ( makeButtonColor( colorSelectionPanelInside.x + 80 * 0 + 10, colorSelectionPanelInside.y + 80 * 1 + 10, 60, 60, DARKBLUE, ColorTint( DARKBLUE, DARKGRAY ), false) ) {
-                    color = "darblue";
+                    color = "darkblue";
+                    showColorSelectionPanel = false;
                 }
                 
                 if ( makeButtonColor( colorSelectionPanelInside.x + 80 * 1 + 10, colorSelectionPanelInside.y + 80 * 1 + 10, 60, 60, PURPLE, ColorTint( PURPLE, DARKGRAY ), false) ) {
                     color = "purple";
+                    showColorSelectionPanel = false;
                 }
                 
                 if ( makeButtonColor( colorSelectionPanelInside.x + 80 * 2 + 10, colorSelectionPanelInside.y + 80 * 1 + 10, 60, 60, BLACK, ColorTint( BLACK, DARKGRAY ), false) ) {
                     color = "black";
+                    showColorSelectionPanel = false;
                 }
                 
                 if ( makeButtonColor( colorSelectionPanelInside.x + 80 * 3 + 10, colorSelectionPanelInside.y + 80 * 1 + 10, 60, 60, GRAY, ColorTint( GRAY, DARKGRAY ), false) ) {
                     color = "gray";
+                    showColorSelectionPanel = false;
                 }
                 
                 if ( makeButtonColor( colorSelectionPanelInside.x + 80 * 4 + 10, colorSelectionPanelInside.y + 80 * 1 + 10, 60, 60, PINK, ColorTint( PINK, DARKGRAY ), false) ) {
                     color = "pink";
                 }
                 
+                if ( IsMouseButtonDown( MOUSE_LEFT_BUTTON ) && !CheckCollisionPointRec( GetMousePosition(), colorSelectionPanelMain ) ) {
+                    showColorSelectionPanel = false;
+                }
             }
             
-            if ( IsMouseButtonDown( MOUSE_LEFT_BUTTON ) && !CheckCollisionPointRec( GetMousePosition(), { ( float ) GetScreenWidth() / 2 + 40, 450, 60, 60 } ) ) {
-                showColorSelectionPanel = false;
-            }
             
 
             currentColor = stoc( color );
