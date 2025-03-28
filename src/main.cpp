@@ -56,18 +56,44 @@ Color stoc( std::string color ) {
         return Q_YELLOW;
     } else if ( color == "green" ) {
         return Q_GREEN;
+    } else if ( color == "lightblue" ) {
+        return Q_LIGHTBLUE;
     } else if ( color == "blue" ) {
         return Q_BLUE;
-    } else if ( color == "darkblue" ) {
-        return Q_DARKBLUE;
     } else if ( color == "purple" ) {
         return Q_PURPLE;
     } else if ( color == "black" ) {
-        return Q_BLACK;
+        return Q_DARKGRAY;
+    } else if ( color == "gray" ) {
+        return Q_LIGHTGRAY;
+    } else if ( color == "pink" ) {
+        return Q_PINK;
+    } else {
+        throw std::runtime_error( color + " is not a recognized color");
+    }
+}
+
+Color stocDark( std::string color ) {
+    if ( color == "red") {
+        return Q_MAROON;
+    } else if ( color == "orange" ) {
+        return Q_DARKORANGE;
+    } else if ( color == "yellow" ) {
+        return Q_GOLD;
+    } else if ( color == "green" ) {
+        return Q_LIME;
+    } else if ( color == "lightblue" ) {
+        return Q_DARKLIGHTBLUE;
+    } else if ( color == "blue" ) {
+        return Q_DARKBLUE;
+    } else if ( color == "purple" ) {
+        return Q_VIOLET;
+    } else if ( color == "black" ) {
+        return Q_LIGHTBLACK;
     } else if ( color == "gray" ) {
         return Q_GRAY;
     } else if ( color == "pink" ) {
-        return Q_PINK;
+        return Q_MAGENTA;
     } else {
         throw std::runtime_error( color + " is not a recognized color");
     }
@@ -681,7 +707,7 @@ int main( int argc, char** argv, char** envv ) {
             textBoxName.setBox( { ( float ) GetScreenWidth() / 2 + 20, 250, 375, 75 } );
             textBoxOwner.setBox( { ( float ) GetScreenWidth() / 2 + 20, 350, 375, 75 } );
 
-            if ( makeButtonColor( GetScreenWidth() / 2 + 20, 450, 60, 60, currentColor, ColorTint( currentColor, Q_DARKGRAY ), false ) ) {
+            if ( makeButtonColor( GetScreenWidth() / 2 + 20, 450, 60, 60, currentColor, stocDark(color), false ) ) {
                 showColorSelectionPanel = true;
             }
 
@@ -742,12 +768,12 @@ int main( int argc, char** argv, char** envv ) {
                 }
                 
                 if ( makeButtonColor( colorSelectionPanelInside.x + 80 * 4 + 10, colorSelectionPanelInside.y + 80 * 0 + 10, 60, 60, Q_LIGHTBLUE, Q_DARKLIGHTBLUE, false) ) {
-                    color = "blue";
+                    color = "lightblue";
                     showColorSelectionPanel = false;
                 }
                 
                 if ( makeButtonColor( colorSelectionPanelInside.x + 80 * 0 + 10, colorSelectionPanelInside.y + 80 * 1 + 10, 60, 60, Q_BLUE, Q_DARKBLUE, false) ) {
-                    color = "darkblue";
+                    color = "blue";
                     showColorSelectionPanel = false;
                 }
                 
@@ -768,6 +794,7 @@ int main( int argc, char** argv, char** envv ) {
                 
                 if ( makeButtonColor( colorSelectionPanelInside.x + 80 * 4 + 10, colorSelectionPanelInside.y + 80 * 1 + 10, 60, 60, Q_PINK, MAGENTA, false) ) {
                     color = "pink";
+                    showColorSelectionPanel = false;
                 }
                 
                 if ( IsMouseButtonDown( MOUSE_LEFT_BUTTON ) && !CheckCollisionPointRec( GetMousePosition(), colorSelectionPanelMain ) ) {
