@@ -36,7 +36,9 @@ void QuimbertTextBox::processTextInput() {
     /*
     ** Else, it isn't
     */
-    else _mouseOnText = false;
+    else if ( !CheckCollisionPointRec( GetMousePosition(), _boundingBox ) && IsMouseButtonPressed( MOUSE_LEFT_BUTTON ) ) {
+        _mouseOnText = false;
+    }
 
     if ( _mouseOnText ) {
 
@@ -54,14 +56,14 @@ void QuimbertTextBox::processTextInput() {
         ** Continue checking the keys until there isn't any
         */
         while ( key > 0 ) {
-            if ( key >= 32 && key <= 126 && _text.length() <= _maxCharCount ) {
+            if ( key >= 32 && key <= 126 && _text.length() < _maxCharCount ) {
                 _text += key;
             }
 
             key = GetCharPressed();
         }
 
-        if ( IsKeyPressed( KEY_BACKSPACE ) ) {
+        if ( IsKeyPressed( KEY_BACKSPACE ) || IsKeyPressedRepeat( KEY_BACKSPACE )) {
             if ( _text.length() < 2 ) {
                 _text = "";
             } else {
@@ -71,6 +73,7 @@ void QuimbertTextBox::processTextInput() {
 
     } else SetMouseCursor( MOUSE_CURSOR_DEFAULT );
 }
+
 
 void QuimbertTextBox::render() {
 
@@ -86,9 +89,11 @@ void QuimbertTextBox::render() {
     }
     DrawRectangleLinesEx( _boundingBox, 10.0f, BLACK );
 
+    // MeasureTextEx( GetFontDefault(), text.c_str(), fontSize, ( float ) fontSize / 10 ).y + 40 }
+
     if ( _mouseOnText ) {
         DrawText( std::format( "INPUT CHARS: {}/{}", _text.length(), _maxCharCount ).c_str(),
-            GetScreenWidth() / 2 + 30, 329, 20, DARKGRAY);
+            _boundingBox.x, _boundingBox.y + _boundingBox.height, 20, DARKGRAY);
         
 
         if ( _text.length() < _maxCharCount ) {
@@ -98,14 +103,10 @@ void QuimbertTextBox::render() {
             if ( _frameCounter / 20 % 2 == 0 ) {
                 DrawText( "_", _boundingBox.x + 23
                     + MeasureText( _text.c_str(), 40 ),
-                    _boundingBox.y, 40, DARKGRAY);
-            } else {
-                /*
-                ** Kosta I very much disapprove of the magic numbers here
-                ** Please make it relative to the position of the textbox
-                */
-                DrawText( "Press BACKSOACE to delete characters...", 230, 300, 20, GRAY);
+                    _boundingBox.y + 15, 40, DARKGRAY);
             }
+        } else {
+            DrawText( "Press BACKSPACE to delete characters...", _boundingBox.x, _boundingBox.y - 20, 20, GRAY);
         }
     }
 

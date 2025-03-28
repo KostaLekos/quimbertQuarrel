@@ -4,6 +4,7 @@
 
 #include "../third/raylib/src/raylib.h"
 
+#include <raylib.h>
 #include <stdexcept>
 #include <string>
 #include <iostream>
@@ -17,13 +18,38 @@ std::mt19937_64::result_type randInt( int min, int max ) {
     return dist( rng );
 }
 
-
+// Colors: Red, Orange, Yellow, Green, Blue, DarkBlue, Purple, Black, Gray, Pink
+Color stoc( std::string color ) {
+    if ( color == "red") {
+        return RED;
+    } else if ( color == "orange" ) {
+        return ORANGE;
+    } else if ( color == "yellow" ) {
+        return YELLOW;
+    } else if ( color == "green" ) {
+        return GREEN;
+    } else if ( color == "blue" ) {
+        return BLUE;
+    } else if ( color == "darkblue" ) {
+        return DARKBLUE;
+    } else if ( color == "purple" ) {
+        return PURPLE;
+    } else if ( color == "black" ) {
+        return BLACK;
+    } else if ( color == "gray" ) {
+        return GRAY;
+    } else if ( color == "pink" ) {
+        return PINK;
+    } else {
+        throw std::runtime_error( color + " is not a recognized color");
+    }
+}
 
 /*
 ** Rewrote makeButtonText, give position of top-left corner, text, fontsize, and whether or not to ignore input
 ** Made better than the previous one!
 */
-bool makeButtonText( int pos_x, int pos_y, std::string text, int fontSize, bool isDisabled ) {
+bool makeButtonText( int pos_x, int pos_y, std::string text, int fontSize, bool isDisabled = false ) {
 
     Rectangle main = { ( float ) pos_x, ( float ) pos_y,
         ( float ) MeasureText( text.c_str(), fontSize ) + 40, 
@@ -58,7 +84,7 @@ bool makeButtonText( int pos_x, int pos_y, std::string text, int fontSize, bool 
 /*
 ** Makes a button, but with the center at the coordinates listed
 */
-bool makeButtonTextCenter( int pos_x, int pos_y, std::string text, int fontSize, bool isDisabled ) {
+bool makeButtonTextCenter( int pos_x, int pos_y, std::string text, int fontSize, bool isDisabled = false ) {
     return makeButtonText( pos_x - 10 - 10 - MeasureText( text.c_str(), fontSize ) / 2,
                                pos_y - 10 - 10 - MeasureTextEx( GetFontDefault(), text.c_str(), fontSize, ( float ) fontSize / 10 ).y,
                                text, fontSize, isDisabled );
@@ -71,7 +97,7 @@ bool makeButtonTextCenter( int pos_x, int pos_y, std::string text, int fontSize,
 ** Source code is not well documented because i forget how it works
 */
 bool makeButtonText_DEPRECATED( int pos_x, int pos_y, int size_x, int size_y,
-    std::string text, int fontSize, bool isDisabled ) {
+    std::string text, int fontSize, bool isDisabled = false ) {
     
     Rectangle main{ ( float ) pos_x, ( float ) pos_y, ( float ) size_x, ( float ) size_y };
 
@@ -132,7 +158,7 @@ bool makeButtonText_DEPRECATED( int pos_x, int pos_y, int size_x, int size_y,
     }
 }
 
-bool makeButtonColor( int pos_x, int pos_y, int size_x, int size_y, Color color1, Color color2, bool isDisabled ) {
+bool makeButtonColor( int pos_x, int pos_y, int size_x, int size_y, Color color1, Color color2, bool isDisabled = false ) {
     Rectangle main = { ( float ) pos_x, ( float ) pos_y, ( float ) size_x, ( float ) size_y };
     Rectangle coll = main;
     coll.width += 5; coll.height += 5;
@@ -160,13 +186,13 @@ bool makeButtonColor( int pos_x, int pos_y, int size_x, int size_y, Color color1
 
 }
 
-bool makeButtonColorCenter( int pos_x, int pos_y, int size_x, int size_y, Color color1, Color color2, bool isDisabled ) {
+bool makeButtonColorCenter( int pos_x, int pos_y, int size_x, int size_y, Color color1, Color color2, bool isDisabled = false ) {
     return makeButtonColor( pos_x - size_x / 2, pos_y - size_y / 2, size_x, size_y, color1, color2, isDisabled );
 }
 /*
 ** Copy-pasted from Java verson
 */
-bool makeButtonColor_DEPRECATED( int pos_x, int pos_y, int size_x, int size_y, Color color1, Color color2, bool isDisabled ) {
+bool makeButtonColor_DEPRECATED( int pos_x, int pos_y, int size_x, int size_y, Color color1, Color color2, bool isDisabled = false ) {
     bool result = false;
     // background rectangle / collision rectangle
     Rectangle main{ ( float ) pos_x, ( float ) pos_y, ( float ) size_x, ( float ) size_y };
@@ -206,7 +232,7 @@ bool makeButtonColor_DEPRECATED( int pos_x, int pos_y, int size_x, int size_y, C
 /*
 ** NOTE: Call with the "image" part as &someImg, and unload it after ( if desired )
 */
-bool makeButtonImage( int pos_x, int pos_y, Texture2D tex, Color background, bool isDisabled ) {
+bool makeButtonImage( int pos_x, int pos_y, Texture2D tex, Color background, bool isDisabled = false ) {
 
     Rectangle main = { ( float ) pos_x, ( float ) pos_y, ( float ) tex.width + 20, ( float ) tex.height + 20 };
     Rectangle coll = main;
@@ -220,7 +246,7 @@ bool makeButtonImage( int pos_x, int pos_y, Texture2D tex, Color background, boo
     Rectangle inside = { main.x + 10, main.y + 10, main.width - 20, main.height - 20 };
     
     DrawRectangleRec( main, BLACK ); // Draw black boarder
-    DrawRectangleRec( inside, background ); // Draw grey inside
+    DrawRectangleRec( inside, background ); // Draw gray inside
     
     DrawTexture( tex, inside.x, inside.y, WHITE );
 
@@ -236,7 +262,7 @@ bool makeButtonImage( int pos_x, int pos_y, Texture2D tex, Color background, boo
 
 }
 
-bool makeButtonImageCenter( int pos_x, int pos_y, int size_x, int size_y, Texture2D tex, Color background, bool isDisabled ) {
+bool makeButtonImageCenter( int pos_x, int pos_y, int size_x, int size_y, Texture2D tex, Color background, bool isDisabled = false ) {
     return makeButtonImage( pos_x - ( tex.width + 40 ) / 2, pos_y - ( tex.height + 40 ) / 2, tex, background, isDisabled );
 }
 
@@ -244,7 +270,7 @@ bool makeButtonImageCenter( int pos_x, int pos_y, int size_x, int size_y, Textur
 ** Copy-pasted again
 ** NOTE: Call with the "image" part as &someImg, and unload it after ( if desired )
 */
-bool makeButtonImage_DEPRACATED(int pos_x, int pos_y, int size_x, int size_y, Image* image, bool isDisabled) {
+bool makeButtonImage_DEPRACATED(int pos_x, int pos_y, int size_x, int size_y, Image* image, bool isDisabled = false ) {
     // load image
     ImageCrop( image , { ( float ) pos_x + 10, ( float ) pos_y + 10, ( float ) size_x - 20, ( float ) size_y - 20 } );
     Texture tex = LoadTextureFromImage( *image );
@@ -295,7 +321,7 @@ bool makeButtonImage_DEPRACATED(int pos_x, int pos_y, int size_x, int size_y, Im
 
 
 
-int drawPlus( int pos_x, int pos_y, bool canNotBePressed, int startNum, int maxOrMinVal, bool isMinus ) {
+int drawPlus( int pos_x, int pos_y, bool canNotBePressed, int startNum, int maxOrMinVal, bool isMinus = false ) {
     Rectangle main = { ( float ) pos_x, ( float ) pos_y, 100, 100 }; /* Main body (Black outline) */
     Rectangle coll = main; /* Collision hitbox */
     coll.width += 5; coll.height += 5; /* Update collision hitbox to include gray area, to prevent jankyness */
@@ -334,7 +360,7 @@ int drawPlus( int pos_x, int pos_y, bool canNotBePressed, int startNum, int maxO
     return startNum;
 }
 
-int drawPlusCenter( int pos_x, int pos_y, bool canNotBePressed, int startNum, int maxOrMinVal, bool isMinus ) {
+int drawPlusCenter( int pos_x, int pos_y, bool canNotBePressed, int startNum, int maxOrMinVal, bool isMinus = false ) {
     return drawPlus( pos_x - 50, pos_y - 50, canNotBePressed, startNum, maxOrMinVal, isMinus );
 }
 
@@ -425,20 +451,28 @@ int main( int argc, char** argv, char** envv ) {
     */
     int looks;
     int smell;
-    std::string color;
+    std::string color = "red";
     int personality;
     int gumption;
     int length;
     std::string name;
     std::string owner;
-
+    
     int startingPoints = randInt( 25, 35 );
     std::vector< Quimbert > quimbertArr;
     bool gameDone;
     bool isMusicMuted;
     std::string gameLayout = "start";
-
+    
+    bool madeQuimbert = false;
+    int currentQuimbert = 0;
+    
     int monitorWidth = GetMonitorWidth( 0 ), monitorHeight = GetMonitorHeight( 0 );
+    
+    bool showColorSelectionPanel = false;
+    Color currentColor = stoc( color );
+    
+    
 
 
     // Image info1 = LoadImage( "./resources/textures/UI/infoButton1.png" );
@@ -564,6 +598,8 @@ int main( int argc, char** argv, char** envv ) {
                 gameLayout = "createQuimbertDetails";
             }
             
+            DrawText( "How many Quimberts?", GetScreenWidth() / 2 - MeasureText("How many Quimberts?", 80) / 2, GetScreenHeight() / 2 - 200, 80, BLACK);
+
             quimbertQuantity = drawPlusCenter( GetScreenWidth() / 2 + 130, GetScreenHeight() / 2 + 90, false, quimbertQuantity, 8, false);
             quimbertQuantity = drawPlusCenter( GetScreenWidth() / 2 - 130, GetScreenHeight() / 2 + 90, false, quimbertQuantity, 2, true);
             EndDrawing();
@@ -601,7 +637,92 @@ int main( int argc, char** argv, char** envv ) {
                 }
             }
 
-            bool madeQuimbert = false;
+            textBoxName.processTextInput();
+            textBoxName.render();
+
+            textBoxOwner.processTextInput();
+            textBoxOwner.render();
+
+            DrawText( ( ( std::string( "Quimbert #" ) + std::to_string( currentQuimbert + 1 ) ).c_str() ), (GetScreenWidth() / 2) - (MeasureText("Quimbert #1", 96) / 2), 20, 96, BLACK);
+            DrawText(("Make your Quimbert"), (GetScreenWidth() / 2) - (MeasureText("Make your Quimbert", 96) / 2), 120, 96, BLACK);
+
+            DrawText("Name:", ((GetScreenWidth() / 2) - MeasureText("Name:", 72)) - 30, 250, 72, BLACK);
+            DrawText("Owner:", ((GetScreenWidth() / 2) - MeasureText("Owner:", 72)) - 30, 350, 72, BLACK);
+            DrawText("Color:", ((GetScreenWidth() / 2) - MeasureText("Color:", 72)) - 30, 450, 72, BLACK);
+
+            textBoxName.setBox( { ( float ) GetScreenWidth() / 2 + 20, 250, 375, 75 } );
+            textBoxOwner.setBox( { ( float ) GetScreenWidth() / 2 + 20, 350, 375, 75 } );
+
+            if ( makeButtonColor( GetScreenWidth() / 2 + 20, 450, 60, 60, currentColor, ColorTint( currentColor, DARKGRAY ), false ) ) {
+                showColorSelectionPanel = true;
+            }
+            
+            if ( showColorSelectionPanel ) {
+                Rectangle colorSelectionPanelMain = { ( float ) GetScreenWidth() / 2 + 60 + 20, 450, 80 * 5 + 20 * 2, 80 * 2 + 20 * 2 };
+                Rectangle colorSelectionPanelInside = colorSelectionPanelMain;
+                
+                colorSelectionPanelInside.x += 10; colorSelectionPanelInside.y += 10; 
+                colorSelectionPanelInside.width -= 20; colorSelectionPanelInside.height -= 20;
+
+                /*
+                ** Draw the box that the selector buttons are in
+                */
+                DrawRectangleRec( colorSelectionPanelMain, BLACK );
+                DrawRectangleRec( colorSelectionPanelInside, GRAY );
+
+                /*
+                ** Draw the selector buttons
+                */
+                // Colors: Red, Orange, Yellow, Green, Blue, DarkBlue, Purple, Black, Gray, Pink
+
+                if ( makeButtonColor( colorSelectionPanelInside.x + 80 * 0 + 10, colorSelectionPanelInside.y + 80 * 0 + 10, 60, 60, RED, ColorTint( RED, DARKGRAY ), false) ) {
+                    color = "red";
+                }
+                
+                if ( makeButtonColor( colorSelectionPanelInside.x + 80 * 1 + 10, colorSelectionPanelInside.y + 80 * 0 + 10, 60, 60, ORANGE, ColorTint( ORANGE, DARKGRAY ), false) ) {
+                    color = "orange";
+                }
+                
+                if ( makeButtonColor( colorSelectionPanelInside.x + 80 * 2 + 10, colorSelectionPanelInside.y + 80 * 0 + 10, 60, 60, YELLOW, ColorTint( YELLOW, DARKGRAY ), false) ) {
+                    color = "yellow";
+                }
+                
+                if ( makeButtonColor( colorSelectionPanelInside.x + 80 * 3 + 10, colorSelectionPanelInside.y + 80 * 0 + 10, 60, 60, GREEN, ColorTint( GREEN, DARKGRAY ), false) ) {
+                    color = "green";
+                }
+                
+                if ( makeButtonColor( colorSelectionPanelInside.x + 80 * 4 + 10, colorSelectionPanelInside.y + 80 * 0 + 10, 60, 60, BLUE, ColorTint( BLUE, DARKGRAY ), false) ) {
+                    color = "blue";
+                }
+                
+                if ( makeButtonColor( colorSelectionPanelInside.x + 80 * 0 + 10, colorSelectionPanelInside.y + 80 * 1 + 10, 60, 60, DARKBLUE, ColorTint( DARKBLUE, DARKGRAY ), false) ) {
+                    color = "darblue";
+                }
+                
+                if ( makeButtonColor( colorSelectionPanelInside.x + 80 * 1 + 10, colorSelectionPanelInside.y + 80 * 1 + 10, 60, 60, PURPLE, ColorTint( PURPLE, DARKGRAY ), false) ) {
+                    color = "purple";
+                }
+                
+                if ( makeButtonColor( colorSelectionPanelInside.x + 80 * 2 + 10, colorSelectionPanelInside.y + 80 * 1 + 10, 60, 60, BLACK, ColorTint( BLACK, DARKGRAY ), false) ) {
+                    color = "black";
+                }
+                
+                if ( makeButtonColor( colorSelectionPanelInside.x + 80 * 3 + 10, colorSelectionPanelInside.y + 80 * 1 + 10, 60, 60, GRAY, ColorTint( GRAY, DARKGRAY ), false) ) {
+                    color = "gray";
+                }
+                
+                if ( makeButtonColor( colorSelectionPanelInside.x + 80 * 4 + 10, colorSelectionPanelInside.y + 80 * 1 + 10, 60, 60, PINK, ColorTint( PINK, DARKGRAY ), false) ) {
+                    color = "pink";
+                }
+                
+            }
+            
+            if ( IsMouseButtonDown( MOUSE_LEFT_BUTTON ) && !CheckCollisionPointRec( GetMousePosition(), { ( float ) GetScreenWidth() / 2 + 40, 450, 60, 60 } ) ) {
+                showColorSelectionPanel = false;
+            }
+            
+
+            currentColor = stoc( color );
 
             EndDrawing();
         }
