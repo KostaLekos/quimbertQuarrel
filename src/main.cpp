@@ -10,36 +10,62 @@
 #include <iostream>
 #include <random>
 
+#define Q_RAYWHITE {245, 245, 245, 255}
+#define Q_OFFWHITE {230, 230, 230, 255}
+#define Q_WHITE {255, 255, 255, 255}
+#define Q_RED {230, 41, 55, 255}
+#define Q_MAROON {190, 33, 55, 255}
+#define Q_ORANGE {255, 161, 0, 255}
+#define Q_DARKORANGE {215, 135, 0, 255}
+#define Q_YELLOW {253, 249, 0, 255}
+#define Q_GOLD {255, 203, 0, 255}
+#define Q_LIME {0, 158, 47, 255}
+#define Q_GREEN {0, 228, 48, 255}
+#define Q_LIGHTBLUE {102, 191, 255, 255}
+#define Q_DARKLIGHTBLUE {0, 148, 255, 255}
+#define Q_BLUE {0, 121, 241, 255}
+#define Q_DARKBLUE {0, 82, 172, 255}
+#define Q_VIOLET {135, 60, 190, 255}
+#define Q_PURPLE {200, 122, 255, 255}
+#define Q_DARKPURPLE {112, 31, 126, 255}
+#define Q_DARKGRAY {80, 80, 80, 255}
+#define Q_LIGHTBLACK {39, 39, 39, 255}
+#define Q_BLACK {0, 0, 0, 255}
+#define Q_LIGHTGRAY {200, 200, 200, 255}
+#define Q_GRAY {130, 130, 130, 255}
+#define Q_PINK {255, 109, 194, 255}
+#define Q_MAGENTA {255, 82, 183, 255}
+
 std::mt19937_64::result_type randInt( int min, int max ) {
     std::random_device randomDev;
     std::mt19937_64 rng( randomDev() );
     std::uniform_int_distribution< std::mt19937::result_type > dist( min, max );
 
     return dist( rng );
-}
+}//kokk
 
-// Colors: Red, Orange, Yellow, Green, Blue, DarkBlue, Purple, Black, Gray, Pink
+// Colors: Red, Orange, Yellow, Green, Blue, DarkBlue, Purple, Q_BLACK, Q_GRAY, Pink
 Color stoc( std::string color ) {
     if ( color == "red") {
-        return RED;
+        return Q_RED;
     } else if ( color == "orange" ) {
-        return ORANGE;
+        return Q_ORANGE;
     } else if ( color == "yellow" ) {
-        return YELLOW;
+        return Q_YELLOW;
     } else if ( color == "green" ) {
-        return GREEN;
+        return Q_GREEN;
     } else if ( color == "blue" ) {
-        return BLUE;
+        return Q_BLUE;
     } else if ( color == "darkblue" ) {
-        return DARKBLUE;
+        return Q_DARKBLUE;
     } else if ( color == "purple" ) {
-        return PURPLE;
+        return Q_PURPLE;
     } else if ( color == "black" ) {
-        return BLACK;
+        return Q_BLACK;
     } else if ( color == "gray" ) {
-        return GRAY;
+        return Q_GRAY;
     } else if ( color == "pink" ) {
-        return PINK;
+        return Q_PINK;
     } else {
         throw std::runtime_error( color + " is not a recognized color");
     }
@@ -66,15 +92,15 @@ bool makeButtonText( int pos_x, int pos_y, std::string text, int fontSize, bool 
 
 
 
-    DrawRectangleRec( main, BLACK ); // Draw black boarder
-    DrawRectangleRec( inside, CheckCollisionPointRec( GetMousePosition(), coll ) ? DARKGRAY : GRAY ); // inside color
+    DrawRectangleRec( main, Q_BLACK ); // Draw Q_BLACK boarder
+    DrawRectangleRec( inside, CheckCollisionPointRec( GetMousePosition(), coll ) ? DARKGRAY : Q_GRAY ); // inside color
 
     // Drop shaddow
     if ( !buttonDown ) {
         DrawRectangleRec( { main.x + main.width, main.y + 5, 5, main.height }, DARKGRAY );
-        DrawRectangleRec( { main.x + 5, main.y + main.height, main.width, 5 }, DARKGRAY );
+        DrawRectangleRec( { main.x + 5, main.y + main.height, main.width, 5 }, Q_DARKGRAY );
     }
-    DrawText( text.c_str(), main.x + 10 + 10, main.y + 10 + 10, fontSize, BLACK );
+    DrawText( text.c_str(), main.x + 10 + 10, main.y + 10 + 10, fontSize, Q_BLACK );
 
     return IsMouseButtonReleased( MOUSE_LEFT_BUTTON ) && CheckCollisionPointRec( GetMousePosition(), coll );
 
@@ -109,18 +135,18 @@ bool makeButtonText_DEPRECATED( int pos_x, int pos_y, int size_x, int size_y,
             /*
             ** Background / buttom bounding box / outline
             */
-            DrawRectangleRec( main, BLACK );
+            DrawRectangleRec( main, Q_BLACK );
             // Inside color
             DrawRectangle( pos_x + 10, pos_y + 10,
-                size_x - 20, size_y - 20, LIGHTGRAY);
+                size_x - 20, size_y - 20, Q_LIGHTGRAY);
 
             // Drop shadow
             DrawRectangle( pos_x + size_x, pos_y + 5, 5,
-                size_y, DARKGRAY);
+                size_y, Q_DARKGRAY);
             DrawRectangle( pos_x + 5, pos_y + size_y,
-                size_x, 5, DARKGRAY );
+                size_x, 5, Q_DARKGRAY );
             
-            DrawText( text.c_str(), pos_x + 20, pos_y, fontSize, BLACK);
+            DrawText( text.c_str(), pos_x + 20, pos_y, fontSize, Q_BLACK);
 
             return false;
         /*
@@ -128,32 +154,32 @@ bool makeButtonText_DEPRECATED( int pos_x, int pos_y, int size_x, int size_y,
         */
         } else {
             if ( IsMouseButtonReleased( MOUSE_LEFT_BUTTON ) ) {
-                DrawRectangle( pos_x + 5, pos_y + 5, size_x, size_y, BLACK );
-                DrawRectangle( pos_x + 15, pos_y + 15, size_x - 20, size_y - 20, GRAY );
-                DrawText( text.c_str(), pos_x + 25, pos_y + 25 - 20, fontSize, BLACK );
+                DrawRectangle( pos_x + 5, pos_y + 5, size_x, size_y, Q_BLACK );
+                DrawRectangle( pos_x + 15, pos_y + 15, size_x - 20, size_y - 20, Q_GRAY );
+                DrawText( text.c_str(), pos_x + 25, pos_y + 25 - 20, fontSize, Q_BLACK );
                 return true;
 
             }
 
             if ( !IsMouseButtonDown( MOUSE_BUTTON_LEFT ) ) {
                 // same except dark interior
-                DrawRectangleRec( main, BLACK );
-                DrawRectangle( pos_x + 10, pos_y + 10, size_x - 20, size_y - 20, GRAY );
-                DrawRectangle( pos_x + size_x, pos_y + 5, 5, size_y, DARKGRAY );
-                DrawRectangle( pos_x + 5, pos_y + size_y, size_x, 5, DARKGRAY );
-                DrawText( text.c_str(), pos_x + 20, pos_y + 20 - 20, fontSize, BLACK );
+                DrawRectangleRec( main, Q_BLACK );
+                DrawRectangle( pos_x + 10, pos_y + 10, size_x - 20, size_y - 20, Q_GRAY );
+                DrawRectangle( pos_x + size_x, pos_y + 5, 5, size_y, Q_DARKGRAY );
+                DrawRectangle( pos_x + 5, pos_y + size_y, size_x, 5, Q_DARKGRAY );
+                DrawText( text.c_str(), pos_x + 20, pos_y + 20 - 20, fontSize, Q_BLACK );
                 return false;
             } else {
-                DrawRectangle( pos_x + 5, pos_y + 5, size_x, size_y, BLACK );
-                DrawRectangle( pos_x + 15, pos_y + 15, size_x - 20, size_y - 20, GRAY );
-                DrawText( text.c_str(), pos_x + 25, pos_y + 25 - 20, fontSize, BLACK );
+                DrawRectangle( pos_x + 5, pos_y + 5, size_x, size_y, Q_BLACK );
+                DrawRectangle( pos_x + 15, pos_y + 15, size_x - 20, size_y - 20, Q_GRAY );
+                DrawText( text.c_str(), pos_x + 25, pos_y + 25 - 20, fontSize, Q_BLACK );
                 return false;
             }
         }
     } else {
-        DrawRectangle( pos_x + 5, pos_y + 5, size_x, size_y, BLACK );
-        DrawRectangle( pos_x + 15, pos_y + 15, size_x - 20, size_y - 20, GRAY );
-        DrawText( text.c_str(), pos_x + 25, pos_y + 25 - 20, fontSize, BLACK );
+        DrawRectangle( pos_x + 5, pos_y + 5, size_x, size_y, Q_BLACK );
+        DrawRectangle( pos_x + 15, pos_y + 15, size_x - 20, size_y - 20, Q_GRAY );
+        DrawText( text.c_str(), pos_x + 25, pos_y + 25 - 20, fontSize, Q_BLACK );
         return false;
     }
 }
@@ -172,13 +198,13 @@ bool makeButtonColor( int pos_x, int pos_y, int size_x, int size_y, Color color1
 
 
 
-    DrawRectangleRec( main, BLACK ); // Draw black boarder
+    DrawRectangleRec( main, Q_BLACK ); // Draw Q_BLACK boarder
     DrawRectangleRec( inside, CheckCollisionPointRec( GetMousePosition(), coll ) ? color2 : color1 ); // inside color
 
     // Drop shaddow
     if ( !buttonDown ) {
-        DrawRectangleRec( { main.x + main.width, main.y + 5, 5, main.height }, DARKGRAY );
-        DrawRectangleRec( { main.x + 5, main.y + main.height, main.width, 5 }, DARKGRAY );
+        DrawRectangleRec( { main.x + main.width, main.y + 5, 5, main.height }, Q_DARKGRAY );
+        DrawRectangleRec( { main.x + 5, main.y + main.height, main.width, 5 }, Q_DARKGRAY );
     }
 
 
@@ -199,12 +225,12 @@ bool makeButtonColor_DEPRECATED( int pos_x, int pos_y, int size_x, int size_y, C
     if ( !isDisabled ) {
         if ( !CheckCollisionPointRec( GetMousePosition(), main ) ) {
             // background / button bounding box / outline
-            DrawRectangleRec( main, BLACK );
+            DrawRectangleRec( main, Q_BLACK );
             // inner body color
             DrawRectangle( pos_x + 10, pos_y + 10, size_x - 20, size_y - 20, color1 );
             // drop shadow
-            DrawRectangle( pos_x + size_x, pos_y + 5, 5, size_y, DARKGRAY );
-            DrawRectangle( pos_x + 5, pos_y + size_y, size_x, 5, DARKGRAY );
+            DrawRectangle( pos_x + size_x, pos_y + 5, 5, size_y, Q_DARKGRAY );
+            DrawRectangle( pos_x + 5, pos_y + size_y, size_x, 5, Q_DARKGRAY );
         } else {
             if ( IsMouseButtonReleased( 0 ) ) {
                 result = true;
@@ -212,18 +238,18 @@ bool makeButtonColor_DEPRECATED( int pos_x, int pos_y, int size_x, int size_y, C
 
             if ( !IsMouseButtonDown( 0 ) && !result ) {
                 // same except dark interior
-                DrawRectangleRec( main, BLACK );
+                DrawRectangleRec( main, Q_BLACK );
                 DrawRectangle( pos_x + 10, pos_y + 10, size_x - 20, size_y - 20, color2 );
-                DrawRectangle( pos_x + size_x, pos_y + 5, 5, size_y, DARKGRAY );
-                DrawRectangle( pos_x + 5, pos_y + size_y, size_x, 5, DARKGRAY );
+                DrawRectangle( pos_x + size_x, pos_y + 5, 5, size_y, Q_DARKGRAY );
+                DrawRectangle( pos_x + 5, pos_y + size_y, size_x, 5, Q_DARKGRAY );
             } else {
 
-                DrawRectangle( pos_x + 5, pos_y + 5, size_x, size_y, BLACK );
+                DrawRectangle( pos_x + 5, pos_y + 5, size_x, size_y, Q_BLACK );
                 DrawRectangle( pos_x + 15, pos_y + 15, size_x - 20, size_y - 20, color2 );
             }
         }
     } else {
-        DrawRectangle( pos_x + 5, pos_y + 5, size_x, size_y, BLACK );
+        DrawRectangle( pos_x + 5, pos_y + 5, size_x, size_y, Q_BLACK );
         DrawRectangle( pos_x + 15, pos_y + 15, size_x - 20, size_y - 20, color2 );
     }
     return result;
@@ -245,16 +271,16 @@ bool makeButtonImage( int pos_x, int pos_y, Texture2D tex, Color background, boo
     
     Rectangle inside = { main.x + 10, main.y + 10, main.width - 20, main.height - 20 };
     
-    DrawRectangleRec( main, BLACK ); // Draw black boarder
-    DrawRectangleRec( inside, background ); // Draw gray inside
+    DrawRectangleRec( main, Q_BLACK ); // Draw Q_BLACK boarder
+    DrawRectangleRec( inside, background ); // Draw Q_GRAY inside
     
-    DrawTexture( tex, inside.x, inside.y, WHITE );
+    DrawTexture( tex, inside.x, inside.y, Q_WHITE );
 
 
     // Drop shaddow
     if ( !buttonDown ) {
-        DrawRectangleRec( { main.x + main.width, main.y + 5, 5, main.height }, DARKGRAY );
-        DrawRectangleRec( { main.x + 5, main.y + main.height, main.width, 5 }, DARKGRAY );
+        DrawRectangleRec( { main.x + main.width, main.y + 5, 5, main.height }, Q_DARKGRAY );
+        DrawRectangleRec( { main.x + 5, main.y + main.height, main.width, 5 }, Q_DARKGRAY );
     }
 
 
@@ -281,14 +307,14 @@ bool makeButtonImage_DEPRACATED(int pos_x, int pos_y, int size_x, int size_y, Im
     if (!isDisabled) {
         if (!CheckCollisionPointRec(GetMousePosition(), main)) {
             // background / button bounding box / outline
-            DrawRectangleRec(main, BLACK);
+            DrawRectangleRec(main, Q_BLACK);
             // inner body color
-            DrawRectangle(pos_x + 10, pos_y + 10, size_x - 20, size_y - 20, LIGHTGRAY);
+            DrawRectangle(pos_x + 10, pos_y + 10, size_x - 20, size_y - 20, Q_LIGHTGRAY);
             // drop shadow
-            DrawRectangle(pos_x + size_x, pos_y + 5, 5, size_y, DARKGRAY);
-            DrawRectangle(pos_x + 5, pos_y + size_y, size_x, 5, DARKGRAY);
+            DrawRectangle(pos_x + size_x, pos_y + 5, 5, size_y, Q_DARKGRAY);
+            DrawRectangle(pos_x + 5, pos_y + size_y, size_x, 5, Q_DARKGRAY);
 
-            DrawTexture(tex, pos_x + 10, pos_y + 10, WHITE);
+            DrawTexture(tex, pos_x + 10, pos_y + 10, Q_WHITE);
         } else {
             if (IsMouseButtonReleased(0)) {
                 result = true;
@@ -296,24 +322,24 @@ bool makeButtonImage_DEPRACATED(int pos_x, int pos_y, int size_x, int size_y, Im
 
             if (!IsMouseButtonDown(0) && !result) {
                 // same except dark interior
-                DrawRectangleRec(main, BLACK);
-                DrawRectangle(pos_x + 10, pos_y + 10, size_x - 20, size_y - 20, GRAY);
-                DrawRectangle(pos_x + size_x, pos_y + 5, 5, size_y, DARKGRAY);
-                DrawRectangle(pos_x + 5, pos_y + size_y, size_x, 5, DARKGRAY);
+                DrawRectangleRec(main, Q_BLACK);
+                DrawRectangle(pos_x + 10, pos_y + 10, size_x - 20, size_y - 20, Q_GRAY);
+                DrawRectangle(pos_x + size_x, pos_y + 5, 5, size_y, Q_DARKGRAY);
+                DrawRectangle(pos_x + 5, pos_y + size_y, size_x, 5, Q_DARKGRAY);
 
-                DrawTexture(tex, pos_x + 10, pos_y + 10, WHITE);
+                DrawTexture(tex, pos_x + 10, pos_y + 10, Q_WHITE);
 
             } else {
 
-                DrawRectangle(pos_x + 5, pos_y + 5, size_x, size_y, BLACK);
-                DrawRectangle(pos_x + 15, pos_y + 15, size_x - 20, size_y - 20, GRAY);
-                DrawTexture(tex, pos_x + 15, pos_y + 15, WHITE);
+                DrawRectangle(pos_x + 5, pos_y + 5, size_x, size_y, Q_BLACK);
+                DrawRectangle(pos_x + 15, pos_y + 15, size_x - 20, size_y - 20, Q_GRAY);
+                DrawTexture(tex, pos_x + 15, pos_y + 15, Q_WHITE);
 
             }
         }
     } else {
-        DrawRectangle(pos_x + 5, pos_y + 5, size_x, size_y, BLACK);
-        DrawRectangle(pos_x + 15, pos_y + 15, size_x - 20, size_y - 20, GRAY);
+        DrawRectangle(pos_x + 5, pos_y + 5, size_x, size_y, Q_BLACK);
+        DrawRectangle(pos_x + 15, pos_y + 15, size_x - 20, size_y - 20, Q_GRAY);
     }
     UnloadTexture( tex );
     return result;
@@ -322,9 +348,9 @@ bool makeButtonImage_DEPRACATED(int pos_x, int pos_y, int size_x, int size_y, Im
 
 
 int drawPlus( int pos_x, int pos_y, bool canNotBePressed, int startNum, int maxOrMinVal, bool isMinus = false ) {
-    Rectangle main = { ( float ) pos_x, ( float ) pos_y, 100, 100 }; /* Main body (Black outline) */
+    Rectangle main = { ( float ) pos_x, ( float ) pos_y, 100, 100 }; /* Main body (Q_BLACK outline) */
     Rectangle coll = main; /* Collision hitbox */
-    coll.width += 5; coll.height += 5; /* Update collision hitbox to include gray area, to prevent jankyness */
+    coll.width += 5; coll.height += 5; /* Update collision hitbox to include Q_GRAY area, to prevent jankyness */
     
     canNotBePressed |= isMinus ? ( startNum <= maxOrMinVal ) : ( startNum >= maxOrMinVal ); /* update canBePressed if it is outside the bounds */
 
@@ -336,22 +362,22 @@ int drawPlus( int pos_x, int pos_y, bool canNotBePressed, int startNum, int maxO
         main.x += 5; main.y += 5;
     }
 
-    /* gray / darkgray area inside the box */
+    /* Q_GRAY / darkgray area inside the box */
     Rectangle inside = { main.x + 10, main.y + 10, main.width - 20, main.height - 20 };
 
     /* vert and hori bars of the plus or minus*/
     Rectangle hBar = { main.x + 20, main.y + 45 , 60, 10 };
     Rectangle vBar = { main.x + 45, main.y + 20, 10, 60 };
 
-    DrawRectangleRec( main, BLACK ); // draw black outling
-    DrawRectangleRec( inside, CheckCollisionPointRec( GetMousePosition(), coll ) ? DARKGRAY : GRAY ); // draw gray inside
-    DrawRectangleRec( hBar, BLACK ); // draw the minus sign
+    DrawRectangleRec( main, Q_BLACK ); // draw Q_BLACK outling
+    DrawRectangleRec( inside, CheckCollisionPointRec( GetMousePosition(), coll ) ? Q_DARKGRAY : Q_GRAY ); // draw Q_GRAY inside
+    DrawRectangleRec( hBar, Q_BLACK ); // draw the minus sign
     if ( !isMinus ) {
-        DrawRectangleRec( vBar, BLACK ); // turn into a plus if not a minus
+        DrawRectangleRec( vBar, Q_BLACK ); // turn into a plus if not a minus
     }
     if ( !isDown ) {
-        DrawRectangleRec( { main.x + main.width, main.y + 5, 5, main.height }, DARKGRAY ); // drop shadow if not down
-        DrawRectangleRec( { main.x + 5, main.y + main.height, main.width, 5 }, DARKGRAY );
+        DrawRectangleRec( { main.x + main.width, main.y + 5, 5, main.height }, Q_DARKGRAY ); // drop shadow if not down
+        DrawRectangleRec( { main.x + 5, main.y + main.height, main.width, 5 }, Q_DARKGRAY );
     }
 
     if ( !canNotBePressed && CheckCollisionPointRec( GetMousePosition(), coll ) && IsMouseButtonReleased( MOUSE_LEFT_BUTTON ) ) { // can i haz increment??????
@@ -371,14 +397,14 @@ int drawPlus_DEPRECATED(int posx, int posy, bool isGrayedOut, int numToIncrement
     Rectangle rec = { (float) posx, (float) posy, 100, 100 };
     if (!isGrayedOut) {
         if(!CheckCollisionPointRec(GetMousePosition(), rec)) {
-            DrawRectangleRec(rec, BLACK);
-            DrawRectangle(80 + posx, 50 + posy, 80, 80, LIGHTGRAY);
+            DrawRectangleRec(rec, Q_BLACK);
+            DrawRectangle(80 + posx, 50 + posy, 80, 80, Q_LIGHTGRAY);
             if (!isMinus) {
-                DrawRectangle(115 + posx, 65 + posy, 10, 50, BLACK);
+                DrawRectangle(115 + posx, 65 + posy, 10, 50, Q_BLACK);
             }
-            DrawRectangle(95 + posx, 85 + posy, 50, 10, BLACK);
-            DrawRectangle(75 + posx, 140 + posy, 95, 5, DARKGRAY);
-            DrawRectangle(170 + posx, 45 + posy, 5, 100, DARKGRAY); 
+            DrawRectangle(95 + posx, 85 + posy, 50, 10, Q_BLACK);
+            DrawRectangle(75 + posx, 140 + posy, 95, 5, Q_DARKGRAY);
+            DrawRectangle(170 + posx, 45 + posy, 5, 100, Q_DARKGRAY); 
         } else {
             if (IsMouseButtonReleased(0)) {
                 if (!isMinus) {
@@ -388,40 +414,40 @@ int drawPlus_DEPRECATED(int posx, int posy, bool isGrayedOut, int numToIncrement
                 }
 
                 if ((!isMinus) ? (numToIncrement <= maxMinVal) : (numToIncrement >= maxMinVal)) {
-                    DrawRectangle(75 + posx, 45 + posy, 100, 100, BLACK);
-                    DrawRectangle(85 + posx, 55 + posy, 80, 80, DARKGRAY);
+                    DrawRectangle(75 + posx, 45 + posy, 100, 100, Q_BLACK);
+                    DrawRectangle(85 + posx, 55 + posy, 80, 80, Q_DARKGRAY);
                     if (!isMinus) {
-                        DrawRectangle(120 + posx, 70 + posy, 10, 50, BLACK);
+                        DrawRectangle(120 + posx, 70 + posy, 10, 50, Q_BLACK);
                     }
-                    DrawRectangle(100 + posx, 90 + posy, 50, 10, BLACK);
+                    DrawRectangle(100 + posx, 90 + posy, 50, 10, Q_BLACK);
                 }
             }
 
             if (IsMouseButtonDown(0)) {
-                DrawRectangle(75 + posx, 45 + posy, 100, 100, BLACK);
-                DrawRectangle(85 + posx, 55 + posy, 80, 80, GRAY);
+                DrawRectangle(75 + posx, 45 + posy, 100, 100, Q_BLACK);
+                DrawRectangle(85 + posx, 55 + posy, 80, 80, Q_GRAY);
                 if (!isMinus) {
-                    DrawRectangle(120 + posx, 70 + posy, 10, 50, BLACK);
+                    DrawRectangle(120 + posx, 70 + posy, 10, 50, Q_BLACK);
                 }
-                DrawRectangle(100 + posx, 90 + posy, 50, 10, BLACK);
+                DrawRectangle(100 + posx, 90 + posy, 50, 10, Q_BLACK);
             } else if ((!isMinus) ? (numToIncrement < maxMinVal) : (numToIncrement > maxMinVal)) {
-                DrawRectangle(70 + posx, 40 + posy, 100, 100, BLACK);
-                DrawRectangle(80 + posx, 50 + posy, 80, 80, GRAY);
+                DrawRectangle(70 + posx, 40 + posy, 100, 100, Q_BLACK);
+                DrawRectangle(80 + posx, 50 + posy, 80, 80, Q_GRAY);
                 if (!isMinus) {
-                    DrawRectangle(115 + posx, 65 + posy, 10, 50, BLACK); //correct
+                    DrawRectangle(115 + posx, 65 + posy, 10, 50, Q_BLACK); //correct
                 }
-                DrawRectangle(95 + posx, 85 + posy, 50, 10, BLACK);
-                DrawRectangle(75 + posx, 140 + posy, 95, 5, DARKGRAY);
-                DrawRectangle(170 + posx, 45 + posy, 5, 100, DARKGRAY);
+                DrawRectangle(95 + posx, 85 + posy, 50, 10, Q_BLACK);
+                DrawRectangle(75 + posx, 140 + posy, 95, 5, Q_DARKGRAY);
+                DrawRectangle(170 + posx, 45 + posy, 5, 100, Q_DARKGRAY);
             }
         }
     } else {
-        DrawRectangle(75 + posx, 45 + posy, 100, 100, BLACK);
-        DrawRectangle(85 + posx, 55 + posy, 80, 80, DARKGRAY);
+        DrawRectangle(75 + posx, 45 + posy, 100, 100, Q_BLACK);
+        DrawRectangle(85 + posx, 55 + posy, 80, 80, Q_DARKGRAY);
         if (!isMinus) {
-            DrawRectangle(120 + posx, 70 + posy, 10, 50, BLACK);
+            DrawRectangle(120 + posx, 70 + posy, 10, 50, Q_BLACK);
         }
-        DrawRectangle(100 + posx, 90 + posy, 50, 10, BLACK);
+        DrawRectangle(100 + posx, 90 + posy, 50, 10, Q_BLACK);
     }
     return numToIncrement;
 }
@@ -539,10 +565,10 @@ int main( int argc, char** argv, char** envv ) {
 
         if ( gameLayout == "start" ) {
             BeginDrawing();
-            ClearBackground( RAYWHITE );
+            ClearBackground( Q_RAYWHITE );
 
-            DrawText("Quimbert Quarrel", (GetScreenWidth() / 2) - (MeasureText("Quimbert Quarrel", 96) / 2), (GetScreenHeight() / 4), 96, BLACK);
-            DrawText("A Green Apple Game", (GetScreenWidth() / 2) - (MeasureText("A Green Apple Game", 36) / 2), (GetScreenHeight() / 4 + 100), 36, BLACK);
+            DrawText("Quimbert Quarrel", (GetScreenWidth() / 2) - (MeasureText("Quimbert Quarrel", 96) / 2), (GetScreenHeight() / 4), 96, Q_BLACK);
+            DrawText("A Green Apple Game", (GetScreenWidth() / 2) - (MeasureText("A Green Apple Game", 36) / 2), (GetScreenHeight() / 4 + 100), 36, Q_BLACK);
 
             Rectangle localButton{ ( float ) GetScreenWidth() / 2 - 155, ( float ) GetScreenHeight() / 2, 300, 150 };
 
@@ -551,7 +577,7 @@ int main( int argc, char** argv, char** envv ) {
                 gameLayout = "howManyQuimberts";
             }
 
-            if ( makeButtonImage( GetScreenWidth() - 170, 10, ( isMusicMuted ? mutedTex : unmutedTex ), GRAY, false ) ) {
+            if ( makeButtonImage( GetScreenWidth() - 170, 10, ( isMusicMuted ? mutedTex : unmutedTex ), Q_GRAY, false ) ) {
                 isMusicMuted = !isMusicMuted;
             }
 
@@ -559,34 +585,34 @@ int main( int argc, char** argv, char** envv ) {
             EndDrawing();
         } else if ( gameLayout == "howManyQuimberts" ) {
             BeginDrawing();
-            ClearBackground( RAYWHITE );
-            DrawRectangle((GetScreenWidth() / 2) - 60, (GetScreenHeight() / 2) + 20, 120, 150, BLACK);
-            DrawRectangle((GetScreenWidth() / 2) - 50, (GetScreenHeight() / 2) + 30, 100, 130, LIGHTGRAY);
-            DrawText(std::to_string(quimbertQuantity).c_str(), (GetScreenWidth() / 2) - MeasureText(std::to_string(quimbertQuantity).c_str(), 108) / 2, (GetScreenHeight() / 2) + 45, 108, BLACK);
+            ClearBackground( Q_RAYWHITE );
+            DrawRectangle((GetScreenWidth() / 2) - 60, (GetScreenHeight() / 2) + 20, 120, 150, Q_BLACK);
+            DrawRectangle((GetScreenWidth() / 2) - 50, (GetScreenHeight() / 2) + 30, 100, 130, Q_LIGHTGRAY);
+            DrawText(std::to_string(quimbertQuantity).c_str(), (GetScreenWidth() / 2) - MeasureText(std::to_string(quimbertQuantity).c_str(), 108) / 2, (GetScreenHeight() / 2) + 45, 108, Q_BLACK);
 
             Rectangle backButton = {20, 20, 120, 80};
 
             // Back button
             if (!CheckCollisionPointRec(GetMousePosition(), backButton)) {
-                DrawRectangleRec(backButton, BLACK);
-                DrawRectangle(30, 30, 100, 60, LIGHTGRAY);
-                DrawLineEx( { 115, 60 }, { 60, 60 }, 15, BLACK);
-                DrawTriangle({ 45, 60 }, { 70, 80 }, { 70, 40 }, BLACK);
-                DrawRectangle(140, 25, 5, 80, DARKGRAY);
-                DrawRectangle(25, 100, 115, 5, DARKGRAY);
+                DrawRectangleRec(backButton, Q_BLACK);
+                DrawRectangle(30, 30, 100, 60, Q_LIGHTGRAY);
+                DrawLineEx( { 115, 60 }, { 60, 60 }, 15, Q_BLACK);
+                DrawTriangle({ 45, 60 }, { 70, 80 }, { 70, 40 }, Q_BLACK);
+                DrawRectangle(140, 25, 5, 80, Q_DARKGRAY);
+                DrawRectangle(25, 100, 115, 5, Q_DARKGRAY);
             } else {
                 if (!IsMouseButtonDown( MOUSE_LEFT_BUTTON )) {
-                    DrawRectangle(20, 20, 120, 80, BLACK);
-                    DrawRectangle(30, 30, 100, 60, GRAY);
-                    DrawLineEx( { 115, 60 }, { 60, 60 }, 15, BLACK);
-                    DrawTriangle( { 45, 60 }, { 70, 80 }, { 70, 40 }, BLACK);
-                    DrawRectangle(140, 25, 5, 80, DARKGRAY);
-                    DrawRectangle(25, 100, 115, 5, DARKGRAY);
+                    DrawRectangle(20, 20, 120, 80, Q_BLACK);
+                    DrawRectangle(30, 30, 100, 60, Q_GRAY);
+                    DrawLineEx( { 115, 60 }, { 60, 60 }, 15, Q_BLACK);
+                    DrawTriangle( { 45, 60 }, { 70, 80 }, { 70, 40 }, Q_BLACK);
+                    DrawRectangle(140, 25, 5, 80, Q_DARKGRAY);
+                    DrawRectangle(25, 100, 115, 5, Q_DARKGRAY);
                 } else {
-                    DrawRectangle(25, 25, 120, 80, BLACK);
-                    DrawRectangle(35, 35, 100, 60, GRAY);
-                    DrawLineEx( { 120, 65 }, { 65, 65 }, 15, BLACK);
-                    DrawTriangle( { 50, 65 }, { 75, 85 }, { 75, 45 }, BLACK);
+                    DrawRectangle(25, 25, 120, 80, Q_BLACK);
+                    DrawRectangle(35, 35, 100, 60, Q_GRAY);
+                    DrawLineEx( { 120, 65 }, { 65, 65 }, 15, Q_BLACK);
+                    DrawTriangle( { 50, 65 }, { 75, 85 }, { 75, 45 }, Q_BLACK);
                 }
 
                 if (IsMouseButtonReleased(0)) {
@@ -598,38 +624,38 @@ int main( int argc, char** argv, char** envv ) {
                 gameLayout = "createQuimbertDetails";
             }
             
-            DrawText( "How many Quimberts?", GetScreenWidth() / 2 - MeasureText("How many Quimberts?", 80) / 2, GetScreenHeight() / 2 - 200, 80, BLACK);
+            DrawText( "How many Quimberts?", GetScreenWidth() / 2 - MeasureText("How many Quimberts?", 80) / 2, GetScreenHeight() / 2 - 200, 80, Q_BLACK);
 
             quimbertQuantity = drawPlusCenter( GetScreenWidth() / 2 + 130, GetScreenHeight() / 2 + 90, false, quimbertQuantity, 8, false);
             quimbertQuantity = drawPlusCenter( GetScreenWidth() / 2 - 130, GetScreenHeight() / 2 + 90, false, quimbertQuantity, 2, true);
             EndDrawing();
         } else if ( gameLayout == "createQuimbertDetails" ) {
             BeginDrawing();
-            ClearBackground( RAYWHITE );
+            ClearBackground( Q_RAYWHITE );
 
             Rectangle backButton = {20, 20, 120, 80};
 
             // Back button
             if (!CheckCollisionPointRec(GetMousePosition(), backButton)) {
-                DrawRectangleRec(backButton, BLACK);
-                DrawRectangle(30, 30, 100, 60, LIGHTGRAY);
-                DrawLineEx( { 115, 60 }, { 60, 60 }, 15, BLACK);
-                DrawTriangle({ 45, 60 }, { 70, 80 }, { 70, 40 }, BLACK);
-                DrawRectangle(140, 25, 5, 80, DARKGRAY);
-                DrawRectangle(25, 100, 115, 5, DARKGRAY);
+                DrawRectangleRec(backButton, Q_BLACK);
+                DrawRectangle(30, 30, 100, 60, Q_LIGHTGRAY);
+                DrawLineEx( { 115, 60 }, { 60, 60 }, 15, Q_BLACK);
+                DrawTriangle({ 45, 60 }, { 70, 80 }, { 70, 40 }, Q_BLACK);
+                DrawRectangle(140, 25, 5, 80, Q_DARKGRAY);
+                DrawRectangle(25, 100, 115, 5, Q_DARKGRAY);
             } else {
                 if (!IsMouseButtonDown( MOUSE_LEFT_BUTTON )) {
-                    DrawRectangle(20, 20, 120, 80, BLACK);
-                    DrawRectangle(30, 30, 100, 60, GRAY);
-                    DrawLineEx( { 115, 60 }, { 60, 60 }, 15, BLACK);
-                    DrawTriangle( { 45, 60 }, { 70, 80 }, { 70, 40 }, BLACK);
-                    DrawRectangle(140, 25, 5, 80, DARKGRAY);
-                    DrawRectangle(25, 100, 115, 5, DARKGRAY);
+                    DrawRectangle(20, 20, 120, 80, Q_BLACK);
+                    DrawRectangle(30, 30, 100, 60, Q_GRAY);
+                    DrawLineEx( { 115, 60 }, { 60, 60 }, 15, Q_BLACK);
+                    DrawTriangle( { 45, 60 }, { 70, 80 }, { 70, 40 }, Q_BLACK);
+                    DrawRectangle(140, 25, 5, 80, Q_DARKGRAY);
+                    DrawRectangle(25, 100, 115, 5, Q_DARKGRAY);
                 } else {
-                    DrawRectangle(25, 25, 120, 80, BLACK);
-                    DrawRectangle(35, 35, 100, 60, GRAY);
-                    DrawLineEx( { 120, 65 }, { 65, 65 }, 15, BLACK);
-                    DrawTriangle( { 50, 65 }, { 75, 85 }, { 75, 45 }, BLACK);
+                    DrawRectangle(25, 25, 120, 80, Q_BLACK);
+                    DrawRectangle(35, 35, 100, 60, Q_GRAY);
+                    DrawLineEx( { 120, 65 }, { 65, 65 }, 15, Q_BLACK);
+                    DrawTriangle( { 50, 65 }, { 75, 85 }, { 75, 45 }, Q_BLACK);
                 }
 
                 if (IsMouseButtonReleased(0)) {
@@ -643,17 +669,17 @@ int main( int argc, char** argv, char** envv ) {
             textBoxOwner.processTextInput();
             textBoxOwner.render();
 
-            DrawText( ( ( std::string( "Quimbert #" ) + std::to_string( currentQuimbert + 1 ) ).c_str() ), (GetScreenWidth() / 2) - (MeasureText("Quimbert #1", 96) / 2), 20, 96, BLACK);
-            DrawText(("Make your Quimbert"), (GetScreenWidth() / 2) - (MeasureText("Make your Quimbert", 96) / 2), 120, 96, BLACK);
+            DrawText( ( ( std::string( "Quimbert #" ) + std::to_string( currentQuimbert + 1 ) ).c_str() ), (GetScreenWidth() / 2) - (MeasureText("Quimbert #1", 96) / 2), 20, 96, Q_BLACK);
+            DrawText(("Make your Quimbert"), (GetScreenWidth() / 2) - (MeasureText("Make your Quimbert", 96) / 2), 120, 96, Q_BLACK);
 
-            DrawText("Name:", ((GetScreenWidth() / 2) - MeasureText("Name:", 72)) - 30, 250, 72, BLACK);
-            DrawText("Owner:", ((GetScreenWidth() / 2) - MeasureText("Owner:", 72)) - 30, 350, 72, BLACK);
-            DrawText("Color:", ((GetScreenWidth() / 2) - MeasureText("Color:", 72)) - 30, 450, 72, BLACK);
+            DrawText("Name:", ((GetScreenWidth() / 2) - MeasureText("Name:", 72)) - 30, 250, 72, Q_BLACK);
+            DrawText("Owner:", ((GetScreenWidth() / 2) - MeasureText("Owner:", 72)) - 30, 350, 72, Q_BLACK);
+            DrawText("Color:", ((GetScreenWidth() / 2) - MeasureText("Color:", 72)) - 30, 450, 72, Q_BLACK);
 
             textBoxName.setBox( { ( float ) GetScreenWidth() / 2 + 20, 250, 375, 75 } );
             textBoxOwner.setBox( { ( float ) GetScreenWidth() / 2 + 20, 350, 375, 75 } );
 
-            if ( makeButtonColor( GetScreenWidth() / 2 + 20, 450, 60, 60, currentColor, ColorTint( currentColor, DARKGRAY ), false ) ) {
+            if ( makeButtonColor( GetScreenWidth() / 2 + 20, 450, 60, 60, currentColor, ColorTint( currentColor, Q_DARKGRAY ), false ) ) {
                 showColorSelectionPanel = true;
             }
 
@@ -671,60 +697,74 @@ int main( int argc, char** argv, char** envv ) {
                 /*
                 ** Draw the box that the selector buttons are in
                 */
-                DrawRectangleRec( colorSelectionPanelMain, BLACK );
-                DrawRectangleRec( colorSelectionPanelInside, GRAY );
+                DrawRectangleRec( colorSelectionPanelMain, Q_BLACK );
+                DrawRectangleRec( colorSelectionPanelInside, Q_GRAY );
 
                 /*
                 ** Draw the selector buttons
                 */
                 // Colors: Red, Orange, Yellow, Green, Blue, DarkBlue, Purple, Black, Gray, Pink
 
-                if ( makeButtonColor( colorSelectionPanelInside.x + 80 * 0 + 10, colorSelectionPanelInside.y + 80 * 0 + 10, 60, 60, RED, ColorTint( RED, DARKGRAY ), false) ) {
+                //COLOR DARKENING GUIDE
+                /*
+                Q_RED --> Q_MAROON
+                Q_ORANGE --> Q_DARKORANGE
+                Q_YELLOW --> Q_GOLD
+                Q_GREEN --> Q_LIME
+                Q_LIGHTBLUE --> Q_DARKLIGHTBLUE
+                Q_BLUE --> Q_DARKBLUE
+                Q_PURPLE --> Q_VIOLET
+                Q_DARKGRAY --> Q_LIGHTBLACK
+                Q_LIGHTGRAY --> Q_GRAY
+                Q_PINK --> Q_MAGENTA
+                */
+
+                if ( makeButtonColor( colorSelectionPanelInside.x + 80 * 0 + 10, colorSelectionPanelInside.y + 80 * 0 + 10, 60, 60, Q_RED, ColorTint( Q_RED, Q_DARKGRAY ), false) ) {
                     color = "red";
                     showColorSelectionPanel = false;
                 }
                 
-                if ( makeButtonColor( colorSelectionPanelInside.x + 80 * 1 + 10, colorSelectionPanelInside.y + 80 * 0 + 10, 60, 60, ORANGE, ColorTint( ORANGE, DARKGRAY ), false) ) {
+                if ( makeButtonColor( colorSelectionPanelInside.x + 80 * 1 + 10, colorSelectionPanelInside.y + 80 * 0 + 10, 60, 60, Q_ORANGE, ColorTint( Q_ORANGE, Q_DARKGRAY ), false) ) {
                     color = "orange";
                     showColorSelectionPanel = false;
                 }
                 
-                if ( makeButtonColor( colorSelectionPanelInside.x + 80 * 2 + 10, colorSelectionPanelInside.y + 80 * 0 + 10, 60, 60, YELLOW, ColorTint( YELLOW, DARKGRAY ), false) ) {
+                if ( makeButtonColor( colorSelectionPanelInside.x + 80 * 2 + 10, colorSelectionPanelInside.y + 80 * 0 + 10, 60, 60, Q_YELLOW, ColorTint( Q_YELLOW, Q_DARKGRAY ), false) ) {
                     color = "yellow";
                     showColorSelectionPanel = false;
                 }
                 
-                if ( makeButtonColor( colorSelectionPanelInside.x + 80 * 3 + 10, colorSelectionPanelInside.y + 80 * 0 + 10, 60, 60, GREEN, ColorTint( GREEN, DARKGRAY ), false) ) {
+                if ( makeButtonColor( colorSelectionPanelInside.x + 80 * 3 + 10, colorSelectionPanelInside.y + 80 * 0 + 10, 60, 60, Q_GREEN, ColorTint( Q_GREEN, Q_DARKGRAY ), false) ) {
                     color = "green";
                     showColorSelectionPanel = false;
                 }
                 
-                if ( makeButtonColor( colorSelectionPanelInside.x + 80 * 4 + 10, colorSelectionPanelInside.y + 80 * 0 + 10, 60, 60, BLUE, ColorTint( BLUE, DARKGRAY ), false) ) {
+                if ( makeButtonColor( colorSelectionPanelInside.x + 80 * 4 + 10, colorSelectionPanelInside.y + 80 * 0 + 10, 60, 60, Q_BLUE, ColorTint( Q_BLUE, Q_DARKGRAY ), false) ) {
                     color = "blue";
                     showColorSelectionPanel = false;
                 }
                 
-                if ( makeButtonColor( colorSelectionPanelInside.x + 80 * 0 + 10, colorSelectionPanelInside.y + 80 * 1 + 10, 60, 60, DARKBLUE, ColorTint( DARKBLUE, DARKGRAY ), false) ) {
+                if ( makeButtonColor( colorSelectionPanelInside.x + 80 * 0 + 10, colorSelectionPanelInside.y + 80 * 1 + 10, 60, 60, Q_DARKBLUE, ColorTint( Q_DARKBLUE, Q_DARKGRAY ), false) ) {
                     color = "darkblue";
                     showColorSelectionPanel = false;
                 }
                 
-                if ( makeButtonColor( colorSelectionPanelInside.x + 80 * 1 + 10, colorSelectionPanelInside.y + 80 * 1 + 10, 60, 60, PURPLE, ColorTint( PURPLE, DARKGRAY ), false) ) {
+                if ( makeButtonColor( colorSelectionPanelInside.x + 80 * 1 + 10, colorSelectionPanelInside.y + 80 * 1 + 10, 60, 60, Q_PURPLE, ColorTint( Q_PURPLE, Q_DARKGRAY ), false) ) {
                     color = "purple";
                     showColorSelectionPanel = false;
                 }
                 
-                if ( makeButtonColor( colorSelectionPanelInside.x + 80 * 2 + 10, colorSelectionPanelInside.y + 80 * 1 + 10, 60, 60, BLACK, ColorTint( BLACK, DARKGRAY ), false) ) {
+                if ( makeButtonColor( colorSelectionPanelInside.x + 80 * 2 + 10, colorSelectionPanelInside.y + 80 * 1 + 10, 60, 60, Q_BLACK, ColorTint( Q_BLACK, Q_DARKGRAY ), false) ) {
                     color = "black";
                     showColorSelectionPanel = false;
                 }
                 
-                if ( makeButtonColor( colorSelectionPanelInside.x + 80 * 3 + 10, colorSelectionPanelInside.y + 80 * 1 + 10, 60, 60, GRAY, ColorTint( GRAY, DARKGRAY ), false) ) {
+                if ( makeButtonColor( colorSelectionPanelInside.x + 80 * 3 + 10, colorSelectionPanelInside.y + 80 * 1 + 10, 60, 60, Q_GRAY, ColorTint( Q_GRAY, Q_DARKGRAY ), false) ) {
                     color = "gray";
                     showColorSelectionPanel = false;
                 }
                 
-                if ( makeButtonColor( colorSelectionPanelInside.x + 80 * 4 + 10, colorSelectionPanelInside.y + 80 * 1 + 10, 60, 60, PINK, ColorTint( PINK, DARKGRAY ), false) ) {
+                if ( makeButtonColor( colorSelectionPanelInside.x + 80 * 4 + 10, colorSelectionPanelInside.y + 80 * 1 + 10, 60, 60, Q_PINK, ColorTint( Q_PINK, Q_DARKGRAY ), false) ) {
                     color = "pink";
                 }
                 
