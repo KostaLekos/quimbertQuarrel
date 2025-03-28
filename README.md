@@ -3,9 +3,9 @@ if you have access to this please go away
 me no like you
 
 # Quimbert Quarrel
-"Turn based battle royale" (*Kosta Lekos*)
+"Turn based battle royale"
 
-# KOSTA MUST KNOWS
+# MUST KNOWS
 
 - Know how headers and source files work
 - Learn c++ standard library
@@ -20,7 +20,7 @@ me no like you
 
 
 # BUILD
-This is for you Kosta, here is the build instructions
+This is for you, here is the build instructions
 
 ## Make sure your path variables are set correctly
 The following will show your path
