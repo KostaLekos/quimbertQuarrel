@@ -10,31 +10,31 @@
 #include <iostream>
 #include <random>
 
-#define Q_RAYWHITE {245, 245, 245, 255}
-#define Q_OFFWHITE {230, 230, 230, 255}
-#define Q_WHITE {255, 255, 255, 255}
-#define Q_RED {230, 41, 55, 255}
-#define Q_MAROON {190, 33, 55, 255}
-#define Q_ORANGE {255, 161, 0, 255}
-#define Q_DARKORANGE {215, 135, 0, 255}
-#define Q_YELLOW {253, 249, 0, 255}
-#define Q_GOLD {255, 203, 0, 255}
-#define Q_LIME {0, 158, 47, 255}
-#define Q_GREEN {0, 228, 48, 255}
-#define Q_LIGHTBLUE {102, 191, 255, 255}
-#define Q_DARKLIGHTBLUE {0, 148, 255, 255}
-#define Q_BLUE {0, 121, 241, 255}
-#define Q_DARKBLUE {0, 82, 172, 255}
-#define Q_VIOLET {135, 60, 190, 255}
-#define Q_PURPLE {200, 122, 255, 255}
-#define Q_DARKPURPLE {112, 31, 126, 255}
-#define Q_DARKGRAY {80, 80, 80, 255}
-#define Q_LIGHTBLACK {39, 39, 39, 255}
-#define Q_BLACK {0, 0, 0, 255}
-#define Q_LIGHTGRAY {200, 200, 200, 255}
-#define Q_GRAY {130, 130, 130, 255}
-#define Q_PINK {255, 109, 194, 255}
-#define Q_MAGENTA {255, 82, 183, 255}
+#define Q_RAYWHITE Color{245, 245, 245, 255}
+#define Q_OFFWHITE Color{230, 230, 230, 255}
+#define Q_WHITE Color{255, 255, 255, 255}
+#define Q_RED Color{230, 41, 55, 255}
+#define Q_MAROON Color{190, 33, 55, 255}
+#define Q_ORANGE Color{255, 161, 0, 255}
+#define Q_DARKORANGE Color{215, 135, 0, 255}
+#define Q_YELLOW Color{253, 249, 0, 255}
+#define Q_GOLD Color{255, 203, 0, 255}
+#define Q_LIME Color{0, 158, 47, 255}
+#define Q_GREEN Color{0, 228, 48, 255}
+#define Q_LIGHTBLUE Color{102, 191, 255, 255}
+#define Q_DARKLIGHTBLUE Color{0, 148, 255, 255}
+#define Q_BLUE Color{0, 121, 241, 255}
+#define Q_DARKBLUE Color{0, 82, 172, 255}
+#define Q_VIOLET Color{135, 60, 190, 255}
+#define Q_PURPLE Color{200, 122, 255, 255}
+#define Q_DARKPURPLE Color{112, 31, 126, 255}
+#define Q_DARKGRAY Color{80, 80, 80, 255}
+#define Q_LIGHTBLACK Color{39, 39, 39, 255}
+#define Q_BLACK Color{0, 0, 0, 255}
+#define Q_LIGHTGRAY Color{200, 200, 200, 255}
+#define Q_GRAY Color{130, 130, 130, 255}
+#define Q_PINK Color{255, 109, 194, 255}
+#define Q_MAGENTA Color{255, 82, 183, 255}
 
 std::mt19937_64::result_type randInt( int min, int max ) {
     std::random_device randomDev;
