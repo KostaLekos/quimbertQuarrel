@@ -1,2 +1,0 @@
-CompileFlags:
-    Add: ["-Icpp/third/raylib/src", "-std=c++20"]
