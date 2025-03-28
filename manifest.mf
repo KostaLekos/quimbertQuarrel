@@ -1,3 +1,0 @@
-Manifest-version: 1.0
-Main-Class: build.QuimbertQuarrel
-Class-Path: build/game.jar
