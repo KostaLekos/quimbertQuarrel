@@ -34,6 +34,8 @@
 #define Q_LIGHTGRAY Color{200, 200, 200, 255}
 #define Q_GRAY Color{130, 130, 130, 255}
 #define Q_PINK Color{255, 109, 194, 255}
+
+//Magenta sucks and no one loves him. Please burn him and get a new one
 #define Q_MAGENTA Color{255, 82, 183, 255}
 
 std::mt19937_64::result_type randInt( int min, int max ) {
