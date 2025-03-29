@@ -814,8 +814,36 @@ int main( int argc, char** argv, char** envv ) {
             }
             
             //Next Button
+
+            /*
+            if (IsMouseButtonReleased(0)) {
+                if (textBoxName.getText().length() > 0 && textBoxOwner.getText().length() > 0 && sColor1 != OFFWHITE) {
+                    g = textBoxName.getText();
+                    h = textBoxOwner.getText();
+                    layout = "createQuimbert2";
+                } else {
+                    if (!(textBoxName.getText().length() > 0)) {
+                        textBoxName.needText = true;
+                    }
+                    
+                    if (!(textBoxOwner.getText().length() > 0)) {
+                        textBoxOwner.needText = true;
+                    
+                    if (sColor1 == OFFWHITE) {
+                        sColor2 = MAROON;
+                        needColor = true;
+                    }
+                }
+            }
+            */
+            //VERY IMPORTANT, TAKE THE ABOVE FUNCTION AND APPLY IT TO THE ONE BELOW
+            //THE FUNCION MUST ONLY GO TO NEXT PAGE IF TEXTBOX AND COLOR BUTTON HAVE CONTENT SELECTED
             if ( makeButtonTextCenter( GetScreenWidth() / 2, GetScreenHeight() - 80, "Next", 60, false) ) {
-                gameLayout = "chooseQuimbertStats";
+                //if () {
+                    gameLayout = "chooseQuimbertStats";
+                //} else {
+
+                //}
             }
 
             currentColor = stoc( color );
