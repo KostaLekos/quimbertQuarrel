@@ -807,28 +807,18 @@ int main( int argc, char** argv, char** envv ) {
                 }
             }
             
-<<<<<<< HEAD
             //Next Button
             if ( makeButtonTextCenter( GetScreenWidth() / 2, GetScreenHeight() / 4 * 3, "Next", 60, false) ) {
                 gameLayout = "chooseQuimbertStats";
-=======
-            if ( makeButtonTextCenter( GetScreenWidth() / 2, GetScreenHeight() / 4 * 3, "Next", 60, false) ) {
-                gameLayout = "createQuimbertDetails";
->>>>>>> 61fc383274677ecaa8b68f5dacf8a0818107b082
             }
 
             currentColor = stoc( color );
 
             EndDrawing();
-<<<<<<< HEAD
         } else if ( gameLayout == "chooseQuimbertStats") {
             BeginDrawing();
             ClearBackground( Q_RAYWHITE );
 
-=======
-        } else if ( gameLayout == "createQuimbertStats" ) {
-            BeginDrawing();
->>>>>>> 61fc383274677ecaa8b68f5dacf8a0818107b082
 
             Rectangle backButton = {20, 20, 120, 80};
 
