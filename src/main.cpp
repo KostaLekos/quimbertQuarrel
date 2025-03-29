@@ -777,7 +777,7 @@ int main( int argc, char** argv, char** envv ) {
                     showColorSelectionPanel = false;
                 }
                 
-                if ( makeButtonColor( colorSelectionPanelInside.x + 80 * 1 + 10, colorSelectionPanelInside.y + 80 * 1 + 10, 60, 60, Q_PURPLE, VIOLET, false) ) {
+                if ( makeButtonColor( colorSelectionPanelInside.x + 80 * 1 + 10, colorSelectionPanelInside.y + 80 * 1 + 10, 60, 60, Q_PURPLE, Q_VIOLET, false) ) {
                     color = "purple";
                     showColorSelectionPanel = false;
                 }
@@ -787,12 +787,12 @@ int main( int argc, char** argv, char** envv ) {
                     showColorSelectionPanel = false;
                 }
                 
-                if ( makeButtonColor( colorSelectionPanelInside.x + 80 * 3 + 10, colorSelectionPanelInside.y + 80 * 1 + 10, 60, 60, Q_LIGHTGRAY, GRAY, false) ) {
+                if ( makeButtonColor( colorSelectionPanelInside.x + 80 * 3 + 10, colorSelectionPanelInside.y + 80 * 1 + 10, 60, 60, Q_LIGHTGRAY, Q_GRAY, false) ) {
                     color = "gray";
                     showColorSelectionPanel = false;
                 }
                 
-                if ( makeButtonColor( colorSelectionPanelInside.x + 80 * 4 + 10, colorSelectionPanelInside.y + 80 * 1 + 10, 60, 60, Q_PINK, MAGENTA, false) ) {
+                if ( makeButtonColor( colorSelectionPanelInside.x + 80 * 4 + 10, colorSelectionPanelInside.y + 80 * 1 + 10, 60, 60, Q_PINK, Q_MAGENTA, false) ) {
                     color = "pink";
                     showColorSelectionPanel = false;
                 }
@@ -802,11 +802,50 @@ int main( int argc, char** argv, char** envv ) {
                 }
             }
             
-            
+            //Next Button
+            if ( makeButtonTextCenter( GetScreenWidth() / 2, GetScreenHeight() / 4 * 3, "Next", 60, false) ) {
+                gameLayout = "chooseQuimbertStats";
+            }
 
             currentColor = stoc( color );
 
             EndDrawing();
+        } else if ( gameLayout == "chooseQuimbertStats") {
+            BeginDrawing();
+            ClearBackground( Q_RAYWHITE );
+
+
+            Rectangle backButton = {20, 20, 120, 80};
+
+            // Back button
+            if (!CheckCollisionPointRec(GetMousePosition(), backButton)) {
+                DrawRectangleRec(backButton, Q_BLACK);
+                DrawRectangle(30, 30, 100, 60, Q_LIGHTGRAY);
+                DrawLineEx( { 115, 60 }, { 60, 60 }, 15, Q_BLACK);
+                DrawTriangle({ 45, 60 }, { 70, 80 }, { 70, 40 }, Q_BLACK);
+                DrawRectangle(140, 25, 5, 80, Q_DARKGRAY);
+                DrawRectangle(25, 100, 115, 5, Q_DARKGRAY);
+            } else {
+                if (!IsMouseButtonDown( MOUSE_LEFT_BUTTON )) {
+                    DrawRectangle(20, 20, 120, 80, Q_BLACK);
+                    DrawRectangle(30, 30, 100, 60, Q_GRAY);
+                    DrawLineEx( { 115, 60 }, { 60, 60 }, 15, Q_BLACK);
+                    DrawTriangle( { 45, 60 }, { 70, 80 }, { 70, 40 }, Q_BLACK);
+                    DrawRectangle(140, 25, 5, 80, Q_DARKGRAY);
+                    DrawRectangle(25, 100, 115, 5, Q_DARKGRAY);
+                } else {
+                    DrawRectangle(25, 25, 120, 80, Q_BLACK);
+                    DrawRectangle(35, 35, 100, 60, Q_GRAY);
+                    DrawLineEx( { 120, 65 }, { 65, 65 }, 15, Q_BLACK);
+                    DrawTriangle( { 50, 65 }, { 75, 85 }, { 75, 45 }, Q_BLACK);
+                }
+
+                if (IsMouseButtonReleased(0)) {
+                    gameLayout = "createQuimbertDetails";
+                }
+            }
+
+            
         }
     }
 }
