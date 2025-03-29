@@ -24,16 +24,6 @@ public:
     void gainBlock();
 
     /*
-    ** Return inventory
-    */
-    std::vector< std::string > getInventory();
-
-    /*
-    ** Returns current health
-    */
-    int getHealth();
-
-    /*
     ** Get info on item
     */
     static std::string infoOfItem( std::string item );
@@ -49,16 +39,73 @@ public:
     */
     std::string getStatsString();
 
-    /*
-    ** Return individual stat value
-    */
-    std::string getStrStat( std::string stat );
-    int getIntStat( std::string stat );
 
     /*
     ** Returns a random integer min <= x <= max
     */
     static std::mt19937_64::result_type randInt( int min, int max );
+
+    /*
+    ** Returns a pointer to the inventory, which is dangerous because you have raw access to the _inventory object
+    */
+    std::vector< std::string > *getInventoryDangerous();
+
+    
+    /*
+    ** Get the stats
+    */
+
+    int getLooks();
+    int getSmell();
+    std::string getColor();
+    int getPersonality();
+    int getGumption();
+    int getLength();
+    std::string getName();
+    std::string getOwner();
+
+    /*
+    ** Set stats
+    */
+
+    void setLooks( int newVal );
+    void setSmell( int newVal );
+    void setColor( std::string newVal );
+    void setPersonality( int newVal );
+    void setGumption( int newVal );
+    void setLength( int newVal );
+    void setName( std::string newVal );
+    void setOwner( std::string newVal );
+
+    /*
+    ** Get other stats
+    */
+
+    int getHealth();
+    int getTurns();
+    int getToDeal();
+    int getBlocks();
+    int getLives();
+    int getYellowFlowers();
+    int getGreenFlowers();
+    int getPurpleFlowers();
+    int getOrangeFlowers();
+    int getRedFlowers();
+    std::vector< std::string > getInventory();
+
+    void setHealth( int newVal );
+    void setTurns( int newVal );
+    void setToDeal( int newVal );
+    void setBlocks( int newVal );
+    void setLives( int newVal );
+    void setYellowFlowers( int newVal );
+    void setGreenFlowers( int newVal );
+    void setPurpleFlowers( int newVal );
+    void setOrangeFlowers( int newVal );
+    void setRedFlowers( int newVal );
+    void setInventory( std::vector< std::string > newVal );
+
+
 
 private:
 

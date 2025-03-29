@@ -58,13 +58,13 @@ void Quimbert::gainBlock() {
     }
 }
 
-std::vector< std::string > Quimbert::getInventory() {
-    return _inventory;
-}
+// std::vector< std::string > Quimbert::getInventory() {
+//     return _inventory;
+// }
 
-int Quimbert::getHealth() {
-    return _health;
-}
+// int Quimbert::getHealth() {
+//     return _health;
+// }
 
 std::string Quimbert::infoOfItem( std::string item ) {
     /*
@@ -247,20 +247,211 @@ std::string Quimbert::getStatsString() {
         "/10\nLength: " + std::to_string( _length ) + "/10\nOwner: " + _owner + "\n";
 }
 
-std::string Quimbert::getStrStat( std::string stat ) {
-    if ( stat == "color") return _color;
-    else if ( stat == "name") return _name;
-    else if ( stat == "owner") return _owner;
+// std::string Quimbert::getStrStat( std::string stat ) {
+//     if ( stat == "color") return _color;
+//     else if ( stat == "name") return _name;
+//     else if ( stat == "owner") return _owner;
 
-    throw std::runtime_error( "Invalid Stat" );
+//     throw std::runtime_error( "Invalid Stat" );
+// }
+
+// void Quimbert::setStrStat( std::string stat, std::string newValue ) {
+//     if ( stat == "color") _color = newValue;
+//     else if ( stat == "name") _name = newValue;
+//     else if ( stat == "owner") _owner = newValue;
+
+//     throw std::runtime_error( "Invalid Stat" );
+// }
+
+// int Quimbert::getIntStat( std::string stat ) {
+//     if ( stat == "looks") return _looks;
+//     else if ( stat == "smell") return _smell;
+//     else if ( stat == "personality") return _personality;
+//     else if ( stat == "gumption") return _gumption;
+//     else if ( stat == "length") return _length;
+
+//     throw std::runtime_error( "Invalid Stat" );
+// }
+
+// void Quimbert::setIntStat( std::string stat, int newValue ) {
+//     if ( stat == "looks") _looks = newValue;
+//     else if ( stat == "smell") _smell = newValue;
+//     else if ( stat == "personality") _personality = newValue;
+//     else if ( stat == "gumption") _gumption = newValue;
+//     else if ( stat == "length") _length = newValue;
+
+//     throw std::runtime_error( "Invalid Stat" );
+// }
+
+
+
+/*
+** Get the stats
+*/
+
+int Quimbert::getLooks() {
+    return _looks;
 }
 
-int Quimbert::getIntStat( std::string stat ) {
-    if ( stat == "looks") return _looks;
-    else if ( stat == "smell") return _smell;
-    else if ( stat == "personality") return _personality;
-    else if ( stat == "gumption") return _gumption;
-    else if ( stat == "length") return _length;
+int Quimbert::getSmell() {
+    return _smell;
+}
 
-    throw std::runtime_error( "Invalid Stat" );
+std::string Quimbert::getColor() {
+    return _color;
+}
+
+int Quimbert::getPersonality() {
+    return _personality;
+}
+
+int Quimbert::getGumption() {
+    return _gumption;
+}
+
+int Quimbert::getLength() {
+    return _length;
+}
+
+std::string Quimbert::getName() {
+    return _name;
+}
+
+std::string Quimbert::getOwner() {
+    return _owner;
+}
+
+
+/*
+** Set stats
+*/
+
+void Quimbert::setLooks( int newVal ) {
+    _looks = newVal;
+}
+
+void Quimbert::setSmell( int newVal ) {
+    _smell = newVal;
+}
+
+void Quimbert::setColor( std::string newVal ) {
+    _color = newVal;
+}
+
+void Quimbert::setPersonality( int newVal ) {
+    _personality = newVal;
+}
+
+void Quimbert::setGumption( int newVal ) {
+    _gumption = newVal;
+}
+
+void Quimbert::setLength( int newVal ) {
+    _length = newVal;
+}
+
+void Quimbert::setName( std::string newVal ) {
+    _name = newVal;
+}
+
+void Quimbert::setOwner( std::string newVal ) {
+    _owner = newVal;
+}
+
+
+/*
+** Get other stats
+*/
+
+int Quimbert::getHealth() {
+    return _health;
+}
+
+int Quimbert::getTurns() {
+    return _turns;
+}
+
+int Quimbert::getToDeal() {
+    return _toDeal;
+}
+
+int Quimbert::getBlocks() {
+    return _blocks;
+}
+
+int Quimbert::getLives() {
+    return _lives;
+}
+
+int Quimbert::getYellowFlowers() {
+    return _yellowFlowers;
+}
+
+int Quimbert::getGreenFlowers() {
+    return _greenFlowers;
+}
+
+int Quimbert::getPurpleFlowers() {
+    return _purpleFlowers;
+}
+
+int Quimbert::getOrangeFlowers() {
+    return _orangeFlowers;
+}
+
+int Quimbert::getRedFlowers() {
+    return _redFlowers;
+}
+
+std::vector< std::string > Quimbert::getInventory() {
+    return _inventory;
+}
+
+
+void Quimbert::setHealth( int newVal ) {
+    _health = newVal;
+}
+
+void Quimbert::setTurns( int newVal ) {
+    _turns = newVal;
+}
+
+void Quimbert::setToDeal( int newVal ) {
+    _toDeal = newVal;
+}
+
+void Quimbert::setBlocks( int newVal ) {
+    _blocks = newVal;
+}
+
+void Quimbert::setLives( int newVal ) {
+    _lives = newVal;
+}
+
+void Quimbert::setYellowFlowers( int newVal ) {
+    _yellowFlowers = newVal;
+}
+
+void Quimbert::setGreenFlowers( int newVal ) {
+    _greenFlowers = newVal;
+}
+
+void Quimbert::setPurpleFlowers( int newVal ) {
+    _purpleFlowers = newVal;
+}
+
+void Quimbert::setOrangeFlowers( int newVal ) {
+    _orangeFlowers = newVal;
+}
+
+void Quimbert::setRedFlowers( int newVal ) {
+    _redFlowers = newVal;
+}
+
+void Quimbert::setInventory( std::vector< std::string > newVal ) {
+    _inventory = newVal;
+}
+
+std::vector< std::string > *Quimbert::getInventoryDangerous() {
+    return &_inventory;
 }

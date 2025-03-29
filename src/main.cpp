@@ -524,8 +524,9 @@ int main( int argc, char** argv, char** envv ) {
     bool showColorSelectionPanel = false;
     Color currentColor = stoc( color );
     
+    int points = randInt( 25, 35 );
     
-
+    bool takenColors[ 10 ] = { false };
 
     // Image info1 = LoadImage( "./resources/textures/UI/infoButton1.png" );
     // Image info2 = LoadImage( "./resources/textures/UI/infoButton2.png" );
@@ -883,6 +884,87 @@ int main( int argc, char** argv, char** envv ) {
                     gameLayout = "createQuimbertDetails";
                 }
             }
+
+            Rectangle doneButton = { ( float ) GetScreenWidth() - 175, 20, 150, 80 };
+
+            //Create Quimbert button
+            if ( makeButtonText( GetScreenWidth() - 175, 20, "Done", 48, points > 0 ) ) {
+                if (points == 0 && currentQuimbert + 1 <= quimbertQuantity) {
+                    if (currentQuimbert + 1 <= quimbertQuantity) {
+                        quimbertArr.push_back( Quimbert( looks, smell, color, personality, gumption, length, name, owner ) );
+                        quimbertArr[ currentQuimbert ].setHealth( (randInt(3, 5) * quimbertArr[ currentQuimbert ].getLooks() ) / 2 );
+                        // quimbertArr[ currentQuimbert ].setHealth( quimbertArr[ currentQuimbert ].startingHealth );
+
+                        // if (quimbertArr[ currentQuimbert ].health < 1) {
+                        //     quimbertArr[ currentQuimbert ].health++;
+                        //     quimbertArr[ currentQuimbert ].startingHealth++;
+                        // }
+
+                        // sColor1 = OFFWHITE;
+                        // sColor2 = WHITE;
+
+                        if ( color == "red" ) {
+                            takenColors[ 0 ] = true;
+                        } else if ( color == "orange" ) {
+                            takenColors[ 1 ] = true;
+                        } else if ( color == "yellow" ) {
+                            takenColors[ 2 ] = true;
+                        } else if ( color == "green" ) {
+                            takenColors[ 3 ] = true;
+                        } else if ( color == "lightblue" ) {
+                            takenColors[ 4 ] = true;
+                        } else if ( color == "blue" ) {
+                            takenColors[ 5 ] = true;
+                        } else if ( color == "purple" ) {
+                            takenColors[ 6 ] = true;
+                        } else if ( color == "black" ) {
+                            takenColors[ 7 ] = true;
+                        } else if ( color == "gray" ) {
+                            takenColors[ 8 ] = true;
+                        } else if ( color == "pink" ) {
+                            takenColors[ 9 ] = true;
+                        }
+
+                        looks = 0; smell = 0; personality = 0; gumption = 0; length = 0; name = ""; owner = "";
+
+                        if ( !takenColors[ 0 ] ) {
+                            color = "red";
+                        } else if ( !takenColors[ 1 ] ) {
+                            color = "orange";
+                        } else if ( !takenColors[ 2 ] ) {
+                            color = "yellow";
+                        } else if ( !takenColors[ 3 ] ) {
+                            color = "green";
+                        } else if ( !takenColors[ 4 ] ) {
+                            color = "lightblue";
+                        } else if ( !takenColors[ 5 ] ) {
+                            color = "blue";
+                        } else if ( !takenColors[ 6 ] ) {
+                            color = "purple";
+                        } else if ( !takenColors[ 7 ] ) {
+                            color = "black";
+                        } else if ( !takenColors[ 8 ] ) {
+                            color = "gray";
+                        } else if ( !takenColors[ 9 ] ) {
+                            color = "pink";
+                        }
+                            
+
+                        textBoxName.clear();
+                        textBoxOwner.clear();
+                        points = randInt(25, 35);
+                        if ( currentQuimbert + 1 < quimbertQuantity) {
+                            gameLayout = "createQuimbert";
+                        } else {
+                            break; // REMOVE: temporary, replace with ```layout = "fightLayout"``` or equivilent when implemented
+                        }
+                        currentQuimbert++;
+                    }
+                }
+            }
+
+            
+
             EndDrawing();
         }
     }

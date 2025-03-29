@@ -90,8 +90,10 @@ If you are cloning for the first time clone with `git clone --recurse-submodules
 - - - - [ ] Write everything else
 - - - - - [x] Start menu
 - - - - - [x] HMQ
-- - - - - [ ] Create Q: info
+- - - - - [x] Create Q: info
 - - - - - [ ] Create Q: stats
+- - - - - - [x] Port the background things to manage the quimberts creation
+- - - - - - [ ] Rewrite the stat selection buttons
 - - [ ] Finish game
 - - - [x] Layout for game screen created
 - - - [ ] Write the layout
