@@ -617,12 +617,9 @@ int main( int argc, char** argv, char** envv ) {
         } else if ( gameLayout == "howManyQuimberts" ) {
             BeginDrawing();
             ClearBackground( Q_RAYWHITE );
-            DrawRectangle((GetScreenWidth() / 2) - 60, (GetScreenHeight() / 2) + 20, 120, 150, Q_BLACK);
-            DrawRectangle((GetScreenWidth() / 2) - 50, (GetScreenHeight() / 2) + 30, 100, 130, Q_LIGHTGRAY);
-            DrawText(std::to_string(quimbertQuantity).c_str(), (GetScreenWidth() / 2) - MeasureText(std::to_string(quimbertQuantity).c_str(), 108) / 2, (GetScreenHeight() / 2) + 45, 108, Q_BLACK);
-
+            
             Rectangle backButton = {20, 20, 120, 80};
-
+            
             // Back button
             if (!CheckCollisionPointRec(GetMousePosition(), backButton)) {
                 DrawRectangleRec(backButton, Q_BLACK);
@@ -650,14 +647,20 @@ int main( int argc, char** argv, char** envv ) {
                     gameLayout = "start";
                 }
             }
-
             
-            DrawText( "How many Quimberts?", GetScreenWidth() / 2 - MeasureText("How many Quimberts?", 80) / 2, 300, 80, Q_BLACK);
             
-            quimbertQuantity = drawPlusCenter( GetScreenWidth() / 2 + 130, GetScreenHeight() / 4 * 3 + 80, false, quimbertQuantity, 8, false);
-            quimbertQuantity = drawPlusCenter( GetScreenWidth() / 2 - 130, GetScreenHeight() / 4 * 3 + 80, false, quimbertQuantity, 2, true);
+            DrawText( "How many Quimberts?", GetScreenWidth() / 2 - MeasureText("How many Quimberts?", 80) / 2, 140, 80, Q_BLACK);
+            
+            /* Draw the current numbers box */
+            DrawRectangle((GetScreenWidth() / 2) - 60, GetScreenHeight() / 2 - 70, 120, 150, Q_BLACK);
+            DrawRectangle((GetScreenWidth() / 2) - 50, GetScreenHeight() / 2 + 10 - 70, 100, 130, Q_LIGHTGRAY);
+            /* Actually draw the number */
+            DrawText(std::to_string(quimbertQuantity).c_str(), (GetScreenWidth() / 2) - MeasureText(std::to_string(quimbertQuantity).c_str(), 108) / 2, GetScreenHeight() / 2 + 25 - 70, 108, Q_BLACK);
 
-            if ( makeButtonTextCenter( GetScreenWidth() / 2, GetScreenHeight() / 4 * 3, "Next", 60, false) ) {
+            quimbertQuantity = drawPlusCenter( GetScreenWidth() / 2 + 130, GetScreenHeight() / 2 + 80 - 70, false, quimbertQuantity, 8, false);
+            quimbertQuantity = drawPlusCenter( GetScreenWidth() / 2 - 130, GetScreenHeight() / 2 + 80 - 70, false, quimbertQuantity, 2, true);
+
+            if ( makeButtonTextCenter( GetScreenWidth() / 2, GetScreenHeight() / 2 + 260 - 70, "Next", 60, false) ) {
                 gameLayout = "createQuimbertDetails";
             }
             
