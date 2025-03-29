@@ -284,7 +284,7 @@ bool makeButtonColor_DEPRECATED( int pos_x, int pos_y, int size_x, int size_y, C
 /*
 ** NOTE: Call with the "image" part as &someImg, and unload it after ( if desired )
 */
-bool makeButtonImage( int pos_x, int pos_y, Texture2D tex, Color background, bool isDisabled = false ) {
+bool makeButtonImage( int pos_x, int pos_y, Texture2D tex, Color background = Q_GRAY, bool isDisabled = false ) {
 
     Rectangle main = { ( float ) pos_x, ( float ) pos_y, ( float ) tex.width + 20, ( float ) tex.height + 20 };
     Rectangle coll = main;
@@ -314,7 +314,7 @@ bool makeButtonImage( int pos_x, int pos_y, Texture2D tex, Color background, boo
 
 }
 
-bool makeButtonImageCenter( int pos_x, int pos_y, int size_x, int size_y, Texture2D tex, Color background, bool isDisabled = false ) {
+bool makeButtonImageCenter( int pos_x, int pos_y, Texture2D tex, Color background = Q_GRAY, bool isDisabled = false ) {
     return makeButtonImage( pos_x - ( tex.width + 40 ) / 2, pos_y - ( tex.height + 40 ) / 2, tex, background, isDisabled );
 }
 
@@ -607,6 +607,11 @@ int main( int argc, char** argv, char** envv ) {
                 isMusicMuted = !isMusicMuted;
             }
 
+            if ( makeButtonImage( 40, 40, exitTex ) ) {
+                /* Break out of the main game loop and stop execution */
+                break; 
+            }
+
             DrawFPS( 20, 20 );
             EndDrawing();
         } else if ( gameLayout == "howManyQuimberts" ) {
@@ -646,14 +651,16 @@ int main( int argc, char** argv, char** envv ) {
                 }
             }
 
+            
+            DrawText( "How many Quimberts?", GetScreenWidth() / 2 - MeasureText("How many Quimberts?", 80) / 2, 300, 80, Q_BLACK);
+            
+            quimbertQuantity = drawPlusCenter( GetScreenWidth() / 2 + 130, GetScreenHeight() / 4 * 3 + 80, false, quimbertQuantity, 8, false);
+            quimbertQuantity = drawPlusCenter( GetScreenWidth() / 2 - 130, GetScreenHeight() / 4 * 3 + 80, false, quimbertQuantity, 2, true);
+
             if ( makeButtonTextCenter( GetScreenWidth() / 2, GetScreenHeight() / 4 * 3, "Next", 60, false) ) {
                 gameLayout = "createQuimbertDetails";
             }
             
-            DrawText( "How many Quimberts?", GetScreenWidth() / 2 - MeasureText("How many Quimberts?", 80) / 2, GetScreenHeight() / 2 - 200, 80, Q_BLACK);
-
-            quimbertQuantity = drawPlusCenter( GetScreenWidth() / 2 + 130, GetScreenHeight() / 2 + 90, false, quimbertQuantity, 8, false);
-            quimbertQuantity = drawPlusCenter( GetScreenWidth() / 2 - 130, GetScreenHeight() / 2 + 90, false, quimbertQuantity, 2, true);
             EndDrawing();
         } else if ( gameLayout == "createQuimbertDetails" ) {
             BeginDrawing();
@@ -800,18 +807,28 @@ int main( int argc, char** argv, char** envv ) {
                 }
             }
             
+<<<<<<< HEAD
             //Next Button
             if ( makeButtonTextCenter( GetScreenWidth() / 2, GetScreenHeight() / 4 * 3, "Next", 60, false) ) {
                 gameLayout = "chooseQuimbertStats";
+=======
+            if ( makeButtonTextCenter( GetScreenWidth() / 2, GetScreenHeight() / 4 * 3, "Next", 60, false) ) {
+                gameLayout = "createQuimbertDetails";
+>>>>>>> 61fc383274677ecaa8b68f5dacf8a0818107b082
             }
 
             currentColor = stoc( color );
 
             EndDrawing();
+<<<<<<< HEAD
         } else if ( gameLayout == "chooseQuimbertStats") {
             BeginDrawing();
             ClearBackground( Q_RAYWHITE );
 
+=======
+        } else if ( gameLayout == "createQuimbertStats" ) {
+            BeginDrawing();
+>>>>>>> 61fc383274677ecaa8b68f5dacf8a0818107b082
 
             Rectangle backButton = {20, 20, 120, 80};
 
@@ -842,8 +859,12 @@ int main( int argc, char** argv, char** envv ) {
                     gameLayout = "createQuimbertDetails";
                 }
             }
+<<<<<<< HEAD
 
             
+=======
+            EndDrawing();
+>>>>>>> 61fc383274677ecaa8b68f5dacf8a0818107b082
         }
     }
 }
