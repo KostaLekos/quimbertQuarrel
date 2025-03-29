@@ -286,7 +286,7 @@ bool makeButtonColor_DEPRECATED( int pos_x, int pos_y, int size_x, int size_y, C
 /*
 ** NOTE: Call with the "image" part as &someImg, and unload it after ( if desired )
 */
-bool makeButtonImage( int pos_x, int pos_y, Texture2D tex, Color background, bool isDisabled = false ) {
+bool makeButtonImage( int pos_x, int pos_y, Texture2D tex, Color background = Q_GRAY, bool isDisabled = false ) {
 
     Rectangle main = { ( float ) pos_x, ( float ) pos_y, ( float ) tex.width + 20, ( float ) tex.height + 20 };
     Rectangle coll = main;
@@ -316,7 +316,7 @@ bool makeButtonImage( int pos_x, int pos_y, Texture2D tex, Color background, boo
 
 }
 
-bool makeButtonImageCenter( int pos_x, int pos_y, int size_x, int size_y, Texture2D tex, Color background, bool isDisabled = false ) {
+bool makeButtonImageCenter( int pos_x, int pos_y, Texture2D tex, Color background = Q_GRAY, bool isDisabled = false ) {
     return makeButtonImage( pos_x - ( tex.width + 40 ) / 2, pos_y - ( tex.height + 40 ) / 2, tex, background, isDisabled );
 }
 
@@ -609,6 +609,11 @@ int main( int argc, char** argv, char** envv ) {
                 isMusicMuted = !isMusicMuted;
             }
 
+            if ( makeButtonImage( 40, 40, exitTex ) ) {
+                /* Break out of the main game loop and stop execution */
+                break; 
+            }
+
             DrawFPS( 20, 20 );
             EndDrawing();
         } else if ( gameLayout == "howManyQuimberts" ) {
@@ -648,14 +653,16 @@ int main( int argc, char** argv, char** envv ) {
                 }
             }
 
+            
+            DrawText( "How many Quimberts?", GetScreenWidth() / 2 - MeasureText("How many Quimberts?", 80) / 2, 300, 80, Q_BLACK);
+            
+            quimbertQuantity = drawPlusCenter( GetScreenWidth() / 2 + 130, GetScreenHeight() / 4 * 3 + 80, false, quimbertQuantity, 8, false);
+            quimbertQuantity = drawPlusCenter( GetScreenWidth() / 2 - 130, GetScreenHeight() / 4 * 3 + 80, false, quimbertQuantity, 2, true);
+
             if ( makeButtonTextCenter( GetScreenWidth() / 2, GetScreenHeight() / 4 * 3, "Next", 60, false) ) {
                 gameLayout = "createQuimbertDetails";
             }
             
-            DrawText( "How many Quimberts?", GetScreenWidth() / 2 - MeasureText("How many Quimberts?", 80) / 2, GetScreenHeight() / 2 - 200, 80, Q_BLACK);
-
-            quimbertQuantity = drawPlusCenter( GetScreenWidth() / 2 + 130, GetScreenHeight() / 2 + 90, false, quimbertQuantity, 8, false);
-            quimbertQuantity = drawPlusCenter( GetScreenWidth() / 2 - 130, GetScreenHeight() / 2 + 90, false, quimbertQuantity, 2, true);
             EndDrawing();
         } else if ( gameLayout == "createQuimbertDetails" ) {
             BeginDrawing();
@@ -802,10 +809,45 @@ int main( int argc, char** argv, char** envv ) {
                 }
             }
             
-            
+            if ( makeButtonTextCenter( GetScreenWidth() / 2, GetScreenHeight() / 4 * 3, "Next", 60, false) ) {
+                gameLayout = "createQuimbertDetails";
+            }
 
             currentColor = stoc( color );
 
+            EndDrawing();
+        } else if ( gameLayout == "createQuimbertStats" ) {
+            BeginDrawing();
+
+            Rectangle backButton = {20, 20, 120, 80};
+
+            // Back button
+            if (!CheckCollisionPointRec(GetMousePosition(), backButton)) {
+                DrawRectangleRec(backButton, Q_BLACK);
+                DrawRectangle(30, 30, 100, 60, Q_LIGHTGRAY);
+                DrawLineEx( { 115, 60 }, { 60, 60 }, 15, Q_BLACK);
+                DrawTriangle({ 45, 60 }, { 70, 80 }, { 70, 40 }, Q_BLACK);
+                DrawRectangle(140, 25, 5, 80, Q_DARKGRAY);
+                DrawRectangle(25, 100, 115, 5, Q_DARKGRAY);
+            } else {
+                if (!IsMouseButtonDown( MOUSE_LEFT_BUTTON )) {
+                    DrawRectangle(20, 20, 120, 80, Q_BLACK);
+                    DrawRectangle(30, 30, 100, 60, Q_GRAY);
+                    DrawLineEx( { 115, 60 }, { 60, 60 }, 15, Q_BLACK);
+                    DrawTriangle( { 45, 60 }, { 70, 80 }, { 70, 40 }, Q_BLACK);
+                    DrawRectangle(140, 25, 5, 80, Q_DARKGRAY);
+                    DrawRectangle(25, 100, 115, 5, Q_DARKGRAY);
+                } else {
+                    DrawRectangle(25, 25, 120, 80, Q_BLACK);
+                    DrawRectangle(35, 35, 100, 60, Q_GRAY);
+                    DrawLineEx( { 120, 65 }, { 65, 65 }, 15, Q_BLACK);
+                    DrawTriangle( { 50, 65 }, { 75, 85 }, { 75, 45 }, Q_BLACK);
+                }
+
+                if (IsMouseButtonReleased(0)) {
+                    gameLayout = "createQuimbertDetails";
+                }
+            }
             EndDrawing();
         }
     }
