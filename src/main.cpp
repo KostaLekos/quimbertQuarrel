@@ -539,7 +539,7 @@ int main( int argc, char** argv, char** envv ) {
 
     SetConfigFlags( FLAG_WINDOW_RESIZABLE | FLAG_WINDOW_MAXIMIZED );
 
-    InitWindow(1840, 1000, "Quimbert Quarrel");
+    InitWindow(1366, 768, "Quimbert Quarrel");
     //InitWindow(1366, 768, "Quimbert Quarrel");
     SetWindowMinSize(600, 500); 
     SetWindowMaxSize(monitorWidth, monitorHeight);
@@ -814,7 +814,7 @@ int main( int argc, char** argv, char** envv ) {
             }
             
             //Next Button
-            if ( makeButtonTextCenter( GetScreenWidth() / 2, GetScreenHeight() / 4 * 3, "Next", 60, false) ) {
+            if ( makeButtonTextCenter( GetScreenWidth() / 2, GetScreenHeight() - 80, "Next", 60, false) ) {
                 gameLayout = "chooseQuimbertStats";
             }
 
