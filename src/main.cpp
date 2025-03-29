@@ -568,6 +568,7 @@ int main( int argc, char** argv, char** envv ) {
     textBoxOwner.setCharLength( 25 );
 
     Image exitImage = LoadImage( "./resources/textures/UI/exit.png" );
+    ImageResize( &exitImage, 70, 70 );
     Texture2D exitTex = LoadTextureFromImage( exitImage );
     UnloadImage( exitImage );
 
@@ -598,16 +599,18 @@ int main( int argc, char** argv, char** envv ) {
 
             Rectangle localButton{ ( float ) GetScreenWidth() / 2 - 155, ( float ) GetScreenHeight() / 2, 300, 150 };
 
-
+            //Local Button (Next Layout)
             if ( makeButtonTextCenter( GetScreenWidth() / 2, GetScreenHeight() / 2, "Local", 80, false ) ) {
                 gameLayout = "howManyQuimberts";
             }
 
-            if ( makeButtonImage( GetScreenWidth() - 170, 10, ( isMusicMuted ? mutedTex : unmutedTex ), Q_GRAY, false ) ) {
+            //Mute/Unmute Button
+            if ( makeButtonImage( GetScreenWidth() - 235, 10, ( isMusicMuted ? mutedTex : unmutedTex ), Q_GRAY, false ) ) {
                 isMusicMuted = !isMusicMuted;
             }
 
-            if ( makeButtonImage( 40, 40, exitTex ) ) {
+            //Exit Button
+            if ( makeButtonImage( GetScreenWidth() - 120, 10, exitTex ) ) {
                 /* Break out of the main game loop and stop execution */
                 break; 
             }
