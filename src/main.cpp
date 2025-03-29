@@ -852,12 +852,7 @@ int main( int argc, char** argv, char** envv ) {
                     gameLayout = "createQuimbertDetails";
                 }
             }
-<<<<<<< HEAD
-
-            
-=======
             EndDrawing();
->>>>>>> 61fc383274677ecaa8b68f5dacf8a0818107b082
         }
     }
 }
