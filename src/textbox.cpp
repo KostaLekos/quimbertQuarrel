@@ -10,6 +10,10 @@ QuimbertTextBox::QuimbertTextBox( Rectangle boundingBox ) {
     _boundingBox = boundingBox;
 }
 
+void QuimbertTextBox::needsText() {
+    _needsText = true;
+}
+
 void QuimbertTextBox::setCharLength( int charLength ) {
     _maxCharCount = charLength;
 }
@@ -32,7 +36,11 @@ void QuimbertTextBox::processTextInput() {
     ** Checks if mouse is in bounding box
     */
     if ( CheckCollisionPointRec( GetMousePosition(), _boundingBox ) && 
-        IsMouseButtonPressed( MOUSE_LEFT_BUTTON ) ) _mouseOnText = true;
+        IsMouseButtonPressed( MOUSE_LEFT_BUTTON ) )  {
+            
+        _mouseOnText = true;
+        _needsText = false;
+    }
     /*
     ** Else, it isn't
     */

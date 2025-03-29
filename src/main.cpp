@@ -373,8 +373,8 @@ bool makeButtonImage_DEPRACATED(int pos_x, int pos_y, int size_x, int size_y, Im
 
 
 
-int drawPlus( int pos_x, int pos_y, bool canNotBePressed, int startNum, int maxOrMinVal, bool isMinus = false ) {
-    Rectangle main = { ( float ) pos_x, ( float ) pos_y, 100, 100 }; /* Main body (Q_BLACK outline) */
+int drawPlus( int pos_x, int pos_y, int size_x, int size_y, bool canNotBePressed, int startNum, int maxOrMinVal, bool isMinus = false ) {
+    Rectangle main = { ( float ) pos_x, ( float ) pos_y, ( float ) size_x, ( float ) size_y }; /* Main body (Q_BLACK outline) */
     Rectangle coll = main; /* Collision hitbox */
     coll.width += 5; coll.height += 5; /* Update collision hitbox to include Q_GRAY area, to prevent jankyness */
     
@@ -392,8 +392,8 @@ int drawPlus( int pos_x, int pos_y, bool canNotBePressed, int startNum, int maxO
     Rectangle inside = { main.x + 10, main.y + 10, main.width - 20, main.height - 20 };
 
     /* vert and hori bars of the plus or minus*/
-    Rectangle hBar = { main.x + 20, main.y + 45 , 60, 10 };
-    Rectangle vBar = { main.x + 45, main.y + 20, 10, 60 };
+    Rectangle hBar = { main.x + main.width / 5, main.y + main.height * 0.45f , main.width * 3 / 5, main.height / 10 };
+    Rectangle vBar = { main.x + main.height * 0.45f, main.y + main.width / 5, main.height / 10, main.width * 3 / 5 };
 
     DrawRectangleRec( main, Q_BLACK ); // draw Q_BLACK outling
     DrawRectangleRec( inside, CheckCollisionPointRec( GetMousePosition(), coll ) ? Q_DARKGRAY : Q_GRAY ); // draw Q_GRAY inside
@@ -412,8 +412,8 @@ int drawPlus( int pos_x, int pos_y, bool canNotBePressed, int startNum, int maxO
     return startNum;
 }
 
-int drawPlusCenter( int pos_x, int pos_y, bool canNotBePressed, int startNum, int maxOrMinVal, bool isMinus = false ) {
-    return drawPlus( pos_x - 50, pos_y - 50, canNotBePressed, startNum, maxOrMinVal, isMinus );
+int drawPlusCenter( int pos_x, int pos_y, int size_x, int size_y, bool canNotBePressed, int startNum, int maxOrMinVal, bool isMinus = false ) {
+    return drawPlus( pos_x - ( float ) size_x / 2, pos_y - ( float ) size_y / 2, size_x, size_y, canNotBePressed, startNum, maxOrMinVal, isMinus );
 }
 
 /*
@@ -501,18 +501,18 @@ int main( int argc, char** argv, char** envv ) {
     /*
     ** Temp quimbert stats
     */
-    int looks;
-    int smell;
+    int looks = 0;
+    int smell = 0;
     std::string color = "red";
-    int personality;
-    int gumption;
-    int length;
-    std::string name;
-    std::string owner;
+    int personality = 0;
+    int gumption = 0;
+    int length = 0;
+    std::string name = "";
+    std::string owner = "";
     
     int startingPoints = randInt( 25, 35 );
     std::vector< Quimbert > quimbertArr;
-    bool gameDone;
+    bool gameDone = false;
     bool isMusicMuted = false;
     std::string gameLayout = "start";
     
@@ -601,7 +601,7 @@ int main( int argc, char** argv, char** envv ) {
             Rectangle localButton{ ( float ) GetScreenWidth() / 2 - 155, ( float ) GetScreenHeight() / 2, 300, 150 };
 
             //Local Button (Next Layout)
-            if ( makeButtonTextCenter( GetScreenWidth() / 2, GetScreenHeight() / 2, "Local", 80, false ) ) {
+            if ( makeButtonTextCenter( GetScreenWidth() / 2, GetScreenHeight() / 2 + 200, "Local", 80, false ) ) {
                 gameLayout = "howManyQuimberts";
             }
 
@@ -661,8 +661,8 @@ int main( int argc, char** argv, char** envv ) {
             /* Actually draw the number */
             DrawText(std::to_string(quimbertQuantity).c_str(), (GetScreenWidth() / 2) - MeasureText(std::to_string(quimbertQuantity).c_str(), 108) / 2, GetScreenHeight() / 2 + 25 - 70, 108, Q_BLACK);
 
-            quimbertQuantity = drawPlusCenter( GetScreenWidth() / 2 + 130, GetScreenHeight() / 2 + 80 - 70, false, quimbertQuantity, 8, false);
-            quimbertQuantity = drawPlusCenter( GetScreenWidth() / 2 - 130, GetScreenHeight() / 2 + 80 - 70, false, quimbertQuantity, 2, true);
+            quimbertQuantity = drawPlusCenter( GetScreenWidth() / 2 + 130, GetScreenHeight() / 2 + 80 - 70, 100, 100, false, quimbertQuantity, 8, false);
+            quimbertQuantity = drawPlusCenter( GetScreenWidth() / 2 - 130, GetScreenHeight() / 2 + 80 - 70, 100, 100, false, quimbertQuantity, 2, true);
 
             if ( makeButtonTextCenter( GetScreenWidth() / 2, GetScreenHeight() / 2 + 260 - 70, "Next", 60, false) ) {
                 gameLayout = "createQuimbertDetails";
@@ -759,52 +759,52 @@ int main( int argc, char** argv, char** envv ) {
                 Q_PINK --> Q_MAGENTA
                 */
 
-                if ( makeButtonColor( colorSelectionPanelInside.x + 80 * 0 + 10, colorSelectionPanelInside.y + 80 * 0 + 10, 60, 60, Q_RED, Q_MAROON, false) ) {
+                if ( makeButtonColor( colorSelectionPanelInside.x + 80 * 0 + 10, colorSelectionPanelInside.y + 80 * 0 + 10, 60, 60, Q_RED, Q_MAROON, takenColors[ 0 ] ) ) {
                     color = "red";
                     showColorSelectionPanel = false;
                 }
                 
-                if ( makeButtonColor( colorSelectionPanelInside.x + 80 * 1 + 10, colorSelectionPanelInside.y + 80 * 0 + 10, 60, 60, Q_ORANGE, Q_DARKORANGE, false) ) {
+                if ( makeButtonColor( colorSelectionPanelInside.x + 80 * 1 + 10, colorSelectionPanelInside.y + 80 * 0 + 10, 60, 60, Q_ORANGE, Q_DARKORANGE, takenColors[ 1 ] ) ) {
                     color = "orange";
                     showColorSelectionPanel = false;
                 }
                 
-                if ( makeButtonColor( colorSelectionPanelInside.x + 80 * 2 + 10, colorSelectionPanelInside.y + 80 * 0 + 10, 60, 60, Q_YELLOW, Q_GOLD, false) ) {
+                if ( makeButtonColor( colorSelectionPanelInside.x + 80 * 2 + 10, colorSelectionPanelInside.y + 80 * 0 + 10, 60, 60, Q_YELLOW, Q_GOLD, takenColors[ 2 ] ) ) {
                     color = "yellow";
                     showColorSelectionPanel = false;
                 }
                 
-                if ( makeButtonColor( colorSelectionPanelInside.x + 80 * 3 + 10, colorSelectionPanelInside.y + 80 * 0 + 10, 60, 60, Q_GREEN, Q_LIME, false) ) {
+                if ( makeButtonColor( colorSelectionPanelInside.x + 80 * 3 + 10, colorSelectionPanelInside.y + 80 * 0 + 10, 60, 60, Q_GREEN, Q_LIME, takenColors[ 3 ] ) ) {
                     color = "green";
                     showColorSelectionPanel = false;
                 }
                 
-                if ( makeButtonColor( colorSelectionPanelInside.x + 80 * 4 + 10, colorSelectionPanelInside.y + 80 * 0 + 10, 60, 60, Q_LIGHTBLUE, Q_DARKLIGHTBLUE, false) ) {
+                if ( makeButtonColor( colorSelectionPanelInside.x + 80 * 4 + 10, colorSelectionPanelInside.y + 80 * 0 + 10, 60, 60, Q_LIGHTBLUE, Q_DARKLIGHTBLUE, takenColors[ 4 ] ) ) {
                     color = "lightblue";
                     showColorSelectionPanel = false;
                 }
                 
-                if ( makeButtonColor( colorSelectionPanelInside.x + 80 * 0 + 10, colorSelectionPanelInside.y + 80 * 1 + 10, 60, 60, Q_BLUE, Q_DARKBLUE, false) ) {
+                if ( makeButtonColor( colorSelectionPanelInside.x + 80 * 0 + 10, colorSelectionPanelInside.y + 80 * 1 + 10, 60, 60, Q_BLUE, Q_DARKBLUE, takenColors[ 5 ] ) ) {
                     color = "blue";
                     showColorSelectionPanel = false;
                 }
                 
-                if ( makeButtonColor( colorSelectionPanelInside.x + 80 * 1 + 10, colorSelectionPanelInside.y + 80 * 1 + 10, 60, 60, Q_PURPLE, Q_VIOLET, false) ) {
+                if ( makeButtonColor( colorSelectionPanelInside.x + 80 * 1 + 10, colorSelectionPanelInside.y + 80 * 1 + 10, 60, 60, Q_PURPLE, Q_VIOLET, takenColors[ 6 ] ) ) {
                     color = "purple";
                     showColorSelectionPanel = false;
                 }
                 
-                if ( makeButtonColor( colorSelectionPanelInside.x + 80 * 2 + 10, colorSelectionPanelInside.y + 80 * 1 + 10, 60, 60, Q_DARKGRAY, Q_LIGHTBLACK, false) ) {
+                if ( makeButtonColor( colorSelectionPanelInside.x + 80 * 2 + 10, colorSelectionPanelInside.y + 80 * 1 + 10, 60, 60, Q_DARKGRAY, Q_LIGHTBLACK, takenColors[ 7 ] ) ) {
                     color = "black";
                     showColorSelectionPanel = false;
                 }
                 
-                if ( makeButtonColor( colorSelectionPanelInside.x + 80 * 3 + 10, colorSelectionPanelInside.y + 80 * 1 + 10, 60, 60, Q_LIGHTGRAY, Q_GRAY, false) ) {
+                if ( makeButtonColor( colorSelectionPanelInside.x + 80 * 3 + 10, colorSelectionPanelInside.y + 80 * 1 + 10, 60, 60, Q_LIGHTGRAY, Q_GRAY, takenColors[ 8 ] ) ) {
                     color = "gray";
                     showColorSelectionPanel = false;
                 }
                 
-                if ( makeButtonColor( colorSelectionPanelInside.x + 80 * 4 + 10, colorSelectionPanelInside.y + 80 * 1 + 10, 60, 60, Q_PINK, Q_MAGENTA, false) ) {
+                if ( makeButtonColor( colorSelectionPanelInside.x + 80 * 4 + 10, colorSelectionPanelInside.y + 80 * 1 + 10, 60, 60, Q_PINK, Q_MAGENTA, takenColors[ 9 ] ) ) {
                     color = "pink";
                     showColorSelectionPanel = false;
                 }
@@ -839,12 +839,20 @@ int main( int argc, char** argv, char** envv ) {
             */
             //VERY IMPORTANT, TAKE THE ABOVE FUNCTION AND APPLY IT TO THE ONE BELOW
             //THE FUNCION MUST ONLY GO TO NEXT PAGE IF TEXTBOX AND COLOR BUTTON HAVE CONTENT SELECTED
-            if ( makeButtonTextCenter( GetScreenWidth() / 2, GetScreenHeight() - 80, "Next", 60, false) ) {
-                //if () {
-                    gameLayout = "chooseQuimbertStats";
-                //} else {
 
-                //}
+            /* NOTE: I implemented it but don't know about the color shenagans, i think i fixed that somewhere else though already so if its an issue refer back here
+            ** --Liam */
+            if ( makeButtonTextCenter( GetScreenWidth() / 2, GetScreenHeight() - 80, "Next", 60, false ) ) {
+                if ( textBoxName.getText().length() > 0 && textBoxOwner.getText().length() > 0 ) {
+                    gameLayout = "chooseQuimbertStats";
+                } else {
+                    if ( textBoxName.getText().length() < 1 ) {
+                        textBoxName.needsText();
+                    }
+                    if ( textBoxOwner.getText().length() < 1 ) {
+                        textBoxOwner.needsText();    
+                    }
+                }
             }
 
             currentColor = stoc( color );
@@ -954,7 +962,7 @@ int main( int argc, char** argv, char** envv ) {
                         textBoxOwner.clear();
                         points = randInt(25, 35);
                         if ( currentQuimbert + 1 < quimbertQuantity) {
-                            gameLayout = "createQuimbert";
+                            gameLayout = "createQuimbertDetails";
                         } else {
                             break; // REMOVE: temporary, replace with ```layout = "fightLayout"``` or equivilent when implemented
                         }
@@ -963,7 +971,134 @@ int main( int argc, char** argv, char** envv ) {
                 }
             }
 
+            /* Initial vars for the stat buttons */
+
+            int pos_x = 280;
+            int pos_y = 220;
+
+            int oldLooks = looks;
+            int oldSmell = smell;
+            int oldPersonality = personality;
+            int oldGumption = gumption;
+            int oldLength = length;
+
             
+            /* Draw the looks buttons */
+            Rectangle looks_stat_main = { pos_x - ( float ) MeasureText( std::to_string( looks ).c_str(), 60 ) / 2 - 20, pos_y - ( float ) MeasureTextEx( GetFontDefault(), std::to_string( looks ).c_str(), 60, 6 ).y / 2 - 20, ( float ) MeasureText( std::to_string( looks ).c_str(), 60 ) + 40, MeasureTextEx( GetFontDefault(), std::to_string( looks ).c_str(), 60, 6 ).y + 40 };
+            Rectangle looks_stat_inside = looks_stat_main;
+            
+            DrawText( "Looks", pos_x - ( float ) MeasureText( "Looks", 48 ) / 2, pos_y - 110, 48, Q_BLACK );
+            
+            looks_stat_inside.x += 10; looks_stat_inside.y += 10;
+            looks_stat_inside.width -= 20; looks_stat_inside.height -= 20;
+
+            DrawRectangleRec( looks_stat_main, Q_BLACK);
+            DrawRectangleRec( looks_stat_inside, Q_GRAY );
+
+            DrawText( std::to_string( looks ).c_str(), looks_stat_inside.x + 10, looks_stat_inside.y + 10, 60, Q_BLACK );
+
+            
+            looks = drawPlusCenter( pos_x - 90, pos_y, 60, 60,  false, looks, 0, true );
+            looks = drawPlusCenter( pos_x + 90, pos_y, 60, 60, points == 0, looks, 10 );
+
+            
+            /* Move it down a bit so they don't overlap */
+            pos_y += 40 + GetScreenHeight() / 5;
+
+
+            /* Smell */
+            Rectangle smell_stat_main = { pos_x - ( float ) MeasureText( std::to_string( smell ).c_str(), 60 ) / 2 - 20, pos_y - ( float ) MeasureTextEx( GetFontDefault(), std::to_string( smell ).c_str(), 60, 6 ).y / 2 - 20, ( float ) MeasureText( std::to_string( smell ).c_str(), 60 ) + 40, MeasureTextEx( GetFontDefault(), std::to_string( smell ).c_str(), 60, 6 ).y + 40 };
+            Rectangle smell_stat_inside = smell_stat_main;
+            
+            DrawText( "smell", pos_x - ( float ) MeasureText( "smell", 48 ) / 2, pos_y - 110, 48, Q_BLACK );
+            
+            smell_stat_inside.x += 10; smell_stat_inside.y += 10;
+            smell_stat_inside.width -= 20; smell_stat_inside.height -= 20;
+
+            DrawRectangleRec( smell_stat_main, Q_BLACK);
+            DrawRectangleRec( smell_stat_inside, Q_GRAY );
+
+            DrawText( std::to_string( smell ).c_str(), smell_stat_inside.x + 10, smell_stat_inside.y + 10, 60, Q_BLACK );
+
+            
+            smell = drawPlusCenter( pos_x - 90, pos_y, 60, 60,  false, smell, 0, true );
+            smell = drawPlusCenter( pos_x + 90, pos_y, 60, 60, points == 0, smell, 10 );
+
+            /* Move it down */
+            pos_y += 40 + GetScreenHeight() / 5;
+
+
+            /* Personality */
+            Rectangle personality_stat_main = { pos_x - ( float ) MeasureText( std::to_string( personality ).c_str(), 60 ) / 2 - 20, pos_y - ( float ) MeasureTextEx( GetFontDefault(), std::to_string( personality ).c_str(), 60, 6 ).y / 2 - 20, ( float ) MeasureText( std::to_string( personality ).c_str(), 60 ) + 40, MeasureTextEx( GetFontDefault(), std::to_string( personality ).c_str(), 60, 6 ).y + 40 };
+            Rectangle personality_stat_inside = personality_stat_main;
+            
+            DrawText( "personality", pos_x - ( float ) MeasureText( "personality", 48 ) / 2, pos_y - 110, 48, Q_BLACK );
+            
+            personality_stat_inside.x += 10; personality_stat_inside.y += 10;
+            personality_stat_inside.width -= 20; personality_stat_inside.height -= 20;
+
+            DrawRectangleRec( personality_stat_main, Q_BLACK);
+            DrawRectangleRec( personality_stat_inside, Q_GRAY );
+
+            DrawText( std::to_string( personality ).c_str(), personality_stat_inside.x + 10, personality_stat_inside.y + 10, 60, Q_BLACK );
+
+            
+            personality = drawPlusCenter( pos_x - 90, pos_y, 60, 60,  false, personality, 0, true );
+            personality = drawPlusCenter( pos_x + 90, pos_y, 60, 60, points == 0, personality, 10 );
+
+            /* Move it to the other side */
+            pos_x = GetScreenWidth() - pos_x;
+            pos_y = 220;
+
+
+            /* gumption */
+            Rectangle gumption_stat_main = { pos_x - ( float ) MeasureText( std::to_string( gumption ).c_str(), 60 ) / 2 - 20, pos_y - ( float ) MeasureTextEx( GetFontDefault(), std::to_string( gumption ).c_str(), 60, 6 ).y / 2 - 20, ( float ) MeasureText( std::to_string( gumption ).c_str(), 60 ) + 40, MeasureTextEx( GetFontDefault(), std::to_string( gumption ).c_str(), 60, 6 ).y + 40 };
+            Rectangle gumption_stat_inside = gumption_stat_main;
+            
+            DrawText( "gumption", pos_x - ( float ) MeasureText( "gumption", 48 ) / 2, pos_y - 110, 48, Q_BLACK );
+            
+            gumption_stat_inside.x += 10; gumption_stat_inside.y += 10;
+            gumption_stat_inside.width -= 20; gumption_stat_inside.height -= 20;
+
+            DrawRectangleRec( gumption_stat_main, Q_BLACK);
+            DrawRectangleRec( gumption_stat_inside, Q_GRAY );
+
+            DrawText( std::to_string( gumption ).c_str(), gumption_stat_inside.x + 10, gumption_stat_inside.y + 10, 60, Q_BLACK );
+
+            
+            gumption = drawPlusCenter( pos_x - 90, pos_y, 60, 60,  false, gumption, 0, true );
+            gumption = drawPlusCenter( pos_x + 90, pos_y, 60, 60, points == 0, gumption, 10 );
+            
+
+            /* Move it down */
+            pos_y += 40 + GetScreenHeight() / 5;
+
+            /* length */
+            Rectangle length_stat_main = { pos_x - ( float ) MeasureText( std::to_string( length ).c_str(), 60 ) / 2 - 20, pos_y - ( float ) MeasureTextEx( GetFontDefault(), std::to_string( length ).c_str(), 60, 6 ).y / 2 - 20, ( float ) MeasureText( std::to_string( length ).c_str(), 60 ) + 40, MeasureTextEx( GetFontDefault(), std::to_string( length ).c_str(), 60, 6 ).y + 40 };
+            Rectangle length_stat_inside = length_stat_main;
+            
+            DrawText( "length", pos_x - ( float ) MeasureText( "length", 48 ) / 2, pos_y - 110, 48, Q_BLACK );
+            
+            length_stat_inside.x += 10; length_stat_inside.y += 10;
+            length_stat_inside.width -= 20; length_stat_inside.height -= 20;
+
+            DrawRectangleRec( length_stat_main, Q_BLACK);
+            DrawRectangleRec( length_stat_inside, Q_GRAY );
+
+            DrawText( std::to_string( length ).c_str(), length_stat_inside.x + 10, length_stat_inside.y + 10, 60, Q_BLACK );
+
+            
+            length = drawPlusCenter( pos_x - 90, pos_y, 60, 60,  false, length, 0, true );
+            length = drawPlusCenter( pos_x + 90, pos_y, 60, 60, points == 0, length, 10 );
+
+            points += oldLooks - looks;
+            points += oldSmell - smell;
+            points += oldPersonality - personality;
+            points += oldGumption - gumption;
+            points += oldLength - length;
+
+
+            DrawText( ( std::string( "Points: " ) + std::to_string( points ) ).c_str(), ( float ) GetScreenWidth() / 2 - ( float ) MeasureText( ( std::string( "Points: " ) + std::to_string( points ) ).c_str(), 48 ) / 2, 150, 48, Q_BLACK );
 
             EndDrawing();
         }

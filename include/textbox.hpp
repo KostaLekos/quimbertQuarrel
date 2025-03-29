@@ -49,6 +49,10 @@ public:
     void render();
 
 
+    /*
+    ** Sets _needsText to true, to turn it red and signify that it needs an input
+    */
+    void needsText();
 
 private:
     std::string _text;

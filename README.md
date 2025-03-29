@@ -94,6 +94,8 @@ If you are cloning for the first time clone with `git clone --recurse-submodules
 - - - - - [ ] Create Q: stats
 - - - - - - [x] Port the background things to manage the quimberts creation
 - - - - - - [ ] Rewrite the stat selection buttons
+- - - - - - - [x] Normal +- button
+- - - - - - - [ ] Plus all button
 - - [ ] Finish game
 - - - [x] Layout for game screen created
 - - - [ ] Write the layout
