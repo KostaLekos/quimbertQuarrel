@@ -1,7 +1,7 @@
 NAME = QuimbertQuarrel
 
 CC = g++
-CCFLAGS = -Ithird/raylib/src --std=c++20 -g
+CCFLAGS = -Ithird/raylib/src --std=c++20 -g -Wpedantic -Wall -Wextra
 
 LINKFLAGS = third/raylib/src/libraylib.a
 

@@ -56,10 +56,10 @@ public:
 
 private:
     std::string _text;
-    int _maxCharCount;
+    size_t _maxCharCount;
     bool _mouseOnText;
     Rectangle _boundingBox;
-    int _frameCounter;
+    size_t _frameCounter;
     bool _needsText;
 
 };

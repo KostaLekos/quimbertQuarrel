@@ -55,7 +55,7 @@ If you are cloning for the first time clone with `git clone --recurse-submodules
 
 ## TODO
 - [ ] Finish acquiring resources
-- - [ ] Get full res background
+- - [ ] Get full res background *Needs to be 16:9 or 16:10, ideally 1920x1080 or 3840x2160*
 - - [ ] Get non-AI music ( except blippy bounce )
 - [ ] Finished writing
 - - [x] Wrote quimbert.hpp

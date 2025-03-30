@@ -42,7 +42,7 @@ std::mt19937_64::result_type randInt( int min, int max ) {
     std::uniform_int_distribution< std::mt19937::result_type > dist( min, max );
 
     return dist( rng );
-}//kokk
+}//kokk /* what? */
 
 // Colors: Red, Orange, Yellow, Green, Blue, DarkBlue, Purple, Q_BLACK, Q_GRAY, Pink
 Color stoc( std::string color ) {
@@ -107,7 +107,7 @@ bool makeButtonTextEx( int pos_x, int pos_y, int size_x, int size_y, std::string
     Rectangle coll = main;
     coll.width += 5; coll.height += 5;
 
-    bool buttonDown = isDisabled || CheckCollisionPointRec( GetMousePosition(), coll ) && IsMouseButtonDown( MOUSE_LEFT_BUTTON );
+    bool buttonDown = isDisabled || ( CheckCollisionPointRec( GetMousePosition(), coll ) && IsMouseButtonDown( MOUSE_LEFT_BUTTON ) );
     if ( buttonDown ) {
         main.x += 5; main.y += 5;
     }
@@ -131,7 +131,7 @@ bool makeButtonTextEx( int pos_x, int pos_y, int size_x, int size_y, std::string
 }
 
 bool makeButtonText( int pos_x, int pos_y, std::string text, int fontSize, bool isDisabled = false ) {
-    return makeButtonTextEx( pos_x, pos_y, MeasureText( text.c_str(), fontSize ) + 40, MeasureTextEx( GetFontDefault(), text.c_str(), fontSize, ( float ) fontSize / 10 ).y + 40, text, fontSize);
+    return makeButtonTextEx( pos_x, pos_y, MeasureText( text.c_str(), fontSize ) + 40, MeasureTextEx( GetFontDefault(), text.c_str(), fontSize, ( float ) fontSize / 10 ).y + 40, text, fontSize, isDisabled);
 }
 
 
@@ -217,7 +217,7 @@ bool makeButtonColor( int pos_x, int pos_y, int size_x, int size_y, Color color1
     Rectangle coll = main;
     coll.width += 5; coll.height += 5;
 
-    bool buttonDown = isDisabled || CheckCollisionPointRec( GetMousePosition(), coll ) && IsMouseButtonDown( MOUSE_LEFT_BUTTON );
+    bool buttonDown = isDisabled || ( CheckCollisionPointRec( GetMousePosition(), coll ) && IsMouseButtonDown( MOUSE_LEFT_BUTTON ) );
     if ( buttonDown ) {
         main.x += 5; main.y += 5;
     }
@@ -292,7 +292,7 @@ bool makeButtonImage( int pos_x, int pos_y, Texture2D tex, Color background = Q_
     Rectangle coll = main;
     coll.width += 5; coll.height += 5;
     
-    bool buttonDown = isDisabled || CheckCollisionPointRec( GetMousePosition(), coll ) && IsMouseButtonDown( MOUSE_LEFT_BUTTON );
+    bool buttonDown = isDisabled || ( CheckCollisionPointRec( GetMousePosition(), coll ) && IsMouseButtonDown( MOUSE_LEFT_BUTTON ) );
     if ( buttonDown ) {
         main.x += 5; main.y += 5;
     }
@@ -518,7 +518,6 @@ int main( int argc, char** argv, char** envv ) {
     bool isMusicMuted = false;
     std::string gameLayout = "start";
     
-    bool madeQuimbert = false;
     int currentQuimbert = 0;
     
     int monitorWidth = GetMonitorWidth( 0 ), monitorHeight = GetMonitorHeight( 0 );
@@ -1195,11 +1194,20 @@ int main( int argc, char** argv, char** envv ) {
 
             EndDrawing();
         } else if ( gameLayout == "game" ) {
-            
-            ImageResize( &backgroundImage, GetScreenWidth(), GetScreenHeight() );
-            Texture2D backgroundTex = LoadTextureFromImage( backgroundImage );
+            Image tmpImage = ImageCopy( backgroundImage );
+
+            const double BACKGROUND_ASPECT_RATIO = static_cast< double >( backgroundImage.width ) / static_cast< double >( backgroundImage.height );
+            if ( static_cast< double >( GetScreenWidth() ) / static_cast< double >( GetScreenHeight() ) > BACKGROUND_ASPECT_RATIO ) {
+                ImageResize( &tmpImage, GetScreenHeight() * BACKGROUND_ASPECT_RATIO, GetScreenHeight() );
+            } else {
+                ImageResize( &tmpImage, GetScreenWidth(), GetScreenWidth() / BACKGROUND_ASPECT_RATIO );
+            }
+                
+            // ImageResize( &tmpImage, GetScreenWidth(), GetScreenHeight() );
+            Texture2D backgroundTex = LoadTextureFromImage( tmpImage );
 
             BeginDrawing();
+            ClearBackground( Q_BLACK );
             DrawTexture( backgroundTex, 0, 0, Q_WHITE );
             
 

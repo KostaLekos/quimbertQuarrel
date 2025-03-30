@@ -113,7 +113,7 @@ std::string Quimbert::infoOfItem( std::string item ) {
 }
 
 bool Quimbert::useItem( std::string item ) {
-    for ( int i = 0; i < _inventory.size(); i++ ) {
+    for ( size_t i = 0; i < _inventory.size(); i++ ) {
         if ( _inventory[ i ] == item ) {
 
             /*
