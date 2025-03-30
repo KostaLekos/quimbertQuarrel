@@ -101,15 +101,13 @@ Color stocDark( std::string color ) {
 ** Rewrote makeButtonText, give position of top-left corner, text, fontsize, and whether or not to ignore input
 ** Made better than the previous one!
 */
-bool makeButtonText( int pos_x, int pos_y, std::string text, int fontSize, bool isDisabled = false ) {
+bool makeButtonTextEx( int pos_x, int pos_y, int size_x, int size_y, std::string text, int fontSize, bool isDisabled = false ) {
 
-    Rectangle main = { ( float ) pos_x, ( float ) pos_y,
-        ( float ) MeasureText( text.c_str(), fontSize ) + 40, 
-        ( float ) MeasureTextEx( GetFontDefault(), text.c_str(), fontSize, ( float ) fontSize / 10 ).y + 40 };
+    Rectangle main = { ( float ) pos_x, ( float ) pos_y, ( float ) size_x, ( float ) size_y };
     Rectangle coll = main;
     coll.width += 5; coll.height += 5;
 
-        bool buttonDown = isDisabled || CheckCollisionPointRec( GetMousePosition(), coll ) && IsMouseButtonDown( MOUSE_LEFT_BUTTON );
+    bool buttonDown = isDisabled || CheckCollisionPointRec( GetMousePosition(), coll ) && IsMouseButtonDown( MOUSE_LEFT_BUTTON );
     if ( buttonDown ) {
         main.x += 5; main.y += 5;
     }
@@ -126,10 +124,14 @@ bool makeButtonText( int pos_x, int pos_y, std::string text, int fontSize, bool 
         DrawRectangleRec( { main.x + main.width, main.y + 5, 5, main.height }, DARKGRAY );
         DrawRectangleRec( { main.x + 5, main.y + main.height, main.width, 5 }, Q_DARKGRAY );
     }
-    DrawText( text.c_str(), main.x + 10 + 10, main.y + 10 + 10, fontSize, Q_BLACK );
+    DrawText( text.c_str(), ( float ) ( main.x + main.width / 2 ) - ( float ) MeasureText( text.c_str(), fontSize ) / 2, ( float ) ( main.y + main.height / 2 ) - ( float ) MeasureTextEx( GetFontDefault(), text.c_str(), fontSize, ( float ) fontSize / 10 ).y / 2, fontSize, Q_BLACK );
 
     return IsMouseButtonReleased( MOUSE_LEFT_BUTTON ) && CheckCollisionPointRec( GetMousePosition(), coll );
 
+}
+
+bool makeButtonText( int pos_x, int pos_y, std::string text, int fontSize, bool isDisabled = false ) {
+    return makeButtonTextEx( pos_x, pos_y, MeasureText( text.c_str(), fontSize ) + 40, MeasureTextEx( GetFontDefault(), text.c_str(), fontSize, ( float ) fontSize / 10 ).y + 40, text, fontSize);
 }
 
 
@@ -393,7 +395,7 @@ int drawPlus( int pos_x, int pos_y, int size_x, int size_y, bool canNotBePressed
 
     /* vert and hori bars of the plus or minus*/
     Rectangle hBar = { main.x + main.width / 5, main.y + main.height * 0.45f , main.width * 3 / 5, main.height / 10 };
-    Rectangle vBar = { main.x + main.height * 0.45f, main.y + main.width / 5, main.height / 10, main.width * 3 / 5 };
+    Rectangle vBar = { main.x + main.width * 0.45f, main.y + main.width / 5, main.height / 10, main.width * 3 / 5 };
 
     DrawRectangleRec( main, Q_BLACK ); // draw Q_BLACK outling
     DrawRectangleRec( inside, CheckCollisionPointRec( GetMousePosition(), coll ) ? Q_DARKGRAY : Q_GRAY ); // draw Q_GRAY inside
@@ -524,9 +526,11 @@ int main( int argc, char** argv, char** envv ) {
     bool showColorSelectionPanel = false;
     Color currentColor = stoc( color );
     
-    int points = randInt( 25, 35 );
+    int points = startingPoints;
     
     bool takenColors[ 10 ] = { false };
+
+    bool showStatsInfoBox = false;
 
     // Image info1 = LoadImage( "./resources/textures/UI/infoButton1.png" );
     // Image info2 = LoadImage( "./resources/textures/UI/infoButton2.png" );
@@ -583,6 +587,12 @@ int main( int argc, char** argv, char** envv ) {
     Texture2D unmutedTex = LoadTextureFromImage( unmutedImage );
     UnloadImage( unmutedImage );
 
+    Image info2Image = LoadImage( "./resources/textures/UI/infoButton2.png");
+    ImageResize( &info2Image, 40, 40 );
+    Texture2D info2Tex = LoadTextureFromImage( info2Image );
+    UnloadImage( info2Image );
+
+    Image backgroundImage = LoadImage( "./resources/textures/backgrounds/quimbert_hell.png");
 
 
     while ( !WindowShouldClose() ) {
@@ -729,7 +739,7 @@ int main( int argc, char** argv, char** envv ) {
                 /*
                 ** The box that the color buttons are in
                 */
-                Rectangle colorSelectionPanelMain = { ( float ) GetScreenWidth() / 2 + 60 + 20 + 10, 450, 80 * 5 + 20 * 2, 80 * 2 + 20 * 2 };
+                Rectangle colorSelectionPanelMain = { ( float ) GetScreenWidth() / 2 + 60 + 20 + 20, 450, 80 * 5 + 25, 80 * 2 + 25 };
                 Rectangle colorSelectionPanelInside = colorSelectionPanelMain;
                 colorSelectionPanelInside.x += 10; colorSelectionPanelInside.y += 10; 
                 colorSelectionPanelInside.width -= 20; colorSelectionPanelInside.height -= 20;
@@ -738,7 +748,7 @@ int main( int argc, char** argv, char** envv ) {
                 ** Draw the box that the selector buttons are in
                 */
                 DrawRectangleRec( colorSelectionPanelMain, Q_BLACK );
-                DrawRectangleRec( colorSelectionPanelInside, Q_GRAY );
+                DrawRectangleRec( colorSelectionPanelInside, Q_LIGHTGRAY );
 
                 /*
                 ** Draw the selector buttons
@@ -896,7 +906,7 @@ int main( int argc, char** argv, char** envv ) {
             Rectangle doneButton = { ( float ) GetScreenWidth() - 175, 20, 150, 80 };
 
             //Create Quimbert button
-            if ( makeButtonText( GetScreenWidth() - 175, 20, "Done", 48, points > 0 ) ) {
+            if ( makeButtonText( GetScreenWidth() - 175, 20, "Done", 48, points != 0 ) ) {
                 if (points == 0 && currentQuimbert + 1 <= quimbertQuantity) {
                     if (currentQuimbert + 1 <= quimbertQuantity) {
                         quimbertArr.push_back( Quimbert( looks, smell, color, personality, gumption, length, name, owner ) );
@@ -961,12 +971,13 @@ int main( int argc, char** argv, char** envv ) {
                         textBoxName.clear();
                         textBoxOwner.clear();
                         points = randInt(25, 35);
-                        if ( currentQuimbert + 1 < quimbertQuantity) {
+
+                        if ( ++currentQuimbert < quimbertQuantity) {
                             gameLayout = "createQuimbertDetails";
                         } else {
-                            break; // REMOVE: temporary, replace with ```layout = "fightLayout"``` or equivilent when implemented
+                            currentQuimbert = 0;
+                            gameLayout = "game"; // REMOVE: temporary, replace with ```layout = "fightLayout"``` or equivilent when implemented
                         }
-                        currentQuimbert++;
                     }
                 }
             }
@@ -1001,6 +1012,20 @@ int main( int argc, char** argv, char** envv ) {
             looks = drawPlusCenter( pos_x - 90, pos_y, 60, 60,  false, looks, 0, true );
             looks = drawPlusCenter( pos_x + 90, pos_y, 60, 60, points == 0, looks, 10 );
 
+
+            if ( makeButtonTextEx( pos_x + 200 - MeasureText( "++", 60 ) / 2 - 20, pos_y - 30, MeasureText( "++", 60 ) + 40, 60, "++", 60, looks > 9 || points < 1 ) ) {
+                if ( 10 - looks > points ) {
+                    looks += points;
+                } else {
+                    looks = 10;
+                }
+            }
+            
+            if ( makeButtonTextEx( pos_x - 200 - MeasureText( "--", 60 ) / 2 - 20, pos_y - 30, MeasureText( "--", 60 ) + 40, 60, "--", 60, looks < 1 ) ) {
+                looks = 0;
+            }
+
+
             
             /* Move it down a bit so they don't overlap */
             pos_y += 40 + GetScreenHeight() / 5;
@@ -1024,6 +1049,20 @@ int main( int argc, char** argv, char** envv ) {
             smell = drawPlusCenter( pos_x - 90, pos_y, 60, 60,  false, smell, 0, true );
             smell = drawPlusCenter( pos_x + 90, pos_y, 60, 60, points == 0, smell, 10 );
 
+            if ( makeButtonTextEx( pos_x + 200 - MeasureText( "++", 60 ) / 2 - 20, pos_y - 30, MeasureText( "++", 60 ) + 40, 60, "++", 60, smell > 9 || points < 1 ) ) {
+                if ( 10 - smell > points ) {
+                    smell += points;
+                } else {
+                    smell = 10;
+                }
+            }
+            
+            if ( makeButtonTextEx( pos_x - 200 - MeasureText( "--", 60 ) / 2 - 20, pos_y - 30, MeasureText( "--", 60 ) + 40, 60, "--", 60, smell < 1 ) ) {
+                smell = 0;
+            }
+
+
+
             /* Move it down */
             pos_y += 40 + GetScreenHeight() / 5;
 
@@ -1045,6 +1084,18 @@ int main( int argc, char** argv, char** envv ) {
             
             personality = drawPlusCenter( pos_x - 90, pos_y, 60, 60,  false, personality, 0, true );
             personality = drawPlusCenter( pos_x + 90, pos_y, 60, 60, points == 0, personality, 10 );
+            
+            if ( makeButtonTextEx( pos_x + 200 - MeasureText( "++", 60 ) / 2 - 20, pos_y - 30, MeasureText( "++", 60 ) + 40, 60, "++", 60, personality > 9 || points < 1 ) ) {
+                if ( 10 - personality > points ) {
+                    personality += points;
+                } else {
+                    personality = 10;
+                }
+            }
+            
+            if ( makeButtonTextEx( pos_x - 200 - MeasureText( "--", 60 ) / 2 - 20, pos_y - 30, MeasureText( "--", 60 ) + 40, 60, "--", 60, personality < 1 ) ) {
+                personality = 0;
+            }
 
             /* Move it to the other side */
             pos_x = GetScreenWidth() - pos_x;
@@ -1069,6 +1120,19 @@ int main( int argc, char** argv, char** envv ) {
             gumption = drawPlusCenter( pos_x - 90, pos_y, 60, 60,  false, gumption, 0, true );
             gumption = drawPlusCenter( pos_x + 90, pos_y, 60, 60, points == 0, gumption, 10 );
             
+            if ( makeButtonTextEx( pos_x + 200 - MeasureText( "++", 60 ) / 2 - 20, pos_y - 30, MeasureText( "++", 60 ) + 40, 60, "++", 60, gumption > 9 || points < 1 ) ) {
+                if ( 10 - gumption > points ) {
+                    gumption += points;
+                } else {
+                    gumption = 10;
+                }
+            }
+            
+            if ( makeButtonTextEx( pos_x - 200 - MeasureText( "--", 60 ) / 2 - 20, pos_y - 30, MeasureText( "--", 60 ) + 40, 60, "--", 60, gumption < 1 ) ) {
+                gumption = 0;
+            }
+
+            
 
             /* Move it down */
             pos_y += 40 + GetScreenHeight() / 5;
@@ -1090,6 +1154,18 @@ int main( int argc, char** argv, char** envv ) {
             
             length = drawPlusCenter( pos_x - 90, pos_y, 60, 60,  false, length, 0, true );
             length = drawPlusCenter( pos_x + 90, pos_y, 60, 60, points == 0, length, 10 );
+            
+            if ( makeButtonTextEx( pos_x + 200 - MeasureText( "++", 60 ) / 2 - 20, pos_y - 30, MeasureText( "++", 60 ) + 40, 60, "++", 60, length > 9 || points < 1 ) ) {
+                if ( 10 - length > points ) {
+                    length += points;
+                } else {
+                    length = 10;
+                }
+            }
+            
+            if ( makeButtonTextEx( pos_x - 200 - MeasureText( "--", 60 ) / 2 - 20, pos_y - 30, MeasureText( "--", 60 ) + 40, 60, "--", 60, length < 1 ) ) {
+                length = 0;
+            }
 
             points += oldLooks - looks;
             points += oldSmell - smell;
@@ -1099,8 +1175,38 @@ int main( int argc, char** argv, char** envv ) {
 
 
             DrawText( ( std::string( "Points: " ) + std::to_string( points ) ).c_str(), ( float ) GetScreenWidth() / 2 - ( float ) MeasureText( ( std::string( "Points: " ) + std::to_string( points ) ).c_str(), 48 ) / 2, 150, 48, Q_BLACK );
+            const char* statsHelpText =
+                "Stats Descriptions:\n"
+                "Looks: \n"
+                "Smell: \n"
+                "Personality: \n"
+                "Gumption: \n"
+                "Length: \n";
+
+            const char *titleText = "Select Stats";
+            DrawText( titleText, ( float ) GetScreenWidth() / 2 - ( float ) MeasureText( titleText, 80 ) / 2, 30, 80, Q_BLACK );
+
+            if ( makeButtonImageCenter( ( float ) GetScreenWidth() / 2 + ( float ) MeasureText( titleText, 80 ) / 2 + 60, 60, info2Tex ) ) {
+                showStatsInfoBox = !showStatsInfoBox;
+            }
+            if ( showStatsInfoBox ) {
+                DrawText( statsHelpText, ( float ) GetScreenWidth() / 2 - ( float ) MeasureText( statsHelpText, 40 ) / 2 + 80, ( float ) GetScreenHeight() / 2 + 80, 40, Q_BLACK );
+            }
 
             EndDrawing();
+        } else if ( gameLayout == "game" ) {
+            
+            ImageResize( &backgroundImage, GetScreenWidth(), GetScreenHeight() );
+            Texture2D backgroundTex = LoadTextureFromImage( backgroundImage );
+
+            BeginDrawing();
+            DrawTexture( backgroundTex, 0, 0, Q_WHITE );
+            
+
+
+            EndDrawing();
+
+            UnloadTexture( backgroundTex );
         }
     }
 }

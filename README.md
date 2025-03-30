@@ -3,7 +3,7 @@ if you have access to this please go away
 me no like you
 
 # Quimbert Quarrel
-"Turn based battle royale"
+"Turn based battle royale" - *anonymous idiot fool*
 
 # MUST KNOWS
 
@@ -12,10 +12,7 @@ me no like you
 - Learn c++ build process
 - Learn c++ class semantics
 - Learn c++ in general
-- Seriously, read the comments in *all* files, it is actually important you do this before you start development, because I have added hints in places on how to do things, as well as documented how things work.
 - Learn markdown (.md files), so you can add to this file todo's and mark them as complete, as well as add other notes
-- Don't ask me to help during lunch, but I will answer questions about my implemntation details, and if you do have a question, WRITE A COMMENT NEXT TO THE ISSUE EXPLAINING WHAT IT DOES
-- Also, WRITE SOME GODDAMN COMMENTS, it doesn't matter when you are working alone, but I am working with you on this and it is so annoying trying to figure what stuff does
 
 
 
@@ -34,12 +31,12 @@ Make sure that it shows `DRIVELETTER:\path\to\apps\w64devkit\w64devkit\bin`, THI
 
 ## Check current working directory
 
-Ensure that your CWD is `path\to\quimbert\cpp`
+Ensure that your CWD is `path\to\quimbertQuarrel`
 
 ## Commands
 
-Run `make all` to build the game
-Run `make clean` if there are build errors
+Run `make all` to build the game *Run in powershell, or maybe cmd works*
+Run `make clean` if there are link errors
 
 # Java version
 The Java version is depracated and unfinished, it should only be used as a reference. If you want to build it anyway, run the c.bat and run.bat, and if on linux, figure it out.
@@ -57,6 +54,10 @@ If you are cloning for the first time clone with `git clone --recurse-submodules
 
 
 ## TODO
+- [ ] Finish acquiring resources
+- - [ ] Get full res background
+- - [ ] Get non-AI music ( except blippy bounce )
+- [ ] Finished writing
 - - [x] Wrote quimbert.hpp
 - - [x] Write quimbert.cpp
 - - - [x] Write Quimbert() 
@@ -95,7 +96,8 @@ If you are cloning for the first time clone with `git clone --recurse-submodules
 - - - - - - [x] Port the background things to manage the quimberts creation
 - - - - - - [ ] Rewrite the stat selection buttons
 - - - - - - - [x] Normal +- button
-- - - - - - - [ ] Plus all button
+- - - - - - - [x] Plus all button
+- - - - - - - [ ] Help text
 - - [ ] Finish game
 - - - [x] Layout for game screen created
 - - - [ ] Write the layout
