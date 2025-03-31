@@ -6,8 +6,15 @@
 #include <format>
 #include <raylib.h>
 
-QuimbertTextBox::QuimbertTextBox( Rectangle boundingBox ) {
-    _boundingBox = boundingBox;
+QuimbertTextBox::QuimbertTextBox( Rectangle boundingBox )
+    : _text( "" ),
+     _maxCharCount( 40 ),
+     _mouseOnText( false ),
+     _boundingBox( boundingBox ),
+     _frameCounter( 0 ),
+     _needsText( false )
+{
+
 }
 
 void QuimbertTextBox::needsText() {

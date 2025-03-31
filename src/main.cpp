@@ -117,11 +117,11 @@ bool makeButtonTextEx( int pos_x, int pos_y, int size_x, int size_y, std::string
 
 
     DrawRectangleRec( main, Q_BLACK ); // Draw Q_BLACK boarder
-    DrawRectangleRec( inside, CheckCollisionPointRec( GetMousePosition(), coll ) ? DARKGRAY : Q_GRAY ); // inside color
+    DrawRectangleRec( inside, CheckCollisionPointRec( GetMousePosition(), coll ) ? Q_DARKGRAY : Q_GRAY ); // inside color
 
     // Drop shaddow
     if ( !buttonDown ) {
-        DrawRectangleRec( { main.x + main.width, main.y + 5, 5, main.height }, DARKGRAY );
+        DrawRectangleRec( { main.x + main.width, main.y + 5, 5, main.height }, Q_DARKGRAY );
         DrawRectangleRec( { main.x + 5, main.y + main.height, main.width, 5 }, Q_DARKGRAY );
     }
     DrawText( text.c_str(), ( float ) ( main.x + main.width / 2 ) - ( float ) MeasureText( text.c_str(), fontSize ) / 2, ( float ) ( main.y + main.height / 2 ) - ( float ) MeasureTextEx( GetFontDefault(), text.c_str(), fontSize, ( float ) fontSize / 10 ).y / 2, fontSize, Q_BLACK );
@@ -236,7 +236,7 @@ bool makeButtonColor( int pos_x, int pos_y, int size_x, int size_y, Color color1
     }
 
 
-    return IsMouseButtonReleased( MOUSE_LEFT_BUTTON ) && CheckCollisionPointRec( GetMousePosition(), coll );
+    return !isDisabled && IsMouseButtonReleased( MOUSE_LEFT_BUTTON ) && CheckCollisionPointRec( GetMousePosition(), coll );
 
 }
 
@@ -512,7 +512,7 @@ int main( int argc, char** argv, char** envv ) {
     std::string name = "";
     std::string owner = "";
     
-    int startingPoints = randInt( 25, 35 );
+    int points = randInt( 25, 35 );
     std::vector< Quimbert > quimbertArr;
     bool gameDone = false;
     bool isMusicMuted = false;
@@ -524,9 +524,7 @@ int main( int argc, char** argv, char** envv ) {
     
     bool showColorSelectionPanel = false;
     Color currentColor = stoc( color );
-    
-    int points = startingPoints;
-    
+        
     bool takenColors[ 10 ] = { false };
 
     bool showStatsInfoBox = false;
@@ -849,7 +847,7 @@ int main( int argc, char** argv, char** envv ) {
             //VERY IMPORTANT, TAKE THE ABOVE FUNCTION AND APPLY IT TO THE ONE BELOW
             //THE FUNCION MUST ONLY GO TO NEXT PAGE IF TEXTBOX AND COLOR BUTTON HAVE CONTENT SELECTED
 
-            /* NOTE: I implemented it but don't know about the color shenagans, i think i fixed that somewhere else though already so if its an issue refer back here
+            /* NOTE: I implemented it but don't know about the color shenagans, i think i fixed that somewhere else though already ( takenColors[] i believe) so if its an issue refer back here
             ** --Liam */
             if ( makeButtonTextCenter( GetScreenWidth() / 2, GetScreenHeight() - 80, "Next", 60, false ) ) {
                 if ( textBoxName.getText().length() > 0 && textBoxOwner.getText().length() > 0 ) {
@@ -908,17 +906,20 @@ int main( int argc, char** argv, char** envv ) {
             if ( makeButtonText( GetScreenWidth() - 175, 20, "Done", 48, points != 0 ) ) {
                 if (points == 0 && currentQuimbert + 1 <= quimbertQuantity) {
                     if (currentQuimbert + 1 <= quimbertQuantity) {
-                        quimbertArr.push_back( Quimbert( looks, smell, color, personality, gumption, length, name, owner ) );
+                        quimbertArr.emplace_back( Quimbert( looks, smell, color, personality, gumption, length, name, owner ) );
+                        /* added to constructor instead
                         quimbertArr[ currentQuimbert ].setHealth( (randInt(3, 5) * quimbertArr[ currentQuimbert ].getLooks() ) / 2 );
-                        // quimbertArr[ currentQuimbert ].setHealth( quimbertArr[ currentQuimbert ].startingHealth );
+                        quimbertArr[ currentQuimbert ].setHealth( quimbertArr[ currentQuimbert ].startingHealth );
 
-                        // if (quimbertArr[ currentQuimbert ].health < 1) {
-                        //     quimbertArr[ currentQuimbert ].health++;
-                        //     quimbertArr[ currentQuimbert ].startingHealth++;
-                        // }
+                        if (quimbertArr[ currentQuimbert ].health < 1) {
+                            quimbertArr[ currentQuimbert ].health++;
+                            quimbertArr[ currentQuimbert ].startingHealth++;
+                        }
+                        
 
-                        // sColor1 = OFFWHITE;
-                        // sColor2 = WHITE;
+                        sColor1 = OFFWHITE;
+                        sColor2 = WHITE;
+                        */
 
                         if ( color == "red" ) {
                             takenColors[ 0 ] = true;
@@ -972,10 +973,13 @@ int main( int argc, char** argv, char** envv ) {
                         points = randInt(25, 35);
 
                         if ( ++currentQuimbert < quimbertQuantity) {
+                            showStatsInfoBox = false;
+                            showColorSelectionPanel = false;
+
                             gameLayout = "createQuimbertDetails";
                         } else {
                             currentQuimbert = 0;
-                            gameLayout = "game"; // REMOVE: temporary, replace with ```layout = "fightLayout"``` or equivilent when implemented
+                            gameLayout = "game";
                         }
                     }
                 }

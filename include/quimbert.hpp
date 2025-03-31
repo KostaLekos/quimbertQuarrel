@@ -110,7 +110,7 @@ public:
 private:
 
     /*
-    ** Point affected stats
+    ** Point stats
     */
     int _looks;
     int _smell;
@@ -123,18 +123,19 @@ private:
 
 
     /*
-    ** Non point affected things
+    ** Non point things
     */
     int _health;
-    int _turns;
-    int _toDeal;
-    int _blocks;
+    int _startingHealth;
+    int _turns = 0;
+    int _toDeal = 0;
+    int _blocks = 0;
     int _lives = 1;
-    int _yellowFlowers;
-    int _greenFlowers;
-    int _purpleFlowers;
-    int _orangeFlowers;
-    int _redFlowers;
+    int _yellowFlowers = 0;
+    int _greenFlowers = 0;
+    int _purpleFlowers = 0;
+    int _orangeFlowers = 0;
+    int _redFlowers = 0;
     std::vector< std::string > _inventory;
 
     /*

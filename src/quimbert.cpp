@@ -20,16 +20,19 @@ std::mt19937_64::result_type Quimbert::randInt( int min, int max ) {
 */
 Quimbert::Quimbert( int looks, int smell, std::string color, 
     int personality, int gumption, int length, 
-    std::string name, std::string owner ) {
-        this->_looks = looks;
-        this->_smell = smell;
-        this->_color = color;
-        this->_personality = personality;
-        this->_gumption = gumption;
-        this->_length = length;
-        this->_name = name;
-        this->_owner = owner;
-}
+    std::string name, std::string owner )
+    : _looks( looks ),
+      _smell( smell ),
+      _color( color ),
+      _personality( personality ),
+      _gumption( gumption ),
+      _length( length ),
+      _name( name ),
+      _owner( owner ),
+      _health( ( looks > 0 ) ? randInt( 3, 5 ) * looks / 2 : 1 ),
+      _startingHealth( ( looks > 0 ) ? randInt( 3, 5 ) * looks / 2 : 1 )
+    {
+    }
 
 /*
 ** Sniffs, returns true on success, and false otherwise
