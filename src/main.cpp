@@ -529,6 +529,10 @@ int main( int argc, char** argv, char** envv ) {
 
     bool showStatsInfoBox = false;
 
+    bool showInventory = false;
+    bool showGambleUi = false;
+    bool showStatsBox = false;
+
     // Image info1 = LoadImage( "./resources/textures/UI/infoButton1.png" );
     // Image info2 = LoadImage( "./resources/textures/UI/infoButton2.png" );
     // Image info3 = LoadImage( "./resources/textures/UI/infoButton3.png" );
@@ -1198,27 +1202,178 @@ int main( int argc, char** argv, char** envv ) {
 
             EndDrawing();
         } else if ( gameLayout == "game" ) {
-            Image tmpImage = ImageCopy( backgroundImage );
+            /* Image is bad :( */
+            // Image tmpImage = ImageCopy( backgroundImage );
 
-            const double BACKGROUND_ASPECT_RATIO = static_cast< double >( backgroundImage.width ) / static_cast< double >( backgroundImage.height );
-            if ( static_cast< double >( GetScreenWidth() ) / static_cast< double >( GetScreenHeight() ) > BACKGROUND_ASPECT_RATIO ) {
-                ImageResize( &tmpImage, GetScreenHeight() * BACKGROUND_ASPECT_RATIO, GetScreenHeight() );
-            } else {
-                ImageResize( &tmpImage, GetScreenWidth(), GetScreenWidth() / BACKGROUND_ASPECT_RATIO );
-            }
-                
-            // ImageResize( &tmpImage, GetScreenWidth(), GetScreenHeight() );
-            Texture2D backgroundTex = LoadTextureFromImage( tmpImage );
+            // const double BACKGROUND_ASPECT_RATIO = static_cast< double >( backgroundImage.width ) / static_cast< double >( backgroundImage.height );
+            // if ( static_cast< double >( GetScreenWidth() ) / static_cast< double >( GetScreenHeight() ) > BACKGROUND_ASPECT_RATIO ) {
+            //     ImageResize( &tmpImage, GetScreenHeight() * BACKGROUND_ASPECT_RATIO, GetScreenHeight() );
+            // } else {
+            //     ImageResize( &tmpImage, GetScreenWidth(), GetScreenWidth() / BACKGROUND_ASPECT_RATIO );
+            // }
+            
+            /* Image is bad :( */
+            // Texture2D backgroundTex = LoadTextureFromImage( tmpImage );
+            
 
             BeginDrawing();
             ClearBackground( Q_BLACK );
-            DrawTexture( backgroundTex, 0, 0, Q_WHITE );
+            // DrawTexture( backgroundTex, 0, 0, Q_WHITE );
+            ClearBackground( Q_WHITE );
             
 
+            /* Botton Row */
+            const int TOTAL_BUTTON_WIDTH = MeasureText( "Gamble", 60 ) +
+                                     MeasureText( "Block", 60 ) +
+                                     MeasureText( "Sniff", 60 ) +
+                                     MeasureText( "Inventory", 60 ) +
+                                     MeasureText( "Attack", 60 ) + 
+                                     45 * 5 /* account for button padding */;
+            const int BUTTON_GAP = ( float ) ( GetScreenWidth() - TOTAL_BUTTON_WIDTH ) / 6; /* number of gaps */
+
+            int button_position_y = GetScreenHeight() - 40 - 20 - MeasureTextEx( GetFontDefault(), "DONT_CHANGE", 60, ( float ) 60 / 10 ).y;
+            int button_position_x = BUTTON_GAP;
+
+            
+            if ( makeButtonText( button_position_x, button_position_y, "Gamble", 60 ) ) {
+                showGambleUi = true;
+            }
+            button_position_x += BUTTON_GAP + MeasureText( "Gamble", 60 ) + 45;
+
+            if ( makeButtonText( button_position_x, button_position_y, "Block", 60 ) ) {}
+            button_position_x += BUTTON_GAP + MeasureText( "Block", 60 ) + 45;
+
+            if ( makeButtonText( button_position_x, button_position_y, "Sniff", 60 ) ) {}
+            button_position_x += BUTTON_GAP + MeasureText( "Sniff", 60 ) + 45;
+
+            if ( makeButtonText( button_position_x, button_position_y, "Inventory", 60) ) {
+                showInventory = true;
+            }
+            button_position_x += BUTTON_GAP + MeasureText( "Inventory", 60 ) + 45;
+
+            if ( makeButtonText( button_position_x, button_position_y, "Attack", 60 ) ) {}
+
+            Rectangle healthBlockCorner = Rectangle{
+                0,
+                0,
+                ( float ) MeasureTextEx( 
+                    GetFontDefault(),
+                    "Health: 20\nBlocks: 10",
+                    60,
+                    ( float ) 60 / 10 
+                ).x + 40,
+
+                ( float ) MeasureTextEx(
+                    GetFontDefault(),
+                    "Health: 20\nBlocks: 10",
+                    60,
+                    ( float ) 60 / 10
+                ).y + 30
+            };
+
+            DrawRectangleRec( healthBlockCorner, Q_BLACK );
+            healthBlockCorner.x += 10; healthBlockCorner.y += 10;
+            healthBlockCorner.width -= 20; healthBlockCorner.height -= 20;
+            DrawRectangleRec( healthBlockCorner, Q_GRAY );
+            
+            /* Draw the Health and Blocks values */
+            DrawText(
+                (
+                    std::string( "Health: ")
+                    + std::to_string( quimbertArr[ currentQuimbert ].getHealth() )
+                    + std::string( "\nBlocks: " )
+                    + std::to_string( quimbertArr[ currentQuimbert ].getBlocks() )
+                ).c_str(),
+                20, 15, 60, Q_BLACK 
+            );
+
+            Vector2 statsCornerLabel = Vector2{
+                GetScreenWidth() - MeasureTextEx(
+                    GetFontDefault(),
+                    "Stats",
+                    60,
+                    static_cast< float >( 60 ) / 10
+                ).x - 55,
+                10
+            };
+
+            if ( makeButtonText(
+                statsCornerLabel.x,
+                statsCornerLabel.y,
+                "Stats",
+                60 )
+            ) { showStatsBox = !showStatsBox; }
+
+            if ( showStatsBox ) {
+                Rectangle statsCornerBox = Rectangle{
+                    GetScreenWidth() - MeasureTextEx(
+                        GetFontDefault(),
+                        "Looks: 10\n"
+                        "Smell: 10\n"
+                        "Personality: 10\n"
+                        "Gumption: 10\n"
+                        "Length: 10",
+                        60,
+                        static_cast< float >( 60 ) / 10
+                    ).x - 40,
+                    MeasureTextEx(
+                        GetFontDefault(),
+                        "Stats",
+                        60,
+                        static_cast< float >( 60 ) / 10
+                    ).y + 30 + 20 + 15,
+                    MeasureTextEx(
+                        GetFontDefault(),
+                        "Looks: 10\n"
+                        "Smell: 10\n"
+                        "Personality: 10\n"
+                        "Gumption: 10\n"
+                        "Length: 10",
+                        60,
+                        static_cast< float >( 60 ) / 10
+                    ).x + 30,
+                    MeasureTextEx(
+                        GetFontDefault(),
+                        "Looks: 10\n"
+                        "Smell: 10\n"
+                        "Personality: 10\n"
+                        "Gumption: 10\n"
+                        "Length: 10",
+                        60,
+                        static_cast< float >( 60 ) / 10
+                    ).y + 30,
+                };
+                DrawRectangleRec( statsCornerBox, Q_BLACK );
+    
+                statsCornerBox.x += 10; statsCornerBox.y += 10;
+                statsCornerBox.width -= 20; statsCornerBox.height -= 20;
+    
+                DrawRectangleRec( statsCornerBox, Q_GRAY );
+    
+                DrawText(
+                    (
+                        std::string( "Looks: " ) +
+                        std::to_string( quimbertArr[ currentQuimbert ].getLooks() ) +
+                        std::string( "\nSmell: " ) +
+                        std::to_string( quimbertArr[ currentQuimbert ].getSmell() ) +
+                        std::string( "\nPersonality: " ) +
+                        std::to_string( quimbertArr[ currentQuimbert ].getPersonality() ) +
+                        std::string( "\nGumption: " ) +
+                        std::to_string( quimbertArr[ currentQuimbert ].getGumption() ) +
+                        std::string( "\nLength: " ) +
+                        std::to_string( quimbertArr[ currentQuimbert ].getLength() )
+                    ).c_str(),
+                    statsCornerBox.x + 10,
+                    statsCornerBox.y,
+                    60,
+                    Q_BLACK
+                );
+
+            }
 
             EndDrawing();
 
-            UnloadTexture( backgroundTex );
+            // UnloadTexture( backgroundTex );
         }
     }
 }
