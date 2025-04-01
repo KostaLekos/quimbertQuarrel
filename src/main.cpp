@@ -673,7 +673,7 @@ int main( int argc, char** argv, char** envv ) {
             DrawText(std::to_string(quimbertQuantity).c_str(), (GetScreenWidth() / 2) - MeasureText(std::to_string(quimbertQuantity).c_str(), 108) / 2, GetScreenHeight() / 2 + 25 - 70, 108, Q_BLACK);
 
             quimbertQuantity = drawPlusCenter( GetScreenWidth() / 2 + 130, GetScreenHeight() / 2 + 80 - 70, 100, 100, false, quimbertQuantity, 8, false);
-            quimbertQuantity = drawPlusCenter( GetScreenWidth() / 2 - 130, GetScreenHeight() / 2 + 80 - 70, 100, 100, false, quimbertQuantity, 2, true);
+            quimbertQuantity = drawPlusCenter( GetScreenWidth() / 2 - 130, GetScreenHeight() / 2 + 80 - 70, 100, 100, false, quimbertQuantity, ( currentQuimbert > 0 ) ? currentQuimbert + 1 : 2, true);
 
             if ( makeButtonTextCenter( GetScreenWidth() / 2, GetScreenHeight() / 2 + 260 - 70, "Next", 60, false) ) {
                 gameLayout = "createQuimbertDetails";
@@ -1331,7 +1331,7 @@ int main( int argc, char** argv, char** envv ) {
                         "Length: 10",
                         60,
                         static_cast< float >( 60 ) / 10
-                    ).x + 30,
+                    ).x + 40,
                     MeasureTextEx(
                         GetFontDefault(),
                         "Looks: 10\n"
