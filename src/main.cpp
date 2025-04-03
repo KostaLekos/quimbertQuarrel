@@ -107,7 +107,7 @@ bool makeButtonTextEx( int pos_x, int pos_y, int size_x, int size_y, std::string
     Rectangle coll = main;
     coll.width += 5; coll.height += 5;
 
-    bool buttonDown = isDisabled || ( CheckCollisionPointRec( GetMousePosition(), coll ) && IsMouseButtonDown( MOUSE_LEFT_BUTTON ) );
+    bool buttonDown = isDisabled || ( CheckCollisionPointRec( GetMousePosition(), coll ) && ( IsMouseButtonDown( MOUSE_LEFT_BUTTON ) || IsMouseButtonReleased( MOUSE_LEFT_BUTTON ) ) );
     if ( buttonDown ) {
         main.x += 5; main.y += 5;
     }
@@ -217,7 +217,7 @@ bool makeButtonColor( int pos_x, int pos_y, int size_x, int size_y, Color color1
     Rectangle coll = main;
     coll.width += 5; coll.height += 5;
 
-    bool buttonDown = isDisabled || ( CheckCollisionPointRec( GetMousePosition(), coll ) && IsMouseButtonDown( MOUSE_LEFT_BUTTON ) );
+    bool buttonDown = isDisabled || ( CheckCollisionPointRec( GetMousePosition(), coll ) && ( IsMouseButtonDown( MOUSE_LEFT_BUTTON ) || IsMouseButtonReleased( MOUSE_LEFT_BUTTON ) ) );
     if ( buttonDown ) {
         main.x += 5; main.y += 5;
     }
@@ -292,7 +292,7 @@ bool makeButtonImage( int pos_x, int pos_y, Texture2D tex, Color background = Q_
     Rectangle coll = main;
     coll.width += 5; coll.height += 5;
     
-    bool buttonDown = isDisabled || ( CheckCollisionPointRec( GetMousePosition(), coll ) && IsMouseButtonDown( MOUSE_LEFT_BUTTON ) );
+    bool buttonDown = isDisabled || ( CheckCollisionPointRec( GetMousePosition(), coll ) && ( IsMouseButtonDown( MOUSE_LEFT_BUTTON ) || IsMouseButtonReleased( MOUSE_LEFT_BUTTON ) ) );
     if ( buttonDown ) {
         main.x += 5; main.y += 5;
     }
