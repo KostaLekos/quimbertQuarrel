@@ -1254,8 +1254,8 @@ int main( int argc, char** argv, char** envv ) {
             if ( makeButtonText( button_position_x, button_position_y, "Attack", 60 ) ) {}
 
             Rectangle healthBlockCorner = Rectangle{
-                0,
-                0,
+                10,
+                10,
                 ( float ) MeasureTextEx( 
                     GetFontDefault(),
                     "Health: 20\nBlocks: 10",
@@ -1284,7 +1284,7 @@ int main( int argc, char** argv, char** envv ) {
                     + std::string( "\nBlocks: " )
                     + std::to_string( quimbertArr[ currentQuimbert ].getBlocks() )
                 ).c_str(),
-                20, 15, 60, Q_BLACK 
+                healthBlockCorner.x + 10, healthBlockCorner.x + 5, 60, Q_BLACK 
             );
 
             Vector2 statsCornerLabel = Vector2{
@@ -1315,7 +1315,7 @@ int main( int argc, char** argv, char** envv ) {
                         "Length: 10",
                         60,
                         static_cast< float >( 60 ) / 10
-                    ).x - 40,
+                    ).x - 60,
                     MeasureTextEx(
                         GetFontDefault(),
                         "Stats",
@@ -1331,7 +1331,7 @@ int main( int argc, char** argv, char** envv ) {
                         "Length: 10",
                         60,
                         static_cast< float >( 60 ) / 10
-                    ).x + 40,
+                    ).x + 50,
                     MeasureTextEx(
                         GetFontDefault(),
                         "Looks: 10\n"
