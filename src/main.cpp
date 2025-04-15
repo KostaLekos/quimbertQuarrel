@@ -492,7 +492,7 @@ bool isAnyKeyPressed() {
 }
 
 
-int main( int argc, char** argv, char** envv ) {
+int main( /*int argc, char** argv, char** envv*/ ) {
 
     /*
     ** IDK
@@ -1369,6 +1369,10 @@ int main( int argc, char** argv, char** envv ) {
                     Q_BLACK
                 );
 
+            }
+
+            if ( showInventory ) {
+                
             }
 
             EndDrawing();
