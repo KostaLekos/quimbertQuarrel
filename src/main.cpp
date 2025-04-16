@@ -530,6 +530,7 @@ int main( /*int argc, char** argv, char** envv*/ ) {
     bool showStatsInfoBox = false;
 
     bool showInventory = false;
+    int inventoryScrollCount = 0;
     bool showGambleUi = false;
     bool showStatsBox = false;
 
@@ -597,13 +598,14 @@ int main( /*int argc, char** argv, char** envv*/ ) {
 
 
     while ( !WindowShouldClose() ) {
+        RenderTexture rentex = LoadRenderTexture( 1366, 768 );
+        BeginTextureMode( rentex );
 
         if ( !isMusicMuted ) {
             UpdateMusicStream( blippy );
         }
 
         if ( gameLayout == "start" ) {
-            BeginDrawing();
             ClearBackground( Q_RAYWHITE );
 
             DrawText("Quimbert Quarrel", (GetScreenWidth() / 2) - (MeasureText("Quimbert Quarrel", 96) / 2), (GetScreenHeight() / 4), 96, Q_BLACK);
@@ -628,9 +630,7 @@ int main( /*int argc, char** argv, char** envv*/ ) {
             }
 
             DrawFPS( 20, 20 );
-            EndDrawing();
         } else if ( gameLayout == "howManyQuimberts" ) {
-            BeginDrawing();
             ClearBackground( Q_RAYWHITE );
             
             Rectangle backButton = {20, 20, 120, 80};
@@ -679,7 +679,6 @@ int main( /*int argc, char** argv, char** envv*/ ) {
                 gameLayout = "createQuimbertDetails";
             }
             
-            EndDrawing();
         } else if ( gameLayout == "createQuimbertDetails" ) {
             BeginDrawing();
             ClearBackground( Q_RAYWHITE );
@@ -870,7 +869,6 @@ int main( /*int argc, char** argv, char** envv*/ ) {
 
             EndDrawing();
         } else if ( gameLayout == "chooseQuimbertStats") {
-            BeginDrawing();
             ClearBackground( Q_RAYWHITE );
 
 
@@ -1200,7 +1198,6 @@ int main( /*int argc, char** argv, char** envv*/ ) {
                 DrawText( statsHelpText, ( float ) GetScreenWidth() / 2 - ( float ) MeasureText( statsHelpText, 40 ) / 2 + 80, ( float ) GetScreenHeight() / 2 + 80, 40, Q_BLACK );
             }
 
-            EndDrawing();
         } else if ( gameLayout == "game" ) {
             /* Image is bad :( */
             // Image tmpImage = ImageCopy( backgroundImage );
@@ -1216,8 +1213,7 @@ int main( /*int argc, char** argv, char** envv*/ ) {
             // Texture2D backgroundTex = LoadTextureFromImage( tmpImage );
             
 
-            BeginDrawing();
-            ClearBackground( Q_BLACK );
+            // ClearBackground( Q_BLACK );
             // DrawTexture( backgroundTex, 0, 0, Q_WHITE );
             ClearBackground( Q_WHITE );
             
@@ -1249,6 +1245,17 @@ int main( /*int argc, char** argv, char** envv*/ ) {
             if ( makeButtonText( button_position_x, button_position_y, "Inventory", 60) ) {
                 showInventory = true;
             }
+            /* this is here to get the location of the inventory button,
+               and use that to get the location of the inventory box */
+            // if ( showInventory ) {
+            //     Rectangle inventoryBack = Rectangle{
+            //         .x = 
+            //     }
+            //     if ( )
+            // } else {
+            //     inventoryScrollCount = 0;
+            // }
+            /* end inventory drawing */
             button_position_x += BUTTON_GAP + MeasureText( "Inventory", 60 ) + 45;
 
             if ( makeButtonText( button_position_x, button_position_y, "Attack", 60 ) ) {}
@@ -1347,6 +1354,7 @@ int main( /*int argc, char** argv, char** envv*/ ) {
     
                 statsCornerBox.x += 10; statsCornerBox.y += 10;
                 statsCornerBox.width -= 20; statsCornerBox.height -= 20;
+            
     
                 DrawRectangleRec( statsCornerBox, Q_GRAY );
     
@@ -1371,13 +1379,23 @@ int main( /*int argc, char** argv, char** envv*/ ) {
 
             }
 
-            if ( showInventory ) {
-                
-            }
 
-            EndDrawing();
 
             // UnloadTexture( backgroundTex );
         }
+
+        EndTextureMode();
+        BeginDrawing();
+        DrawTexturePro(
+            rentex.texture,
+            Rectangle{ 0, 0, static_cast< float >( rentex.texture.width ), -static_cast< float >( rentex.texture.height ) },
+            Rectangle{ 0, 0, GetScreenWidth(), GetScreenHeight() },
+            Vector2{ 0, 0 },
+            0,
+            Q_WHITE
+        );
+        EndDrawing();
+        
+        UnloadRenderTexture( rentex );
     }
 }
