@@ -4,15 +4,14 @@
 
 #include "../third/raylib/src/raylib.h"
 
-#include <raylib.h>
 #include <stdexcept>
 #include <string>
 #include <iostream>
 #include <random>
 
+#define Q_WHITE Color{255, 255, 255, 255}
 #define Q_RAYWHITE Color{245, 245, 245, 255}
 #define Q_OFFWHITE Color{230, 230, 230, 255}
-#define Q_WHITE Color{255, 255, 255, 255}
 #define Q_RED Color{230, 41, 55, 255}
 #define Q_MAROON Color{190, 33, 55, 255}
 #define Q_ORANGE Color{255, 161, 0, 255}
@@ -566,13 +565,27 @@ int main( /*int argc, char** argv, char** envv*/ ) {
     SetMusicVolume(mania, 0.25f);
     SetMusicVolume(quimbertcall, 0.25f);
 
-    QuimbertTextBox textBoxName( Rectangle{
-        ( float ) GetScreenWidth() / 2 + 20, 250, 375, 75 } );
-    textBoxName.setCharLength( 25 );
+    QuimbertTextBox textBoxName(
+        Rectangle{
+            static_cast< float >( GetScreenWidth() / 2 + 20 ),
+            250,
+            375,
+            75
+        }
+    );
 
-    QuimbertTextBox textBoxOwner( Rectangle{
-        ( float ) GetScreenWidth() / 2 + 20, 350, 375, 75 } );
+    QuimbertTextBox textBoxOwner(
+        Rectangle{
+            static_cast< float >( GetScreenWidth() / 2 + 20 ),
+            350,
+            375,
+            75
+        }
+    );
+
+    textBoxName.setCharLength( 25 );
     textBoxOwner.setCharLength( 25 );
+    
 
     Image exitImage = LoadImage( "./resources/textures/UI/exit.png" );
     ImageResize( &exitImage, 70, 70 );
@@ -597,16 +610,16 @@ int main( /*int argc, char** argv, char** envv*/ ) {
     Image backgroundImage = LoadImage( "./resources/textures/backgrounds/quimbert_hell.png");
 
 
+    RenderTexture rentex = LoadRenderTexture( 1366, 768 );
     while ( !WindowShouldClose() ) {
-        RenderTexture rentex = LoadRenderTexture( 1366, 768 );
         BeginTextureMode( rentex );
+        ClearBackground( Q_WHITE );
 
         if ( !isMusicMuted ) {
             UpdateMusicStream( blippy );
         }
 
         if ( gameLayout == "start" ) {
-            ClearBackground( Q_RAYWHITE );
 
             DrawText("Quimbert Quarrel", (GetScreenWidth() / 2) - (MeasureText("Quimbert Quarrel", 96) / 2), (GetScreenHeight() / 4), 96, Q_BLACK);
             DrawText("A Green Apple Game", (GetScreenWidth() / 2) - (MeasureText("A Green Apple Game", 36) / 2), (GetScreenHeight() / 4 + 100), 36, Q_BLACK);
@@ -631,7 +644,6 @@ int main( /*int argc, char** argv, char** envv*/ ) {
 
             DrawFPS( 20, 20 );
         } else if ( gameLayout == "howManyQuimberts" ) {
-            ClearBackground( Q_RAYWHITE );
             
             Rectangle backButton = {20, 20, 120, 80};
             
@@ -680,9 +692,6 @@ int main( /*int argc, char** argv, char** envv*/ ) {
             }
             
         } else if ( gameLayout == "createQuimbertDetails" ) {
-            BeginDrawing();
-            ClearBackground( Q_RAYWHITE );
-
             Rectangle backButton = {20, 20, 120, 80};
 
             // Back button
@@ -726,8 +735,22 @@ int main( /*int argc, char** argv, char** envv*/ ) {
             DrawText("Owner:", ((GetScreenWidth() / 2) - MeasureText("Owner:", 72)) - 30, 350, 72, Q_BLACK);
             DrawText("Color:", ((GetScreenWidth() / 2) - MeasureText("Color:", 72)) - 30, 450, 72, Q_BLACK);
 
-            textBoxName.setBox( { ( float ) GetScreenWidth() / 2 + 20, 250, 375, 75 } );
-            textBoxOwner.setBox( { ( float ) GetScreenWidth() / 2 + 20, 350, 375, 75 } );
+            // textBoxName.setBox(
+            //     Rectangle{
+            //         static_cast< float >( GetScreenWidth() / 2 + 20 ),
+            //         250,
+            //         375,
+            //         75
+            //     }
+            // );
+            // textBoxOwner.setBox(
+            //     Rectangle{
+            //         static_cast< float >( GetScreenWidth() / 2 + 20 ),
+            //         350,
+            //         375,
+            //         75
+            //     }
+            // );
 
             if ( makeButtonColor( GetScreenWidth() / 2 + 20, 450, 60, 60, currentColor, stocDark(color), false ) ) {
                 showColorSelectionPanel = true;
@@ -867,9 +890,7 @@ int main( /*int argc, char** argv, char** envv*/ ) {
 
             currentColor = stoc( color );
 
-            EndDrawing();
         } else if ( gameLayout == "chooseQuimbertStats") {
-            ClearBackground( Q_RAYWHITE );
 
 
             Rectangle backButton = {20, 20, 120, 80};
@@ -1215,7 +1236,6 @@ int main( /*int argc, char** argv, char** envv*/ ) {
 
             // ClearBackground( Q_BLACK );
             // DrawTexture( backgroundTex, 0, 0, Q_WHITE );
-            ClearBackground( Q_WHITE );
             
 
             /* Botton Row */
@@ -1382,20 +1402,25 @@ int main( /*int argc, char** argv, char** envv*/ ) {
 
 
             // UnloadTexture( backgroundTex );
-        }
+        } /* end render if tree */
 
         EndTextureMode();
         BeginDrawing();
+        ClearBackground( Q_WHITE );
         DrawTexturePro(
             rentex.texture,
-            Rectangle{ 0, 0, static_cast< float >( rentex.texture.width ), -static_cast< float >( rentex.texture.height ) },
+            Rectangle{
+                0,
+                0,
+                static_cast< float >( rentex.texture.width ),
+                -static_cast< float >( rentex.texture.height )
+            },
             Rectangle{ 0, 0, GetScreenWidth(), GetScreenHeight() },
             Vector2{ 0, 0 },
             0,
             Q_WHITE
         );
         EndDrawing();
-        
-        UnloadRenderTexture( rentex );
     }
+    UnloadRenderTexture( rentex );
 }

@@ -2,20 +2,27 @@
 
 #include "../include/textbox.hpp"
 
+#include "../third/raylib/src/raylib.h"
+
 #include <string>
 #include <format>
-#include <raylib.h>
+#include <vector>
+
+bool QuimbertTextBox::_mouseOnAnyText;
+std::vector< QuimbertTextBox * > QuimbertTextBox::_textBoxes;
 
 QuimbertTextBox::QuimbertTextBox( Rectangle boundingBox )
     : _text( "" ),
-     _maxCharCount( 40 ),
-     _mouseOnText( false ),
-     _boundingBox( boundingBox ),
-     _frameCounter( 0 ),
-     _needsText( false )
+      _maxCharCount( 40 ),
+      _boundingBox( boundingBox ),
+      _frameCounter( 0 ),
+      _needsText( false )
 {
-
+    _mouseOnText = false;
+    _textBoxes.push_back( this );
 }
+
+
 
 void QuimbertTextBox::needsText() {
     _needsText = true;
@@ -37,6 +44,9 @@ void QuimbertTextBox::setBox( Rectangle boundingBox ) {
     _boundingBox = boundingBox;
 }
 
+bool QuimbertTextBox::isSelectedAndHovered() {
+    return _mouseOnText && CheckCollisionPointRec( GetMousePosition(), _boundingBox );
+}
 
 void QuimbertTextBox::processTextInput() {
     /*
@@ -47,6 +57,7 @@ void QuimbertTextBox::processTextInput() {
             
         _mouseOnText = true;
         _needsText = false;
+        _mouseOnAnyText = true;
     }
     /*
     ** Else, it isn't
@@ -55,13 +66,18 @@ void QuimbertTextBox::processTextInput() {
         _mouseOnText = false;
     }
 
-    if ( _mouseOnText ) {
+    _mouseOnAnyText = false;
+    for ( QuimbertTextBox *tb : _textBoxes ) {
+        _mouseOnAnyText |= tb->isSelectedAndHovered();
+    }
 
-        /*
-        ** Set the cursor to the I-Beam, the standard for text input
-        */
+    if ( _mouseOnAnyText ) {
         SetMouseCursor( MOUSE_CURSOR_IBEAM );
+    } else {
+        SetMouseCursor( MOUSE_CURSOR_DEFAULT );
+    }
 
+    if ( _mouseOnText ) {
         /*
         ** Get the ascii character pressed
         */
@@ -86,7 +102,7 @@ void QuimbertTextBox::processTextInput() {
             }
         }
 
-    } else SetMouseCursor( MOUSE_CURSOR_DEFAULT );
+    }
 }
 
 
@@ -130,4 +146,8 @@ void QuimbertTextBox::render() {
     */
     DrawText( _text.c_str(), _boundingBox.x + 20,
         _boundingBox.y + 15, 40, DARKGRAY);
+}
+
+Rectangle QuimbertTextBox::getBox() {
+    return _boundingBox;
 }
