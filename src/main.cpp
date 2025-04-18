@@ -813,52 +813,52 @@ int main( /*int argc, char** argv, char** envv*/ ) {
                 Q_PINK --> Q_MAGENTA
                 */
 
-                if ( makeButtonColor( rentex, colorSelectionPanelInside.x + 80 * 0 + 10, colorSelectionPanelInside.y + 80 * 0 + 10, 60, 60, Q_RED, Q_MAROON, takenColors[ 0 ] ) ) {
+                if ( makeButtonColor( rentex, colorSelectionPanelInside.x + 80 * 0 + 10, colorSelectionPanelInside.y + 80 * 0 + 10, 60, 60, takenColors[ 0 ] ? Q_MAROON : Q_RED, Q_MAROON, takenColors[ 0 ] ) ) {
                     color = "red";
                     showColorSelectionPanel = false;
                 }
                 
-                if ( makeButtonColor( rentex, colorSelectionPanelInside.x + 80 * 1 + 10, colorSelectionPanelInside.y + 80 * 0 + 10, 60, 60, Q_ORANGE, Q_DARKORANGE, takenColors[ 1 ] ) ) {
+                if ( makeButtonColor( rentex, colorSelectionPanelInside.x + 80 * 1 + 10, colorSelectionPanelInside.y + 80 * 0 + 10, 60, 60, takenColors[ 1 ] ? Q_DARKORANGE : Q_ORANGE, Q_DARKORANGE, takenColors[ 1 ] ) ) {
                     color = "orange";
                     showColorSelectionPanel = false;
                 }
                 
-                if ( makeButtonColor( rentex, colorSelectionPanelInside.x + 80 * 2 + 10, colorSelectionPanelInside.y + 80 * 0 + 10, 60, 60, Q_YELLOW, Q_GOLD, takenColors[ 2 ] ) ) {
+                if ( makeButtonColor( rentex, colorSelectionPanelInside.x + 80 * 2 + 10, colorSelectionPanelInside.y + 80 * 0 + 10, 60, 60, takenColors[ 2 ] ? Q_GOLD : Q_YELLOW, Q_GOLD, takenColors[ 2 ] ) ) {
                     color = "yellow";
                     showColorSelectionPanel = false;
                 }
                 
-                if ( makeButtonColor( rentex, colorSelectionPanelInside.x + 80 * 3 + 10, colorSelectionPanelInside.y + 80 * 0 + 10, 60, 60, Q_GREEN, Q_LIME, takenColors[ 3 ] ) ) {
+                if ( makeButtonColor( rentex, colorSelectionPanelInside.x + 80 * 3 + 10, colorSelectionPanelInside.y + 80 * 0 + 10, 60, 60, takenColors[ 3 ] ? Q_LIME : Q_GREEN, Q_LIME, takenColors[ 3 ] ) ) {
                     color = "green";
                     showColorSelectionPanel = false;
                 }
                 
-                if ( makeButtonColor( rentex, colorSelectionPanelInside.x + 80 * 4 + 10, colorSelectionPanelInside.y + 80 * 0 + 10, 60, 60, Q_LIGHTBLUE, Q_DARKLIGHTBLUE, takenColors[ 4 ] ) ) {
+                if ( makeButtonColor( rentex, colorSelectionPanelInside.x + 80 * 4 + 10, colorSelectionPanelInside.y + 80 * 0 + 10, 60, 60, takenColors[ 4 ] ? Q_DARKLIGHTBLUE : Q_LIGHTBLUE, Q_DARKLIGHTBLUE, takenColors[ 4 ] ) ) {
                     color = "lightblue";
                     showColorSelectionPanel = false;
                 }
                 
-                if ( makeButtonColor( rentex, colorSelectionPanelInside.x + 80 * 0 + 10, colorSelectionPanelInside.y + 80 * 1 + 10, 60, 60, Q_BLUE, Q_DARKBLUE, takenColors[ 5 ] ) ) {
+                if ( makeButtonColor( rentex, colorSelectionPanelInside.x + 80 * 0 + 10, colorSelectionPanelInside.y + 80 * 1 + 10, 60, 60, takenColors[ 5 ] ? Q_DARKBLUE : Q_BLUE, Q_DARKBLUE, takenColors[ 5 ] ) ) {
                     color = "blue";
                     showColorSelectionPanel = false;
                 }
                 
-                if ( makeButtonColor( rentex, colorSelectionPanelInside.x + 80 * 1 + 10, colorSelectionPanelInside.y + 80 * 1 + 10, 60, 60, Q_PURPLE, Q_VIOLET, takenColors[ 6 ] ) ) {
+                if ( makeButtonColor( rentex, colorSelectionPanelInside.x + 80 * 1 + 10, colorSelectionPanelInside.y + 80 * 1 + 10, 60, 60, takenColors[ 6 ] ? Q_VIOLET : Q_PURPLE, Q_VIOLET, takenColors[ 6 ] ) ) {
                     color = "purple";
                     showColorSelectionPanel = false;
                 }
                 
-                if ( makeButtonColor( rentex, colorSelectionPanelInside.x + 80 * 2 + 10, colorSelectionPanelInside.y + 80 * 1 + 10, 60, 60, Q_DARKGRAY, Q_LIGHTBLACK, takenColors[ 7 ] ) ) {
+                if ( makeButtonColor( rentex, colorSelectionPanelInside.x + 80 * 2 + 10, colorSelectionPanelInside.y + 80 * 1 + 10, 60, 60, takenColors[ 7 ] ? Q_LIGHTBLACK : Q_DARKGRAY, Q_LIGHTBLACK, takenColors[ 7 ] ) ) {
                     color = "black";
                     showColorSelectionPanel = false;
                 }
                 
-                if ( makeButtonColor( rentex, colorSelectionPanelInside.x + 80 * 3 + 10, colorSelectionPanelInside.y + 80 * 1 + 10, 60, 60, Q_LIGHTGRAY, Q_GRAY, takenColors[ 8 ] ) ) {
+                if ( makeButtonColor( rentex, colorSelectionPanelInside.x + 80 * 3 + 10, colorSelectionPanelInside.y + 80 * 1 + 10, 60, 60, takenColors[ 8 ] ? Q_GRAY : Q_LIGHTGRAY, Q_GRAY, takenColors[ 8 ] ) ) {
                     color = "gray";
                     showColorSelectionPanel = false;
                 }
                 
-                if ( makeButtonColor( rentex, colorSelectionPanelInside.x + 80 * 4 + 10, colorSelectionPanelInside.y + 80 * 1 + 10, 60, 60, Q_PINK, Q_MAGENTA, takenColors[ 9 ] ) ) {
+                if ( makeButtonColor( rentex, colorSelectionPanelInside.x + 80 * 4 + 10, colorSelectionPanelInside.y + 80 * 1 + 10, 60, 60, takenColors[ 9 ] ? Q_MAGENTA : Q_PINK, Q_MAGENTA, takenColors[ 9 ] ) ) {
                     color = "pink";
                     showColorSelectionPanel = false;
                 }
