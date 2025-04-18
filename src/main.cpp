@@ -770,7 +770,7 @@ int main( /*int argc, char** argv, char** envv*/ ) {
                 Q_PINK --> Q_MAGENTA
                 */
 
-                if ( makeButtonColor( colorSelectionPanelInside.x + 80 * 0 + 10, colorSelectionPanelInside.y + 80 * 0 + 10, 60, 60, Q_RED, Q_MAROON, takenColors[ 0 ] ) ) {
+                if ( makeButtonColor( colorSelectionPanelInside.x + 80 * 0 + 10, colorSelectionPanelInside.y + 80 * 0 + 10, 60, 60, (takenColors[ 0 ]) ? (Q_MAROON) : Q_RED, Q_MAROON, takenColors[ 0 ] ) ) {
                     color = "red";
                     showColorSelectionPanel = false;
                 }

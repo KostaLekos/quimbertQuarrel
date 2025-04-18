@@ -113,3 +113,8 @@ If you are cloning for the first time clone with `git clone --recurse-submodules
 - ADDED makeButtonTextCenter, same as makeButtonText, but the given coords are the center of the button and not the top left corner
 - ADDED makeButtonColorCenter, figure it out
 - ADDED drawPlusCenter
+
+HairyJade Notes for HairyJade:
+- Fix Info Button for stats, make each stat have own info button and display info in button right. Middle is for sprite
+- Add quimbert in the middle of stat page once sprites are received
+- Change scaling to scale whole screen (Maybe beyond a certain point, scaling right now isn't the best)
