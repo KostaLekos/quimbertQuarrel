@@ -100,13 +100,16 @@ Color stocDark( std::string color ) {
 ** Rewrote makeButtonText, give position of top-left corner, text, fontsize, and whether or not to ignore input
 ** Made better than the previous one!
 */
-bool makeButtonTextEx( int pos_x, int pos_y, int size_x, int size_y, std::string text, int fontSize, bool isDisabled = false ) {
+bool makeButtonTextEx( RenderTexture rentex, int pos_x, int pos_y, int size_x, int size_y, std::string text, int fontSize, bool isDisabled = false ) {
+
+    float sf_x = static_cast< float >( rentex.texture.width ) / GetScreenWidth();
+    float sf_y = static_cast< float >( rentex.texture.height ) / GetScreenHeight();
 
     Rectangle main = { ( float ) pos_x, ( float ) pos_y, ( float ) size_x, ( float ) size_y };
     Rectangle coll = main;
     coll.width += 5; coll.height += 5;
 
-    bool buttonDown = isDisabled || ( CheckCollisionPointRec( GetMousePosition(), coll ) && ( IsMouseButtonDown( MOUSE_LEFT_BUTTON ) || IsMouseButtonReleased( MOUSE_LEFT_BUTTON ) ) );
+    bool buttonDown = isDisabled || ( CheckCollisionPointRec( Vector2{ GetMouseX() * sf_x, GetMouseY() * sf_y }, coll ) && ( IsMouseButtonDown( MOUSE_LEFT_BUTTON ) || IsMouseButtonReleased( MOUSE_LEFT_BUTTON ) ) );
     if ( buttonDown ) {
         main.x += 5; main.y += 5;
     }
@@ -116,7 +119,7 @@ bool makeButtonTextEx( int pos_x, int pos_y, int size_x, int size_y, std::string
 
 
     DrawRectangleRec( main, Q_BLACK ); // Draw Q_BLACK boarder
-    DrawRectangleRec( inside, CheckCollisionPointRec( GetMousePosition(), coll ) ? Q_DARKGRAY : Q_GRAY ); // inside color
+    DrawRectangleRec( inside, CheckCollisionPointRec( Vector2{ GetMouseX() * sf_x, GetMouseY() * sf_y }, coll ) ? Q_DARKGRAY : Q_GRAY ); // inside color
 
     // Drop shaddow
     if ( !buttonDown ) {
@@ -125,20 +128,20 @@ bool makeButtonTextEx( int pos_x, int pos_y, int size_x, int size_y, std::string
     }
     DrawText( text.c_str(), ( float ) ( main.x + main.width / 2 ) - ( float ) MeasureText( text.c_str(), fontSize ) / 2, ( float ) ( main.y + main.height / 2 ) - ( float ) MeasureTextEx( GetFontDefault(), text.c_str(), fontSize, ( float ) fontSize / 10 ).y / 2, fontSize, Q_BLACK );
 
-    return IsMouseButtonReleased( MOUSE_LEFT_BUTTON ) && CheckCollisionPointRec( GetMousePosition(), coll );
+    return IsMouseButtonReleased( MOUSE_LEFT_BUTTON ) && CheckCollisionPointRec( Vector2{ GetMouseX() * sf_x, GetMouseY() * sf_y }, coll );
 
 }
 
-bool makeButtonText( int pos_x, int pos_y, std::string text, int fontSize, bool isDisabled = false ) {
-    return makeButtonTextEx( pos_x, pos_y, MeasureText( text.c_str(), fontSize ) + 40, MeasureTextEx( GetFontDefault(), text.c_str(), fontSize, ( float ) fontSize / 10 ).y + 40, text, fontSize, isDisabled);
+bool makeButtonText( RenderTexture rentex, int pos_x, int pos_y, std::string text, int fontSize, bool isDisabled = false ) {
+    return makeButtonTextEx( rentex, pos_x, pos_y, MeasureText( text.c_str(), fontSize ) + 40, MeasureTextEx( GetFontDefault(), text.c_str(), fontSize, ( float ) fontSize / 10 ).y + 40, text, fontSize, isDisabled);
 }
 
 
 /*
 ** Makes a button, but with the center at the coordinates listed
 */
-bool makeButtonTextCenter( int pos_x, int pos_y, std::string text, int fontSize, bool isDisabled = false ) {
-    return makeButtonText( pos_x - 10 - 10 - MeasureText( text.c_str(), fontSize ) / 2,
+bool makeButtonTextCenter( RenderTexture rentex, int pos_x, int pos_y, std::string text, int fontSize, bool isDisabled = false ) {
+    return makeButtonText( rentex, pos_x - 10 - 10 - MeasureText( text.c_str(), fontSize ) / 2,
                                pos_y - 10 - 10 - MeasureTextEx( GetFontDefault(), text.c_str(), fontSize, ( float ) fontSize / 10 ).y,
                                text, fontSize, isDisabled );
 }
@@ -211,12 +214,15 @@ bool makeButtonText_DEPRECATED( int pos_x, int pos_y, int size_x, int size_y,
     }
 }
 
-bool makeButtonColor( int pos_x, int pos_y, int size_x, int size_y, Color color1, Color color2, bool isDisabled = false ) {
+bool makeButtonColor( RenderTexture rentex, int pos_x, int pos_y, int size_x, int size_y, Color color1, Color color2, bool isDisabled = false ) {
+    float sf_x = static_cast< float >( rentex.texture.width ) / GetScreenWidth();
+    float sf_y = static_cast< float >( rentex.texture.height ) / GetScreenHeight();
+
     Rectangle main = { ( float ) pos_x, ( float ) pos_y, ( float ) size_x, ( float ) size_y };
     Rectangle coll = main;
     coll.width += 5; coll.height += 5;
 
-    bool buttonDown = isDisabled || ( CheckCollisionPointRec( GetMousePosition(), coll ) && ( IsMouseButtonDown( MOUSE_LEFT_BUTTON ) || IsMouseButtonReleased( MOUSE_LEFT_BUTTON ) ) );
+    bool buttonDown = isDisabled || ( CheckCollisionPointRec( Vector2{ GetMouseX() * sf_x, GetMouseY() * sf_y }, coll ) && ( IsMouseButtonDown( MOUSE_LEFT_BUTTON ) || IsMouseButtonReleased( MOUSE_LEFT_BUTTON ) ) );
     if ( buttonDown ) {
         main.x += 5; main.y += 5;
     }
@@ -226,7 +232,7 @@ bool makeButtonColor( int pos_x, int pos_y, int size_x, int size_y, Color color1
 
 
     DrawRectangleRec( main, Q_BLACK ); // Draw Q_BLACK boarder
-    DrawRectangleRec( inside, CheckCollisionPointRec( GetMousePosition(), coll ) ? color2 : color1 ); // inside color
+    DrawRectangleRec( inside, CheckCollisionPointRec( Vector2{ GetMouseX() * sf_x, GetMouseY() * sf_y }, coll ) ? color2 : color1 ); // inside color
 
     // Drop shaddow
     if ( !buttonDown ) {
@@ -235,12 +241,12 @@ bool makeButtonColor( int pos_x, int pos_y, int size_x, int size_y, Color color1
     }
 
 
-    return !isDisabled && IsMouseButtonReleased( MOUSE_LEFT_BUTTON ) && CheckCollisionPointRec( GetMousePosition(), coll );
+    return !isDisabled && IsMouseButtonReleased( MOUSE_LEFT_BUTTON ) && CheckCollisionPointRec( Vector2{ GetMouseX() * sf_x, GetMouseY() * sf_y }, coll );
 
 }
 
-bool makeButtonColorCenter( int pos_x, int pos_y, int size_x, int size_y, Color color1, Color color2, bool isDisabled = false ) {
-    return makeButtonColor( pos_x - size_x / 2, pos_y - size_y / 2, size_x, size_y, color1, color2, isDisabled );
+bool makeButtonColorCenter( RenderTexture rentex, int pos_x, int pos_y, int size_x, int size_y, Color color1, Color color2, bool isDisabled = false ) {
+    return makeButtonColor( rentex, pos_x - size_x / 2, pos_y - size_y / 2, size_x, size_y, color1, color2, isDisabled );
 }
 /*
 ** Copy-pasted from Java verson
@@ -285,13 +291,16 @@ bool makeButtonColor_DEPRECATED( int pos_x, int pos_y, int size_x, int size_y, C
 /*
 ** NOTE: Call with the "image" part as &someImg, and unload it after ( if desired )
 */
-bool makeButtonImage( int pos_x, int pos_y, Texture2D tex, Color background = Q_GRAY, bool isDisabled = false ) {
+bool makeButtonImage( RenderTexture rentex, int pos_x, int pos_y, Texture2D tex, Color background = Q_GRAY, bool isDisabled = false ) {
+    float sf_x = static_cast< float >( rentex.texture.width ) / GetScreenWidth();
+    float sf_y = static_cast< float >( rentex.texture.height ) / GetScreenHeight();
+
 
     Rectangle main = { ( float ) pos_x, ( float ) pos_y, ( float ) tex.width + 20, ( float ) tex.height + 20 };
     Rectangle coll = main;
     coll.width += 5; coll.height += 5;
     
-    bool buttonDown = isDisabled || ( CheckCollisionPointRec( GetMousePosition(), coll ) && ( IsMouseButtonDown( MOUSE_LEFT_BUTTON ) || IsMouseButtonReleased( MOUSE_LEFT_BUTTON ) ) );
+    bool buttonDown = isDisabled || ( CheckCollisionPointRec( Vector2{ GetMouseX() * sf_x, GetMouseY() * sf_y }, coll ) && ( IsMouseButtonDown( MOUSE_LEFT_BUTTON ) || IsMouseButtonReleased( MOUSE_LEFT_BUTTON ) ) );
     if ( buttonDown ) {
         main.x += 5; main.y += 5;
     }
@@ -311,12 +320,12 @@ bool makeButtonImage( int pos_x, int pos_y, Texture2D tex, Color background = Q_
     }
 
 
-    return IsMouseButtonReleased( MOUSE_LEFT_BUTTON ) && CheckCollisionPointRec( GetMousePosition(), coll );
+    return IsMouseButtonReleased( MOUSE_LEFT_BUTTON ) && CheckCollisionPointRec( Vector2{ GetMouseX() * sf_x, GetMouseY() * sf_y }, coll );
 
 }
 
-bool makeButtonImageCenter( int pos_x, int pos_y, Texture2D tex, Color background = Q_GRAY, bool isDisabled = false ) {
-    return makeButtonImage( pos_x - ( tex.width + 40 ) / 2, pos_y - ( tex.height + 40 ) / 2, tex, background, isDisabled );
+bool makeButtonImageCenter( RenderTexture rentex, int pos_x, int pos_y, Texture2D tex, Color background = Q_GRAY, bool isDisabled = false ) {
+    return makeButtonImage( rentex, pos_x - ( tex.width + 40 ) / 2, pos_y - ( tex.height + 40 ) / 2, tex, background, isDisabled );
 }
 
 /*
@@ -374,7 +383,11 @@ bool makeButtonImage_DEPRACATED(int pos_x, int pos_y, int size_x, int size_y, Im
 
 
 
-int drawPlus( int pos_x, int pos_y, int size_x, int size_y, bool canNotBePressed, int startNum, int maxOrMinVal, bool isMinus = false ) {
+int drawPlus( RenderTexture rentex, int pos_x, int pos_y, int size_x, int size_y, bool canNotBePressed, int startNum, int maxOrMinVal, bool isMinus = false ) {
+    float sf_x = static_cast< float >( rentex.texture.width ) / GetScreenWidth();
+    float sf_y = static_cast< float >( rentex.texture.height ) / GetScreenHeight();
+
+
     Rectangle main = { ( float ) pos_x, ( float ) pos_y, ( float ) size_x, ( float ) size_y }; /* Main body (Q_BLACK outline) */
     Rectangle coll = main; /* Collision hitbox */
     coll.width += 5; coll.height += 5; /* Update collision hitbox to include Q_GRAY area, to prevent jankyness */
@@ -383,7 +396,7 @@ int drawPlus( int pos_x, int pos_y, int size_x, int size_y, bool canNotBePressed
 
     /* check if the button should be down, down if cant be pressed or mouse is down inside box */
     /* button release added to prevent jankyness with the button flickering */
-    bool isDown = canNotBePressed || ( CheckCollisionPointRec( GetMousePosition(), coll ) && ( IsMouseButtonDown( MOUSE_LEFT_BUTTON ) || IsMouseButtonReleased( MOUSE_LEFT_BUTTON ) ) );
+    bool isDown = canNotBePressed || ( CheckCollisionPointRec( Vector2{ GetMouseX() * sf_x, GetMouseY() * sf_y }, coll ) && ( IsMouseButtonDown( MOUSE_LEFT_BUTTON ) || IsMouseButtonReleased( MOUSE_LEFT_BUTTON ) ) );
 
     if ( isDown ) {
         main.x += 5; main.y += 5;
@@ -397,24 +410,24 @@ int drawPlus( int pos_x, int pos_y, int size_x, int size_y, bool canNotBePressed
     Rectangle vBar = { main.x + main.width * 0.45f, main.y + main.width / 5, main.height / 10, main.width * 3 / 5 };
 
     DrawRectangleRec( main, Q_BLACK ); // draw Q_BLACK outling
-    DrawRectangleRec( inside, CheckCollisionPointRec( GetMousePosition(), coll ) ? Q_DARKGRAY : Q_GRAY ); // draw Q_GRAY inside
+    DrawRectangleRec( inside, CheckCollisionPointRec( Vector2{ GetMouseX() * sf_x, GetMouseY() * sf_y }, coll ) ? Q_DARKGRAY : Q_GRAY ); // draw Q_GRAY inside
     DrawRectangleRec( hBar, Q_BLACK ); // draw the minus sign
     if ( !isMinus ) {
         DrawRectangleRec( vBar, Q_BLACK ); // turn into a plus if not a minus
     }
     if ( !isDown ) {
-        DrawRectangleRec( { main.x + main.width, main.y + 5, 5, main.height }, Q_DARKGRAY ); // drop shadow if not down
-        DrawRectangleRec( { main.x + 5, main.y + main.height, main.width, 5 }, Q_DARKGRAY );
+        DrawRectangleRec( Rectangle{ main.x + main.width, main.y + 5, 5, main.height }, Q_DARKGRAY ); // drop shadow if not down
+        DrawRectangleRec( Rectangle{ main.x + 5, main.y + main.height, main.width, 5 }, Q_DARKGRAY );
     }
 
-    if ( !canNotBePressed && CheckCollisionPointRec( GetMousePosition(), coll ) && IsMouseButtonReleased( MOUSE_LEFT_BUTTON ) ) { // can i haz increment??????
+    if ( !canNotBePressed && CheckCollisionPointRec( Vector2{ GetMouseX() * sf_x, GetMouseY() * sf_y }, coll ) && IsMouseButtonReleased( MOUSE_LEFT_BUTTON ) ) { // can i haz increment??????
         return startNum + ( isMinus ? -1 : 1 ); // yes
     }
     return startNum;
 }
 
-int drawPlusCenter( int pos_x, int pos_y, int size_x, int size_y, bool canNotBePressed, int startNum, int maxOrMinVal, bool isMinus = false ) {
-    return drawPlus( pos_x - ( float ) size_x / 2, pos_y - ( float ) size_y / 2, size_x, size_y, canNotBePressed, startNum, maxOrMinVal, isMinus );
+int drawPlusCenter( RenderTexture rentex, int pos_x, int pos_y, int size_x, int size_y, bool canNotBePressed, int startNum, int maxOrMinVal, bool isMinus = false ) {
+    return drawPlus( rentex, pos_x - ( float ) size_x / 2, pos_y - ( float ) size_y / 2, size_x, size_y, canNotBePressed, startNum, maxOrMinVal, isMinus );
 }
 
 /*
@@ -546,6 +559,10 @@ int main( /*int argc, char** argv, char** envv*/ ) {
     SetConfigFlags( FLAG_WINDOW_RESIZABLE | FLAG_WINDOW_MAXIMIZED );
 
     InitWindow(1366, 768, "Quimbert Quarrel");
+
+    RenderTexture rentex = LoadRenderTexture( 1920, 1080 );
+
+
     //InitWindow(1366, 768, "Quimbert Quarrel");
     SetWindowMinSize(600, 500); 
     SetWindowMaxSize(monitorWidth, monitorHeight);
@@ -567,7 +584,7 @@ int main( /*int argc, char** argv, char** envv*/ ) {
 
     QuimbertTextBox textBoxName(
         Rectangle{
-            static_cast< float >( GetScreenWidth() / 2 + 20 ),
+            static_cast< float >( rentex.texture.width / 2 + 20 ),
             250,
             375,
             75
@@ -576,7 +593,7 @@ int main( /*int argc, char** argv, char** envv*/ ) {
 
     QuimbertTextBox textBoxOwner(
         Rectangle{
-            static_cast< float >( GetScreenWidth() / 2 + 20 ),
+            static_cast< float >( rentex.texture.width / 2 + 20 ),
             350,
             375,
             75
@@ -610,9 +627,13 @@ int main( /*int argc, char** argv, char** envv*/ ) {
     Image backgroundImage = LoadImage( "./resources/textures/backgrounds/quimbert_hell.png");
 
 
-    RenderTexture rentex = LoadRenderTexture( 1366, 768 );
     while ( !WindowShouldClose() ) {
+
         BeginTextureMode( rentex );
+
+        float sf_x = static_cast< float >( rentex.texture.width ) / GetScreenWidth();
+        float sf_y = static_cast< float >( rentex.texture.height ) / GetScreenHeight();
+
         ClearBackground( Q_WHITE );
 
         if ( !isMusicMuted ) {
@@ -621,23 +642,23 @@ int main( /*int argc, char** argv, char** envv*/ ) {
 
         if ( gameLayout == "start" ) {
 
-            DrawText("Quimbert Quarrel", (GetScreenWidth() / 2) - (MeasureText("Quimbert Quarrel", 96) / 2), (GetScreenHeight() / 4), 96, Q_BLACK);
-            DrawText("A Green Apple Game", (GetScreenWidth() / 2) - (MeasureText("A Green Apple Game", 36) / 2), (GetScreenHeight() / 4 + 100), 36, Q_BLACK);
+            DrawText("Quimbert Quarrel", ( rentex.texture.width / 2 ) - ( MeasureText( "Quimbert Quarrel", 96 ) / 2 ), ( rentex.texture.height / 4), 96, Q_BLACK);
+            DrawText("A Green Apple Game", ( rentex.texture.width / 2 ) - ( MeasureText( "A Green Apple Game", 36 ) / 2 ), ( rentex.texture.height / 4 + 100), 36, Q_BLACK);
 
-            Rectangle localButton{ ( float ) GetScreenWidth() / 2 - 155, ( float ) GetScreenHeight() / 2, 300, 150 };
+            Rectangle localButton{ ( float ) rentex.texture.width / 2 - 155, ( float ) rentex.texture.height / 2, 300, 150 };
 
             //Local Button (Next Layout)
-            if ( makeButtonTextCenter( GetScreenWidth() / 2, GetScreenHeight() / 2 + 200, "Local", 80, false ) ) {
+            if ( makeButtonTextCenter( rentex, rentex.texture.width / 2, rentex.texture.height / 2 + 200, "Local", 80, false ) ) {
                 gameLayout = "howManyQuimberts";
             }
 
             //Mute/Unmute Button
-            if ( makeButtonImage( GetScreenWidth() - 235, 10, ( isMusicMuted ? mutedTex : unmutedTex ), Q_GRAY, false ) ) {
+            if ( makeButtonImage( rentex, rentex.texture.width - 235, 10, ( isMusicMuted ? mutedTex : unmutedTex ), Q_GRAY, false ) ) {
                 isMusicMuted = !isMusicMuted;
             }
 
             //Exit Button
-            if ( makeButtonImage( GetScreenWidth() - 120, 10, exitTex ) ) {
+            if ( makeButtonImage( rentex, rentex.texture.width - 120, 10, exitTex ) ) {
                 /* Break out of the main game loop and stop execution */
                 break; 
             }
@@ -648,7 +669,7 @@ int main( /*int argc, char** argv, char** envv*/ ) {
             Rectangle backButton = {20, 20, 120, 80};
             
             // Back button
-            if (!CheckCollisionPointRec(GetMousePosition(), backButton)) {
+            if (!CheckCollisionPointRec(Vector2{ GetMouseX() * sf_x, GetMouseY() * sf_y }, backButton)) {
                 DrawRectangleRec(backButton, Q_BLACK);
                 DrawRectangle(30, 30, 100, 60, Q_LIGHTGRAY);
                 DrawLineEx( { 115, 60 }, { 60, 60 }, 15, Q_BLACK);
@@ -676,18 +697,18 @@ int main( /*int argc, char** argv, char** envv*/ ) {
             }
             
             
-            DrawText( "How many Quimberts?", GetScreenWidth() / 2 - MeasureText("How many Quimberts?", 80) / 2, 140, 80, Q_BLACK);
+            DrawText( "How many Quimberts?", rentex.texture.width / 2 - MeasureText("How many Quimberts?", 80) / 2, 140, 80, Q_BLACK);
             
             /* Draw the current numbers box */
-            DrawRectangle((GetScreenWidth() / 2) - 60, GetScreenHeight() / 2 - 70, 120, 150, Q_BLACK);
-            DrawRectangle((GetScreenWidth() / 2) - 50, GetScreenHeight() / 2 + 10 - 70, 100, 130, Q_LIGHTGRAY);
+            DrawRectangle((rentex.texture.width / 2) - 60, rentex.texture.height / 2 - 70, 120, 150, Q_BLACK);
+            DrawRectangle((rentex.texture.width / 2) - 50, rentex.texture.height / 2 + 10 - 70, 100, 130, Q_LIGHTGRAY);
             /* Actually draw the number */
-            DrawText(std::to_string(quimbertQuantity).c_str(), (GetScreenWidth() / 2) - MeasureText(std::to_string(quimbertQuantity).c_str(), 108) / 2, GetScreenHeight() / 2 + 25 - 70, 108, Q_BLACK);
+            DrawText(std::to_string(quimbertQuantity).c_str(), ( rentex.texture.width / 2 ) - MeasureText(std::to_string(quimbertQuantity).c_str(), 108) / 2, rentex.texture.height / 2 + 25 - 70, 108, Q_BLACK);
 
-            quimbertQuantity = drawPlusCenter( GetScreenWidth() / 2 + 130, GetScreenHeight() / 2 + 80 - 70, 100, 100, false, quimbertQuantity, 8, false);
-            quimbertQuantity = drawPlusCenter( GetScreenWidth() / 2 - 130, GetScreenHeight() / 2 + 80 - 70, 100, 100, false, quimbertQuantity, ( currentQuimbert > 0 ) ? currentQuimbert + 1 : 2, true);
+            quimbertQuantity = drawPlusCenter( rentex, rentex.texture.width / 2 + 130, rentex.texture.height / 2 + 80 - 70, 100, 100, false, quimbertQuantity, 8, false);
+            quimbertQuantity = drawPlusCenter( rentex, rentex.texture.width / 2 - 130, rentex.texture.height / 2 + 80 - 70, 100, 100, false, quimbertQuantity, ( currentQuimbert > 0 ) ? currentQuimbert + 1 : 2, true);
 
-            if ( makeButtonTextCenter( GetScreenWidth() / 2, GetScreenHeight() / 2 + 260 - 70, "Next", 60, false) ) {
+            if ( makeButtonTextCenter( rentex, rentex.texture.width / 2, rentex.texture.height / 2 + 260 - 70, "Next", 60, false) ) {
                 gameLayout = "createQuimbertDetails";
             }
             
@@ -695,7 +716,7 @@ int main( /*int argc, char** argv, char** envv*/ ) {
             Rectangle backButton = {20, 20, 120, 80};
 
             // Back button
-            if (!CheckCollisionPointRec(GetMousePosition(), backButton)) {
+            if (!CheckCollisionPointRec(Vector2{ GetMouseX() * sf_x, GetMouseY() * sf_y }, backButton)) {
                 DrawRectangleRec(backButton, Q_BLACK);
                 DrawRectangle(30, 30, 100, 60, Q_LIGHTGRAY);
                 DrawLineEx( { 115, 60 }, { 60, 60 }, 15, Q_BLACK);
@@ -722,22 +743,22 @@ int main( /*int argc, char** argv, char** envv*/ ) {
                 }
             }
 
-            textBoxName.processTextInput();
-            textBoxName.render();
+            textBoxName.processTextInput( rentex );
+            textBoxName.render( rentex );
 
-            textBoxOwner.processTextInput();
-            textBoxOwner.render();
+            textBoxOwner.processTextInput( rentex );
+            textBoxOwner.render( rentex );
 
-            DrawText( ( ( std::string( "Quimbert #" ) + std::to_string( currentQuimbert + 1 ) ).c_str() ), (GetScreenWidth() / 2) - (MeasureText("Quimbert #1", 96) / 2), 20, 96, Q_BLACK);
-            DrawText(("Make your Quimbert"), (GetScreenWidth() / 2) - (MeasureText("Make your Quimbert", 96) / 2), 120, 96, Q_BLACK);
+            DrawText( ( ( std::string( "Quimbert #" ) + std::to_string( currentQuimbert + 1 ) ).c_str() ), (rentex.texture.width / 2) - (MeasureText("Quimbert #1", 96) / 2), 20, 96, Q_BLACK);
+            DrawText(("Make your Quimbert"), (rentex.texture.width / 2) - (MeasureText("Make your Quimbert", 96) / 2), 120, 96, Q_BLACK);
 
-            DrawText("Name:", ((GetScreenWidth() / 2) - MeasureText("Name:", 72)) - 30, 250, 72, Q_BLACK);
-            DrawText("Owner:", ((GetScreenWidth() / 2) - MeasureText("Owner:", 72)) - 30, 350, 72, Q_BLACK);
-            DrawText("Color:", ((GetScreenWidth() / 2) - MeasureText("Color:", 72)) - 30, 450, 72, Q_BLACK);
+            DrawText("Name:", ((rentex.texture.width / 2) - MeasureText("Name:", 72)) - 30, 250, 72, Q_BLACK);
+            DrawText("Owner:", ((rentex.texture.width / 2) - MeasureText("Owner:", 72)) - 30, 350, 72, Q_BLACK);
+            DrawText("Color:", ((rentex.texture.width / 2) - MeasureText("Color:", 72)) - 30, 450, 72, Q_BLACK);
 
             // textBoxName.setBox(
             //     Rectangle{
-            //         static_cast< float >( GetScreenWidth() / 2 + 20 ),
+            //         static_cast< float >( rentex.texture.width / 2 + 20 ),
             //         250,
             //         375,
             //         75
@@ -745,14 +766,14 @@ int main( /*int argc, char** argv, char** envv*/ ) {
             // );
             // textBoxOwner.setBox(
             //     Rectangle{
-            //         static_cast< float >( GetScreenWidth() / 2 + 20 ),
+            //         static_cast< float >( rentex.texture.width / 2 + 20 ),
             //         350,
             //         375,
             //         75
             //     }
             // );
 
-            if ( makeButtonColor( GetScreenWidth() / 2 + 20, 450, 60, 60, currentColor, stocDark(color), false ) ) {
+            if ( makeButtonColor( rentex, rentex.texture.width / 2 + 20, 450, 60, 60, currentColor, stocDark(color), false ) ) {
                 showColorSelectionPanel = true;
             }
 
@@ -762,7 +783,7 @@ int main( /*int argc, char** argv, char** envv*/ ) {
                 /*
                 ** The box that the color buttons are in
                 */
-                Rectangle colorSelectionPanelMain = { ( float ) GetScreenWidth() / 2 + 60 + 20 + 20, 450, 80 * 5 + 25, 80 * 2 + 25 };
+                Rectangle colorSelectionPanelMain = { ( float ) rentex.texture.width / 2 + 60 + 20 + 20, 450, 80 * 5 + 25, 80 * 2 + 25 };
                 Rectangle colorSelectionPanelInside = colorSelectionPanelMain;
                 colorSelectionPanelInside.x += 10; colorSelectionPanelInside.y += 10; 
                 colorSelectionPanelInside.width -= 20; colorSelectionPanelInside.height -= 20;
@@ -792,52 +813,52 @@ int main( /*int argc, char** argv, char** envv*/ ) {
                 Q_PINK --> Q_MAGENTA
                 */
 
-                if ( makeButtonColor( colorSelectionPanelInside.x + 80 * 0 + 10, colorSelectionPanelInside.y + 80 * 0 + 10, 60, 60, Q_RED, Q_MAROON, takenColors[ 0 ] ) ) {
+                if ( makeButtonColor( rentex, colorSelectionPanelInside.x + 80 * 0 + 10, colorSelectionPanelInside.y + 80 * 0 + 10, 60, 60, Q_RED, Q_MAROON, takenColors[ 0 ] ) ) {
                     color = "red";
                     showColorSelectionPanel = false;
                 }
                 
-                if ( makeButtonColor( colorSelectionPanelInside.x + 80 * 1 + 10, colorSelectionPanelInside.y + 80 * 0 + 10, 60, 60, Q_ORANGE, Q_DARKORANGE, takenColors[ 1 ] ) ) {
+                if ( makeButtonColor( rentex, colorSelectionPanelInside.x + 80 * 1 + 10, colorSelectionPanelInside.y + 80 * 0 + 10, 60, 60, Q_ORANGE, Q_DARKORANGE, takenColors[ 1 ] ) ) {
                     color = "orange";
                     showColorSelectionPanel = false;
                 }
                 
-                if ( makeButtonColor( colorSelectionPanelInside.x + 80 * 2 + 10, colorSelectionPanelInside.y + 80 * 0 + 10, 60, 60, Q_YELLOW, Q_GOLD, takenColors[ 2 ] ) ) {
+                if ( makeButtonColor( rentex, colorSelectionPanelInside.x + 80 * 2 + 10, colorSelectionPanelInside.y + 80 * 0 + 10, 60, 60, Q_YELLOW, Q_GOLD, takenColors[ 2 ] ) ) {
                     color = "yellow";
                     showColorSelectionPanel = false;
                 }
                 
-                if ( makeButtonColor( colorSelectionPanelInside.x + 80 * 3 + 10, colorSelectionPanelInside.y + 80 * 0 + 10, 60, 60, Q_GREEN, Q_LIME, takenColors[ 3 ] ) ) {
+                if ( makeButtonColor( rentex, colorSelectionPanelInside.x + 80 * 3 + 10, colorSelectionPanelInside.y + 80 * 0 + 10, 60, 60, Q_GREEN, Q_LIME, takenColors[ 3 ] ) ) {
                     color = "green";
                     showColorSelectionPanel = false;
                 }
                 
-                if ( makeButtonColor( colorSelectionPanelInside.x + 80 * 4 + 10, colorSelectionPanelInside.y + 80 * 0 + 10, 60, 60, Q_LIGHTBLUE, Q_DARKLIGHTBLUE, takenColors[ 4 ] ) ) {
+                if ( makeButtonColor( rentex, colorSelectionPanelInside.x + 80 * 4 + 10, colorSelectionPanelInside.y + 80 * 0 + 10, 60, 60, Q_LIGHTBLUE, Q_DARKLIGHTBLUE, takenColors[ 4 ] ) ) {
                     color = "lightblue";
                     showColorSelectionPanel = false;
                 }
                 
-                if ( makeButtonColor( colorSelectionPanelInside.x + 80 * 0 + 10, colorSelectionPanelInside.y + 80 * 1 + 10, 60, 60, Q_BLUE, Q_DARKBLUE, takenColors[ 5 ] ) ) {
+                if ( makeButtonColor( rentex, colorSelectionPanelInside.x + 80 * 0 + 10, colorSelectionPanelInside.y + 80 * 1 + 10, 60, 60, Q_BLUE, Q_DARKBLUE, takenColors[ 5 ] ) ) {
                     color = "blue";
                     showColorSelectionPanel = false;
                 }
                 
-                if ( makeButtonColor( colorSelectionPanelInside.x + 80 * 1 + 10, colorSelectionPanelInside.y + 80 * 1 + 10, 60, 60, Q_PURPLE, Q_VIOLET, takenColors[ 6 ] ) ) {
+                if ( makeButtonColor( rentex, colorSelectionPanelInside.x + 80 * 1 + 10, colorSelectionPanelInside.y + 80 * 1 + 10, 60, 60, Q_PURPLE, Q_VIOLET, takenColors[ 6 ] ) ) {
                     color = "purple";
                     showColorSelectionPanel = false;
                 }
                 
-                if ( makeButtonColor( colorSelectionPanelInside.x + 80 * 2 + 10, colorSelectionPanelInside.y + 80 * 1 + 10, 60, 60, Q_DARKGRAY, Q_LIGHTBLACK, takenColors[ 7 ] ) ) {
+                if ( makeButtonColor( rentex, colorSelectionPanelInside.x + 80 * 2 + 10, colorSelectionPanelInside.y + 80 * 1 + 10, 60, 60, Q_DARKGRAY, Q_LIGHTBLACK, takenColors[ 7 ] ) ) {
                     color = "black";
                     showColorSelectionPanel = false;
                 }
                 
-                if ( makeButtonColor( colorSelectionPanelInside.x + 80 * 3 + 10, colorSelectionPanelInside.y + 80 * 1 + 10, 60, 60, Q_LIGHTGRAY, Q_GRAY, takenColors[ 8 ] ) ) {
+                if ( makeButtonColor( rentex, colorSelectionPanelInside.x + 80 * 3 + 10, colorSelectionPanelInside.y + 80 * 1 + 10, 60, 60, Q_LIGHTGRAY, Q_GRAY, takenColors[ 8 ] ) ) {
                     color = "gray";
                     showColorSelectionPanel = false;
                 }
                 
-                if ( makeButtonColor( colorSelectionPanelInside.x + 80 * 4 + 10, colorSelectionPanelInside.y + 80 * 1 + 10, 60, 60, Q_PINK, Q_MAGENTA, takenColors[ 9 ] ) ) {
+                if ( makeButtonColor( rentex, colorSelectionPanelInside.x + 80 * 4 + 10, colorSelectionPanelInside.y + 80 * 1 + 10, 60, 60, Q_PINK, Q_MAGENTA, takenColors[ 9 ] ) ) {
                     color = "pink";
                     showColorSelectionPanel = false;
                 }
@@ -875,7 +896,7 @@ int main( /*int argc, char** argv, char** envv*/ ) {
 
             /* NOTE: I implemented it but don't know about the color shenagans, i think i fixed that somewhere else though already ( takenColors[] i believe) so if its an issue refer back here
             ** --Liam */
-            if ( makeButtonTextCenter( GetScreenWidth() / 2, GetScreenHeight() - 80, "Next", 60, false ) ) {
+            if ( makeButtonTextCenter( rentex, rentex.texture.width / 2, rentex.texture.height - 80, "Next", 60, false ) ) {
                 if ( textBoxName.getText().length() > 0 && textBoxOwner.getText().length() > 0 ) {
                     gameLayout = "chooseQuimbertStats";
                 } else {
@@ -896,7 +917,7 @@ int main( /*int argc, char** argv, char** envv*/ ) {
             Rectangle backButton = {20, 20, 120, 80};
 
             // Back button
-            if (!CheckCollisionPointRec(GetMousePosition(), backButton)) {
+            if (!CheckCollisionPointRec(Vector2{ GetMouseX() * sf_x, GetMouseY() * sf_y }, backButton)) {
                 DrawRectangleRec(backButton, Q_BLACK);
                 DrawRectangle(30, 30, 100, 60, Q_LIGHTGRAY);
                 DrawLineEx( { 115, 60 }, { 60, 60 }, 15, Q_BLACK);
@@ -923,10 +944,10 @@ int main( /*int argc, char** argv, char** envv*/ ) {
                 }
             }
 
-            Rectangle doneButton = { ( float ) GetScreenWidth() - 175, 20, 150, 80 };
+            Rectangle doneButton = { ( float ) rentex.texture.width - 175, 20, 150, 80 };
 
             //Create Quimbert button
-            if ( makeButtonText( GetScreenWidth() - 175, 20, "Done", 48, points != 0 ) ) {
+            if ( makeButtonText( rentex, rentex.texture.width - 175, 20, "Done", 48, points != 0 ) ) {
                 if (points == 0 && currentQuimbert + 1 <= quimbertQuantity) {
                     if (currentQuimbert + 1 <= quimbertQuantity) {
                         quimbertArr.emplace_back( Quimbert( looks, smell, color, personality, gumption, length, name, owner ) );
@@ -1035,11 +1056,11 @@ int main( /*int argc, char** argv, char** envv*/ ) {
             DrawText( std::to_string( looks ).c_str(), looks_stat_inside.x + 10, looks_stat_inside.y + 10, 60, Q_BLACK );
 
             
-            looks = drawPlusCenter( pos_x - 90, pos_y, 60, 60,  false, looks, 0, true );
-            looks = drawPlusCenter( pos_x + 90, pos_y, 60, 60, points == 0, looks, 10 );
+            looks = drawPlusCenter( rentex, pos_x - 90, pos_y, 60, 60,  false, looks, 0, true );
+            looks = drawPlusCenter( rentex, pos_x + 90, pos_y, 60, 60, points == 0, looks, 10 );
 
 
-            if ( makeButtonTextEx( pos_x + 200 - MeasureText( "++", 60 ) / 2 - 20, pos_y - 30, MeasureText( "++", 60 ) + 40, 60, "++", 60, looks > 9 || points < 1 ) ) {
+            if ( makeButtonTextEx( rentex, pos_x + 200 - MeasureText( "++", 60 ) / 2 - 20, pos_y - 30, MeasureText( "++", 60 ) + 40, 60, "++", 60, looks > 9 || points < 1 ) ) {
                 if ( 10 - looks > points ) {
                     looks += points;
                 } else {
@@ -1047,14 +1068,14 @@ int main( /*int argc, char** argv, char** envv*/ ) {
                 }
             }
             
-            if ( makeButtonTextEx( pos_x - 200 - MeasureText( "--", 60 ) / 2 - 20, pos_y - 30, MeasureText( "--", 60 ) + 40, 60, "--", 60, looks < 1 ) ) {
+            if ( makeButtonTextEx( rentex, pos_x - 200 - MeasureText( "--", 60 ) / 2 - 20, pos_y - 30, MeasureText( "--", 60 ) + 40, 60, "--", 60, looks < 1 ) ) {
                 looks = 0;
             }
 
 
             
             /* Move it down a bit so they don't overlap */
-            pos_y += 40 + GetScreenHeight() / 5;
+            pos_y += 40 + rentex.texture.height / 5;
 
 
             /* Smell */
@@ -1072,10 +1093,10 @@ int main( /*int argc, char** argv, char** envv*/ ) {
             DrawText( std::to_string( smell ).c_str(), smell_stat_inside.x + 10, smell_stat_inside.y + 10, 60, Q_BLACK );
 
             
-            smell = drawPlusCenter( pos_x - 90, pos_y, 60, 60,  false, smell, 0, true );
-            smell = drawPlusCenter( pos_x + 90, pos_y, 60, 60, points == 0, smell, 10 );
+            smell = drawPlusCenter( rentex, pos_x - 90, pos_y, 60, 60,  false, smell, 0, true );
+            smell = drawPlusCenter( rentex, pos_x + 90, pos_y, 60, 60, points == 0, smell, 10 );
 
-            if ( makeButtonTextEx( pos_x + 200 - MeasureText( "++", 60 ) / 2 - 20, pos_y - 30, MeasureText( "++", 60 ) + 40, 60, "++", 60, smell > 9 || points < 1 ) ) {
+            if ( makeButtonTextEx( rentex, pos_x + 200 - MeasureText( "++", 60 ) / 2 - 20, pos_y - 30, MeasureText( "++", 60 ) + 40, 60, "++", 60, smell > 9 || points < 1 ) ) {
                 if ( 10 - smell > points ) {
                     smell += points;
                 } else {
@@ -1083,14 +1104,14 @@ int main( /*int argc, char** argv, char** envv*/ ) {
                 }
             }
             
-            if ( makeButtonTextEx( pos_x - 200 - MeasureText( "--", 60 ) / 2 - 20, pos_y - 30, MeasureText( "--", 60 ) + 40, 60, "--", 60, smell < 1 ) ) {
+            if ( makeButtonTextEx( rentex, pos_x - 200 - MeasureText( "--", 60 ) / 2 - 20, pos_y - 30, MeasureText( "--", 60 ) + 40, 60, "--", 60, smell < 1 ) ) {
                 smell = 0;
             }
 
 
 
             /* Move it down */
-            pos_y += 40 + GetScreenHeight() / 5;
+            pos_y += 40 + rentex.texture.height / 5;
 
 
             /* Personality */
@@ -1108,10 +1129,10 @@ int main( /*int argc, char** argv, char** envv*/ ) {
             DrawText( std::to_string( personality ).c_str(), personality_stat_inside.x + 10, personality_stat_inside.y + 10, 60, Q_BLACK );
 
             
-            personality = drawPlusCenter( pos_x - 90, pos_y, 60, 60,  false, personality, 0, true );
-            personality = drawPlusCenter( pos_x + 90, pos_y, 60, 60, points == 0, personality, 10 );
+            personality = drawPlusCenter( rentex, pos_x - 90, pos_y, 60, 60,  false, personality, 0, true );
+            personality = drawPlusCenter( rentex, pos_x + 90, pos_y, 60, 60, points == 0, personality, 10 );
             
-            if ( makeButtonTextEx( pos_x + 200 - MeasureText( "++", 60 ) / 2 - 20, pos_y - 30, MeasureText( "++", 60 ) + 40, 60, "++", 60, personality > 9 || points < 1 ) ) {
+            if ( makeButtonTextEx( rentex, pos_x + 200 - MeasureText( "++", 60 ) / 2 - 20, pos_y - 30, MeasureText( "++", 60 ) + 40, 60, "++", 60, personality > 9 || points < 1 ) ) {
                 if ( 10 - personality > points ) {
                     personality += points;
                 } else {
@@ -1119,12 +1140,12 @@ int main( /*int argc, char** argv, char** envv*/ ) {
                 }
             }
             
-            if ( makeButtonTextEx( pos_x - 200 - MeasureText( "--", 60 ) / 2 - 20, pos_y - 30, MeasureText( "--", 60 ) + 40, 60, "--", 60, personality < 1 ) ) {
+            if ( makeButtonTextEx( rentex, pos_x - 200 - MeasureText( "--", 60 ) / 2 - 20, pos_y - 30, MeasureText( "--", 60 ) + 40, 60, "--", 60, personality < 1 ) ) {
                 personality = 0;
             }
 
             /* Move it to the other side */
-            pos_x = GetScreenWidth() - pos_x;
+            pos_x = rentex.texture.width - pos_x;
             pos_y = 220;
 
 
@@ -1143,10 +1164,10 @@ int main( /*int argc, char** argv, char** envv*/ ) {
             DrawText( std::to_string( gumption ).c_str(), gumption_stat_inside.x + 10, gumption_stat_inside.y + 10, 60, Q_BLACK );
 
             
-            gumption = drawPlusCenter( pos_x - 90, pos_y, 60, 60,  false, gumption, 0, true );
-            gumption = drawPlusCenter( pos_x + 90, pos_y, 60, 60, points == 0, gumption, 10 );
+            gumption = drawPlusCenter( rentex, pos_x - 90, pos_y, 60, 60,  false, gumption, 0, true );
+            gumption = drawPlusCenter( rentex, pos_x + 90, pos_y, 60, 60, points == 0, gumption, 10 );
             
-            if ( makeButtonTextEx( pos_x + 200 - MeasureText( "++", 60 ) / 2 - 20, pos_y - 30, MeasureText( "++", 60 ) + 40, 60, "++", 60, gumption > 9 || points < 1 ) ) {
+            if ( makeButtonTextEx( rentex, pos_x + 200 - MeasureText( "++", 60 ) / 2 - 20, pos_y - 30, MeasureText( "++", 60 ) + 40, 60, "++", 60, gumption > 9 || points < 1 ) ) {
                 if ( 10 - gumption > points ) {
                     gumption += points;
                 } else {
@@ -1154,14 +1175,14 @@ int main( /*int argc, char** argv, char** envv*/ ) {
                 }
             }
             
-            if ( makeButtonTextEx( pos_x - 200 - MeasureText( "--", 60 ) / 2 - 20, pos_y - 30, MeasureText( "--", 60 ) + 40, 60, "--", 60, gumption < 1 ) ) {
+            if ( makeButtonTextEx( rentex, pos_x - 200 - MeasureText( "--", 60 ) / 2 - 20, pos_y - 30, MeasureText( "--", 60 ) + 40, 60, "--", 60, gumption < 1 ) ) {
                 gumption = 0;
             }
 
             
 
             /* Move it down */
-            pos_y += 40 + GetScreenHeight() / 5;
+            pos_y += 40 + rentex.texture.height / 5;
 
             /* length */
             Rectangle length_stat_main = { pos_x - ( float ) MeasureText( std::to_string( length ).c_str(), 60 ) / 2 - 20, pos_y - ( float ) MeasureTextEx( GetFontDefault(), std::to_string( length ).c_str(), 60, 6 ).y / 2 - 20, ( float ) MeasureText( std::to_string( length ).c_str(), 60 ) + 40, MeasureTextEx( GetFontDefault(), std::to_string( length ).c_str(), 60, 6 ).y + 40 };
@@ -1178,10 +1199,10 @@ int main( /*int argc, char** argv, char** envv*/ ) {
             DrawText( std::to_string( length ).c_str(), length_stat_inside.x + 10, length_stat_inside.y + 10, 60, Q_BLACK );
 
             
-            length = drawPlusCenter( pos_x - 90, pos_y, 60, 60,  false, length, 0, true );
-            length = drawPlusCenter( pos_x + 90, pos_y, 60, 60, points == 0, length, 10 );
+            length = drawPlusCenter( rentex, pos_x - 90, pos_y, 60, 60,  false, length, 0, true );
+            length = drawPlusCenter( rentex, pos_x + 90, pos_y, 60, 60, points == 0, length, 10 );
             
-            if ( makeButtonTextEx( pos_x + 200 - MeasureText( "++", 60 ) / 2 - 20, pos_y - 30, MeasureText( "++", 60 ) + 40, 60, "++", 60, length > 9 || points < 1 ) ) {
+            if ( makeButtonTextEx( rentex, pos_x + 200 - MeasureText( "++", 60 ) / 2 - 20, pos_y - 30, MeasureText( "++", 60 ) + 40, 60, "++", 60, length > 9 || points < 1 ) ) {
                 if ( 10 - length > points ) {
                     length += points;
                 } else {
@@ -1189,7 +1210,7 @@ int main( /*int argc, char** argv, char** envv*/ ) {
                 }
             }
             
-            if ( makeButtonTextEx( pos_x - 200 - MeasureText( "--", 60 ) / 2 - 20, pos_y - 30, MeasureText( "--", 60 ) + 40, 60, "--", 60, length < 1 ) ) {
+            if ( makeButtonTextEx( rentex, pos_x - 200 - MeasureText( "--", 60 ) / 2 - 20, pos_y - 30, MeasureText( "--", 60 ) + 40, 60, "--", 60, length < 1 ) ) {
                 length = 0;
             }
 
@@ -1200,7 +1221,7 @@ int main( /*int argc, char** argv, char** envv*/ ) {
             points += oldLength - length;
 
 
-            DrawText( ( std::string( "Points: " ) + std::to_string( points ) ).c_str(), ( float ) GetScreenWidth() / 2 - ( float ) MeasureText( ( std::string( "Points: " ) + std::to_string( points ) ).c_str(), 48 ) / 2, 150, 48, Q_BLACK );
+            DrawText( ( std::string( "Points: " ) + std::to_string( points ) ).c_str(), ( float ) rentex.texture.width / 2 - ( float ) MeasureText( ( std::string( "Points: " ) + std::to_string( points ) ).c_str(), 48 ) / 2, 150, 48, Q_BLACK );
             const char* statsHelpText =
                 "Stats Descriptions:\n"
                 "Looks: \n"
@@ -1210,13 +1231,13 @@ int main( /*int argc, char** argv, char** envv*/ ) {
                 "Length: \n";
 
             const char *titleText = "Select Stats";
-            DrawText( titleText, ( float ) GetScreenWidth() / 2 - ( float ) MeasureText( titleText, 80 ) / 2, 30, 80, Q_BLACK );
+            DrawText( titleText, ( float ) rentex.texture.width / 2 - ( float ) MeasureText( titleText, 80 ) / 2, 30, 80, Q_BLACK );
 
-            if ( makeButtonImageCenter( ( float ) GetScreenWidth() / 2 + ( float ) MeasureText( titleText, 80 ) / 2 + 60, 60, info2Tex ) ) {
+            if ( makeButtonImageCenter( rentex, ( float ) rentex.texture.width / 2 + ( float ) MeasureText( titleText, 80 ) / 2 + 60, 60, info2Tex ) ) {
                 showStatsInfoBox = !showStatsInfoBox;
             }
             if ( showStatsInfoBox ) {
-                DrawText( statsHelpText, ( float ) GetScreenWidth() / 2 - ( float ) MeasureText( statsHelpText, 40 ) / 2 + 80, ( float ) GetScreenHeight() / 2 + 80, 40, Q_BLACK );
+                DrawText( statsHelpText, ( float ) rentex.texture.width / 2 - ( float ) MeasureText( statsHelpText, 40 ) / 2 + 80, ( float ) rentex.texture.height / 2 + 80, 40, Q_BLACK );
             }
 
         } else if ( gameLayout == "game" ) {
@@ -1224,10 +1245,10 @@ int main( /*int argc, char** argv, char** envv*/ ) {
             // Image tmpImage = ImageCopy( backgroundImage );
 
             // const double BACKGROUND_ASPECT_RATIO = static_cast< double >( backgroundImage.width ) / static_cast< double >( backgroundImage.height );
-            // if ( static_cast< double >( GetScreenWidth() ) / static_cast< double >( GetScreenHeight() ) > BACKGROUND_ASPECT_RATIO ) {
-            //     ImageResize( &tmpImage, GetScreenHeight() * BACKGROUND_ASPECT_RATIO, GetScreenHeight() );
+            // if ( static_cast< double >( rentex.texture.width ) / static_cast< double >( rentex.texture.height ) > BACKGROUND_ASPECT_RATIO ) {
+            //     ImageResize( &tmpImage, rentex.texture.height * BACKGROUND_ASPECT_RATIO, rentex.texture.height );
             // } else {
-            //     ImageResize( &tmpImage, GetScreenWidth(), GetScreenWidth() / BACKGROUND_ASPECT_RATIO );
+            //     ImageResize( &tmpImage, rentex.texture.width, rentex.texture.width / BACKGROUND_ASPECT_RATIO );
             // }
             
             /* Image is bad :( */
@@ -1245,24 +1266,24 @@ int main( /*int argc, char** argv, char** envv*/ ) {
                                      MeasureText( "Inventory", 60 ) +
                                      MeasureText( "Attack", 60 ) + 
                                      45 * 5 /* account for button padding */;
-            const int BUTTON_GAP = ( float ) ( GetScreenWidth() - TOTAL_BUTTON_WIDTH ) / 6; /* number of gaps */
+            const int BUTTON_GAP = ( float ) ( rentex.texture.width - TOTAL_BUTTON_WIDTH ) / 6; /* number of gaps */
 
-            int button_position_y = GetScreenHeight() - 40 - 20 - MeasureTextEx( GetFontDefault(), "DONT_CHANGE", 60, ( float ) 60 / 10 ).y;
+            int button_position_y = rentex.texture.height - 40 - 20 - MeasureTextEx( GetFontDefault(), "DONT_CHANGE", 60, ( float ) 60 / 10 ).y;
             int button_position_x = BUTTON_GAP;
 
             
-            if ( makeButtonText( button_position_x, button_position_y, "Gamble", 60 ) ) {
+            if ( makeButtonText( rentex, button_position_x, button_position_y, "Gamble", 60 ) ) {
                 showGambleUi = true;
             }
             button_position_x += BUTTON_GAP + MeasureText( "Gamble", 60 ) + 45;
 
-            if ( makeButtonText( button_position_x, button_position_y, "Block", 60 ) ) {}
+            if ( makeButtonText( rentex, button_position_x, button_position_y, "Block", 60 ) ) {}
             button_position_x += BUTTON_GAP + MeasureText( "Block", 60 ) + 45;
 
-            if ( makeButtonText( button_position_x, button_position_y, "Sniff", 60 ) ) {}
+            if ( makeButtonText( rentex, button_position_x, button_position_y, "Sniff", 60 ) ) {}
             button_position_x += BUTTON_GAP + MeasureText( "Sniff", 60 ) + 45;
 
-            if ( makeButtonText( button_position_x, button_position_y, "Inventory", 60) ) {
+            if ( makeButtonText( rentex, button_position_x, button_position_y, "Inventory", 60) ) {
                 showInventory = true;
             }
             /* this is here to get the location of the inventory button,
@@ -1278,7 +1299,7 @@ int main( /*int argc, char** argv, char** envv*/ ) {
             /* end inventory drawing */
             button_position_x += BUTTON_GAP + MeasureText( "Inventory", 60 ) + 45;
 
-            if ( makeButtonText( button_position_x, button_position_y, "Attack", 60 ) ) {}
+            if ( makeButtonText( rentex, button_position_x, button_position_y, "Attack", 60 ) ) {}
 
             Rectangle healthBlockCorner = Rectangle{
                 10,
@@ -1315,7 +1336,7 @@ int main( /*int argc, char** argv, char** envv*/ ) {
             );
 
             Vector2 statsCornerLabel = Vector2{
-                GetScreenWidth() - MeasureTextEx(
+                rentex.texture.width - MeasureTextEx(
                     GetFontDefault(),
                     "Stats",
                     60,
@@ -1325,6 +1346,7 @@ int main( /*int argc, char** argv, char** envv*/ ) {
             };
 
             if ( makeButtonText(
+                rentex,
                 statsCornerLabel.x,
                 statsCornerLabel.y,
                 "Stats",
@@ -1333,7 +1355,7 @@ int main( /*int argc, char** argv, char** envv*/ ) {
 
             if ( showStatsBox ) {
                 Rectangle statsCornerBox = Rectangle{
-                    GetScreenWidth() - MeasureTextEx(
+                    rentex.texture.width - MeasureTextEx(
                         GetFontDefault(),
                         "Looks: 10\n"
                         "Smell: 10\n"
@@ -1413,9 +1435,14 @@ int main( /*int argc, char** argv, char** envv*/ ) {
                 0,
                 0,
                 static_cast< float >( rentex.texture.width ),
-                -static_cast< float >( rentex.texture.height )
+                static_cast< float >( -rentex.texture.height )
             },
-            Rectangle{ 0, 0, GetScreenWidth(), GetScreenHeight() },
+            Rectangle{
+                0,
+                0,
+                static_cast< float >( GetScreenWidth() ),
+                static_cast< float >( GetScreenHeight() )
+            },
             Vector2{ 0, 0 },
             0,
             Q_WHITE

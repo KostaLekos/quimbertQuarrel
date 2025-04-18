@@ -44,15 +44,20 @@ void QuimbertTextBox::setBox( Rectangle boundingBox ) {
     _boundingBox = boundingBox;
 }
 
-bool QuimbertTextBox::isSelectedAndHovered() {
-    return _mouseOnText && CheckCollisionPointRec( GetMousePosition(), _boundingBox );
+bool QuimbertTextBox::isSelectedAndHovered( RenderTexture rentex ) {
+    float sf_x = static_cast< float >( rentex.texture.width ) / GetScreenWidth();
+    float sf_y = static_cast< float >( rentex.texture.height ) / GetScreenHeight();
+    return _mouseOnText && CheckCollisionPointRec( Vector2{ GetMouseX() * sf_x, GetMouseY() * sf_y }, _boundingBox );
 }
 
-void QuimbertTextBox::processTextInput() {
+void QuimbertTextBox::processTextInput( RenderTexture rentex ) {
+    float sf_x = static_cast< float >( rentex.texture.width ) / GetScreenWidth();
+    float sf_y = static_cast< float >( rentex.texture.height ) / GetScreenHeight();
+
     /*
     ** Checks if mouse is in bounding box
     */
-    if ( CheckCollisionPointRec( GetMousePosition(), _boundingBox ) && 
+    if ( CheckCollisionPointRec( Vector2{ GetMouseX() * sf_x, GetMouseY() * sf_y }, _boundingBox ) && 
         IsMouseButtonPressed( MOUSE_LEFT_BUTTON ) )  {
             
         _mouseOnText = true;
@@ -62,13 +67,13 @@ void QuimbertTextBox::processTextInput() {
     /*
     ** Else, it isn't
     */
-    else if ( !CheckCollisionPointRec( GetMousePosition(), _boundingBox ) && IsMouseButtonPressed( MOUSE_LEFT_BUTTON ) ) {
+    else if ( !CheckCollisionPointRec( Vector2{ GetMouseX() * sf_x, GetMouseY() * sf_y }, _boundingBox ) && IsMouseButtonPressed( MOUSE_LEFT_BUTTON ) ) {
         _mouseOnText = false;
     }
 
     _mouseOnAnyText = false;
     for ( QuimbertTextBox *tb : _textBoxes ) {
-        _mouseOnAnyText |= tb->isSelectedAndHovered();
+        _mouseOnAnyText |= tb->isSelectedAndHovered( rentex );
     }
 
     if ( _mouseOnAnyText ) {
@@ -106,7 +111,10 @@ void QuimbertTextBox::processTextInput() {
 }
 
 
-void QuimbertTextBox::render() {
+void QuimbertTextBox::render( RenderTexture rentex ) {
+    float sf_x = static_cast< float >( rentex.texture.width ) / GetScreenWidth();
+    float sf_y = static_cast< float >( rentex.texture.height ) / GetScreenHeight();
+
 
     _frameCounter++;
 

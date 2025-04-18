@@ -50,13 +50,13 @@ public:
     ** Processes text input
     ** Reccomended to be ran every frame the textbox is supposed to be onscreen
     */
-    void processTextInput();
+    void processTextInput( RenderTexture rentex );
 
     /*
     ** Renders the text box
     ** Assumes after a BeginDrawing() call
     */
-    void render();
+    void render( RenderTexture rentex );
 
 
     /*
@@ -67,7 +67,7 @@ public:
     /* returns a copy of the bounding box to be used (hopefully) non-nefariously */
     Rectangle getBox();
 
-    bool isSelectedAndHovered();
+    bool isSelectedAndHovered( RenderTexture rentex );
 
 private:
     std::string _text;
