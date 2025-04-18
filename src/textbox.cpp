@@ -2,20 +2,27 @@
 
 #include "../include/textbox.hpp"
 
+#include "../third/raylib/src/raylib.h"
+
 #include <string>
 #include <format>
-#include <raylib.h>
+#include <vector>
+
+bool QuimbertTextBox::_mouseOnAnyText;
+std::vector< QuimbertTextBox * > QuimbertTextBox::_textBoxes;
 
 QuimbertTextBox::QuimbertTextBox( Rectangle boundingBox )
     : _text( "" ),
-     _maxCharCount( 40 ),
-     _mouseOnText( false ),
-     _boundingBox( boundingBox ),
-     _frameCounter( 0 ),
-     _needsText( false )
+      _maxCharCount( 40 ),
+      _boundingBox( boundingBox ),
+      _frameCounter( 0 ),
+      _needsText( false )
 {
-
+    _mouseOnText = false;
+    _textBoxes.push_back( this );
 }
+
+
 
 void QuimbertTextBox::needsText() {
     _needsText = true;
@@ -37,31 +44,45 @@ void QuimbertTextBox::setBox( Rectangle boundingBox ) {
     _boundingBox = boundingBox;
 }
 
+bool QuimbertTextBox::isSelectedAndHovered( RenderTexture rentex ) {
+    float sf_x = static_cast< float >( rentex.texture.width ) / GetScreenWidth();
+    float sf_y = static_cast< float >( rentex.texture.height ) / GetScreenHeight();
+    return _mouseOnText && CheckCollisionPointRec( Vector2{ GetMouseX() * sf_x, GetMouseY() * sf_y }, _boundingBox );
+}
 
-void QuimbertTextBox::processTextInput() {
+void QuimbertTextBox::processTextInput( RenderTexture rentex ) {
+    float sf_x = static_cast< float >( rentex.texture.width ) / GetScreenWidth();
+    float sf_y = static_cast< float >( rentex.texture.height ) / GetScreenHeight();
+
     /*
     ** Checks if mouse is in bounding box
     */
-    if ( CheckCollisionPointRec( GetMousePosition(), _boundingBox ) && 
+    if ( CheckCollisionPointRec( Vector2{ GetMouseX() * sf_x, GetMouseY() * sf_y }, _boundingBox ) && 
         IsMouseButtonPressed( MOUSE_LEFT_BUTTON ) )  {
             
         _mouseOnText = true;
         _needsText = false;
+        _mouseOnAnyText = true;
     }
     /*
     ** Else, it isn't
     */
-    else if ( !CheckCollisionPointRec( GetMousePosition(), _boundingBox ) && IsMouseButtonPressed( MOUSE_LEFT_BUTTON ) ) {
+    else if ( !CheckCollisionPointRec( Vector2{ GetMouseX() * sf_x, GetMouseY() * sf_y }, _boundingBox ) && IsMouseButtonPressed( MOUSE_LEFT_BUTTON ) ) {
         _mouseOnText = false;
     }
 
-    if ( _mouseOnText ) {
+    _mouseOnAnyText = false;
+    for ( QuimbertTextBox *tb : _textBoxes ) {
+        _mouseOnAnyText |= tb->isSelectedAndHovered( rentex );
+    }
 
-        /*
-        ** Set the cursor to the I-Beam, the standard for text input
-        */
+    if ( _mouseOnAnyText ) {
         SetMouseCursor( MOUSE_CURSOR_IBEAM );
+    } else {
+        SetMouseCursor( MOUSE_CURSOR_DEFAULT );
+    }
 
+    if ( _mouseOnText ) {
         /*
         ** Get the ascii character pressed
         */
@@ -86,11 +107,14 @@ void QuimbertTextBox::processTextInput() {
             }
         }
 
-    } else SetMouseCursor( MOUSE_CURSOR_DEFAULT );
+    }
 }
 
 
-void QuimbertTextBox::render() {
+void QuimbertTextBox::render( RenderTexture rentex ) {
+    float sf_x = static_cast< float >( rentex.texture.width ) / GetScreenWidth();
+    float sf_y = static_cast< float >( rentex.texture.height ) / GetScreenHeight();
+
 
     _frameCounter++;
 
@@ -130,4 +154,8 @@ void QuimbertTextBox::render() {
     */
     DrawText( _text.c_str(), _boundingBox.x + 20,
         _boundingBox.y + 15, 40, DARKGRAY);
+}
+
+Rectangle QuimbertTextBox::getBox() {
+    return _boundingBox;
 }

@@ -1,2 +1,4 @@
 CompileFlags:
-    Add: ["-Ithird/raylib/src", "-std=c++20"]
+    Add:
+    - -Ithird/raylib/src
+    - -std=c++20
