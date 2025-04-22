@@ -283,7 +283,7 @@ bool isAnyKeyPressed() {
 }
 
 
-int main( int argc, char** argv/*, char** envv*/ ) {
+int main( int argc, char** argv ) {
 
     bool DEBUG;
     for ( int i = 0; i < argc; i++ ) {
@@ -323,22 +323,16 @@ int main( int argc, char** argv/*, char** envv*/ ) {
         
     bool takenColors[ 10 ] = { false };
 
-    bool showStatsInfoBox = false;
+    bool showStatsInfoBoxLooks = false;
+    bool showStatsInfoBoxSmell = false;
+    bool showStatsInfoBoxPersonality = false;
+    bool showStatsInfoBoxGumption = false;
+    bool showStatsInfoBoxLength = false;
 
     bool showInventory = false;
     int inventoryScrollCount = 0;
     bool showGambleUi = false;
     bool showStatsBox = false;
-
-    // Image info1 = LoadImage( "./resources/textures/UI/infoButton1.png" );
-    // Image info2 = LoadImage( "./resources/textures/UI/infoButton2.png" );
-    // Image info3 = LoadImage( "./resources/textures/UI/infoButton3.png" );
-    // Texture2D infoButton1 = LoadTexture( "./resources/textures/UI/infoButton1.png" );
-    // Texture2D infoButton2 = LoadTexture( "./resources/textures/UI/infoButton2.png" );
-    // Texture2D infoButton3 = LoadTexture( "./resources/textures/UI/infoButton3.png" );
-    // UnloadImage( info1 );
-    // UnloadImage( info2 );
-    // UnloadImage( info3 );
 
     SetConfigFlags( FLAG_WINDOW_RESIZABLE | FLAG_WINDOW_MAXIMIZED );
 
@@ -347,8 +341,7 @@ int main( int argc, char** argv/*, char** envv*/ ) {
     RenderTexture rentex = LoadRenderTexture( 1920, 1080 );
 
 
-    //InitWindow(1366, 768, "Quimbert Quarrel");
-    SetWindowMinSize(600, 500); 
+    SetWindowMinSize(600, 500);
     SetWindowMaxSize(monitorWidth, monitorHeight);
     SetWindowPosition(40, 70);
     MaximizeWindow();
@@ -412,7 +405,8 @@ int main( int argc, char** argv/*, char** envv*/ ) {
     UnloadImage( info2Image );
 
     Image backgroundImage = LoadImage( "resources/textures/backgrounds/quimbert_hell.png");
-
+    Texture2D backgroundTex = LoadTextureFromImage( backgroundImage );
+    UnloadImage( backgroundImage );
 
     while ( !WindowShouldClose() ) {
 
@@ -806,7 +800,11 @@ int main( int argc, char** argv/*, char** envv*/ ) {
                         points = randInt(25, 35);
 
                         if ( ++currentQuimbert < quimbertQuantity) {
-                            showStatsInfoBox = false;
+                            showStatsInfoBoxLooks = false;
+                            showStatsInfoBoxSmell = false;
+                            showStatsInfoBoxPersonality = false;
+                            showStatsInfoBoxGumption = false;
+                            showStatsInfoBoxLength = false;
                             showColorSelectionPanel = false;
 
                             gameLayout = "createQuimbertDetails";
@@ -866,11 +864,33 @@ int main( int argc, char** argv/*, char** envv*/ ) {
             if ( makeButtonTextEx( rentex, pos_x - 200 - MeasureText( "--", 60 ) / 2 - 20, pos_y - 30, MeasureText( "--", 60 ) + 40, 60, "--", 60, looks < 1 ) ) {
                 looks = 0;
             }
+            /* Stats Button, same for all of the below */
+            if ( makeButtonImageCenter( rentex, pos_x + 7, pos_y + 100, info2Tex ) ) {
+                showStatsInfoBoxLooks = !showStatsInfoBoxLooks;
+                showStatsInfoBoxSmell = false;
+                showStatsInfoBoxPersonality = false;
+                showStatsInfoBoxGumption = false;
+                showStatsInfoBoxLength = false;
+            }
 
-
-            
+            const std::string looksHelp{
+                "The Looks stat\n"
+                "improves your health."
+            };
+            if ( showStatsInfoBoxLooks ) {
+                DrawText(
+                    looksHelp.c_str(),
+                    pos_x - MeasureText(
+                        looksHelp.c_str(),
+                        48
+                    ) / 2,
+                    pos_y + 140,
+                    48,
+                    Q_BLACK
+                );
+            }
             /* Move it down a bit so they don't overlap */
-            pos_y += 40 + rentex.texture.height / 5;
+            pos_y += 40 + rentex.texture.height / 3;
 
 
             /* Smell */
@@ -908,11 +928,35 @@ int main( int argc, char** argv/*, char** envv*/ ) {
             if ( makeButtonTextEx( rentex, pos_x - 200 - MeasureText( "--", 60 ) / 2 - 20, pos_y - 30, MeasureText( "--", 60 ) + 40, 60, "--", 60, smell < 1 ) ) {
                 smell = 0;
             }
+            if ( makeButtonImageCenter( rentex, pos_x + 7, pos_y + 100, info2Tex ) ) {
+                showStatsInfoBoxLooks = false;
+                showStatsInfoBoxSmell = !showStatsInfoBoxSmell;
+                showStatsInfoBoxPersonality = false;
+                showStatsInfoBoxGumption = false;
+                showStatsInfoBoxLength = false;
+            }
+            const std::string smellHelp{
+                "The Smell stat\n"
+                "improves your ability\n"
+                "to \"Sniff\" (get items)."
+            };
+            if ( showStatsInfoBoxSmell ) {
+                DrawText(
+                    smellHelp.c_str(),
+                    pos_x - MeasureText(
+                        smellHelp.c_str(),
+                        48
+                    ) / 2,
+                    pos_y + 140,
+                    48,
+                    Q_BLACK
+                );
+            }
 
 
-
-            /* Move it down */
-            pos_y += 40 + rentex.texture.height / 5;
+            /* Move it to the middle */
+            pos_y = 320;
+            pos_x = rentex.texture.width / 2;
 
 
             /* Personality */
@@ -950,9 +994,31 @@ int main( int argc, char** argv/*, char** envv*/ ) {
             if ( makeButtonTextEx( rentex, pos_x - 200 - MeasureText( "--", 60 ) / 2 - 20, pos_y - 30, MeasureText( "--", 60 ) + 40, 60, "--", 60, personality < 1 ) ) {
                 personality = 0;
             }
-
+            if ( makeButtonImageCenter( rentex, pos_x + 7, pos_y + 100, info2Tex ) ) {
+                showStatsInfoBoxLooks = false;
+                showStatsInfoBoxSmell = false;
+                showStatsInfoBoxPersonality = !showStatsInfoBoxPersonality;
+                showStatsInfoBoxGumption = false;
+                showStatsInfoBoxLength = false;
+            }
+            const std::string personalityHelp{
+                "The Personality stat\n"
+                "improves your blocks."
+            };
+            if ( showStatsInfoBoxPersonality ) {
+                DrawText(
+                    personalityHelp.c_str(),
+                    pos_x - MeasureText(
+                        personalityHelp.c_str(),
+                        48
+                    ) / 2,
+                    pos_y + 140,
+                    48,
+                    Q_BLACK
+                );
+            }
             /* Move it to the other side */
-            pos_x = rentex.texture.width - pos_x;
+            pos_x = rentex.texture.width - 280;
             pos_y = 220;
 
 
@@ -991,11 +1057,34 @@ int main( int argc, char** argv/*, char** envv*/ ) {
             if ( makeButtonTextEx( rentex, pos_x - 200 - MeasureText( "--", 60 ) / 2 - 20, pos_y - 30, MeasureText( "--", 60 ) + 40, 60, "--", 60, gumption < 1 ) ) {
                 gumption = 0;
             }
-
+            if ( makeButtonImageCenter( rentex, pos_x + 7, pos_y + 100, info2Tex ) ) {
+                showStatsInfoBoxLooks = false;
+                showStatsInfoBoxSmell = false;
+                showStatsInfoBoxPersonality = false;
+                showStatsInfoBoxGumption = !showStatsInfoBoxGumption;
+                showStatsInfoBoxLength = false;
+            }
+            const std::string gumptionHelp{
+                "The Looks stat\n"
+                "improves your item\n"
+                "use chances/ability."
+            };
+            if ( showStatsInfoBoxGumption ) {
+                DrawText(
+                    gumptionHelp.c_str(),
+                    pos_x - MeasureText(
+                        gumptionHelp.c_str(),
+                        48
+                    ) / 2,
+                    pos_y + 140,
+                    48,
+                    Q_BLACK
+                );
+            }
             
 
             /* Move it down */
-            pos_y += 40 + rentex.texture.height / 5;
+            pos_y += 40 + rentex.texture.height / 3;
 
             /* length */
             std::string length_string = std::to_string( length );
@@ -1032,7 +1121,29 @@ int main( int argc, char** argv/*, char** envv*/ ) {
             if ( makeButtonTextEx( rentex, pos_x - 200 - MeasureText( "--", 60 ) / 2 - 20, pos_y - 30, MeasureText( "--", 60 ) + 40, 60, "--", 60, length < 1 ) ) {
                 length = 0;
             }
-
+            if ( makeButtonImageCenter( rentex, pos_x + 7, pos_y + 100, info2Tex ) ) {
+                showStatsInfoBoxLooks = false;
+                showStatsInfoBoxSmell = false;
+                showStatsInfoBoxPersonality = false;
+                showStatsInfoBoxGumption = false;
+                showStatsInfoBoxLength = !showStatsInfoBoxLength;
+            }
+            const std::string lengthHelp{
+                "The Looks stat\n"
+                "improves your damage."
+            };
+            if ( showStatsInfoBoxLength ) {
+                DrawText(
+                    lengthHelp.c_str(),
+                    pos_x - MeasureText(
+                        lengthHelp.c_str(),
+                        48
+                    ) / 2,
+                    pos_y + 140,
+                    48,
+                    Q_BLACK
+                );
+            }
             points += oldLooks - looks;
             points += oldSmell - smell;
             points += oldPersonality - personality;
@@ -1065,25 +1176,19 @@ int main( int argc, char** argv/*, char** envv*/ ) {
             const char *titleText = "Select Stats";
             DrawText( titleText, rentex.texture.width / 2 - MeasureText( titleText, 80 ) / 2, 30, 80, Q_BLACK );
 
-            if ( makeButtonImageCenter( rentex, rentex.texture.width / 2 + MeasureText( titleText, 80 ) / 2 + 60, 60, info2Tex ) ) {
-                showStatsInfoBox = !showStatsInfoBox;
-            }
-            if ( showStatsInfoBox ) {
-                DrawText( statsHelpText, rentex.texture.width / 2 - MeasureText( statsHelpText, 40 ) / 2 + 80, rentex.texture.height / 2 + 80, 40, Q_BLACK );
-            }
-
         } else if ( gameLayout == "game" ) {
-            
-            Image tmpImage = ImageCopy( backgroundImage );
 
-            const double BACKGROUND_ASPECT_RATIO = static_cast< double >( backgroundImage.width ) / static_cast< double >( backgroundImage.height );
-            if ( static_cast< double >( rentex.texture.width ) / static_cast< double >( rentex.texture.height ) > BACKGROUND_ASPECT_RATIO ) {
-                ImageResize( &tmpImage, rentex.texture.height * BACKGROUND_ASPECT_RATIO, rentex.texture.height );
-            } else {
-                ImageResize( &tmpImage, rentex.texture.width, rentex.texture.width / BACKGROUND_ASPECT_RATIO );
-            }
+            /* no longer necessary for because of the scaling system */
+            // Image tmpImage = ImageCopy( backgroundImage );
+
+            // const double BACKGROUND_ASPECT_RATIO = static_cast< double >( backgroundImage.width ) / static_cast< double >( backgroundImage.height );
+            // if ( static_cast< double >( rentex.texture.width ) / static_cast< double >( rentex.texture.height ) > BACKGROUND_ASPECT_RATIO ) {
+            //     ImageResize( &tmpImage, rentex.texture.height * BACKGROUND_ASPECT_RATIO, rentex.texture.height );
+            // } else {
+            //     ImageResize( &tmpImage, rentex.texture.width, rentex.texture.width / BACKGROUND_ASPECT_RATIO );
+            // }
             
-            Texture2D backgroundTex = LoadTextureFromImage( tmpImage );
+            // Texture2D backgroundTex = LoadTextureFromImage( tmpImage );
             
 
             ClearBackground( Q_BLACK );
@@ -1135,19 +1240,19 @@ int main( int argc, char** argv/*, char** envv*/ ) {
             Rectangle healthBlockCorner = Rectangle{
                 10,
                 10,
-                ( float ) MeasureTextEx( 
+                static_cast< float >( MeasureTextEx( 
                     GetFontDefault(),
                     "Health: 20\nBlocks: 10",
                     60,
-                    ( float ) 60 / 10 
-                ).x + 40,
+                    6 
+                ).x + 40 ),
 
-                ( float ) MeasureTextEx(
+                static_cast< float >( MeasureTextEx(
                     GetFontDefault(),
                     "Health: 20\nBlocks: 10",
                     60,
-                    ( float ) 60 / 10
-                ).y + 30
+                    6
+                ).y + 30 )
             };
 
             DrawRectangleRec( healthBlockCorner, Q_BLACK );
@@ -1253,8 +1358,6 @@ int main( int argc, char** argv/*, char** envv*/ ) {
             }
 
 
-            UnloadImage(tmpImage);
-            UnloadTexture( backgroundTex );
         } /* end render if tree */
 
         EndTextureMode();
