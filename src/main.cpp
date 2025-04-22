@@ -272,68 +272,6 @@ int drawPlusCenter( RenderTexture rentex, int pos_x, int pos_y, int size_x, int 
 }
 
 /*
-** You guessed it! Copy-pasted
-*/
-int drawPlus_DEPRECATED(int posx, int posy, bool isGrayedOut, int numToIncrement, int maxMinVal, bool isMinus) {
-    Rectangle rec = { static_cast< float >( posx ), static_cast< float >( posy ), 100, 100 };
-    if (!isGrayedOut) {
-        if(!CheckCollisionPointRec(GetMousePosition(), rec)) {
-            DrawRectangleRec(rec, Q_BLACK);
-            DrawRectangle(80 + posx, 50 + posy, 80, 80, Q_LIGHTGRAY);
-            if (!isMinus) {
-                DrawRectangle(115 + posx, 65 + posy, 10, 50, Q_BLACK);
-            }
-            DrawRectangle(95 + posx, 85 + posy, 50, 10, Q_BLACK);
-            DrawRectangle(75 + posx, 140 + posy, 95, 5, Q_DARKGRAY);
-            DrawRectangle(170 + posx, 45 + posy, 5, 100, Q_DARKGRAY); 
-        } else {
-            if (IsMouseButtonReleased(0)) {
-                if (!isMinus) {
-                    numToIncrement++;
-                } else {
-                    numToIncrement--;
-                }
-
-                if ((!isMinus) ? (numToIncrement <= maxMinVal) : (numToIncrement >= maxMinVal)) {
-                    DrawRectangle(75 + posx, 45 + posy, 100, 100, Q_BLACK);
-                    DrawRectangle(85 + posx, 55 + posy, 80, 80, Q_DARKGRAY);
-                    if (!isMinus) {
-                        DrawRectangle(120 + posx, 70 + posy, 10, 50, Q_BLACK);
-                    }
-                    DrawRectangle(100 + posx, 90 + posy, 50, 10, Q_BLACK);
-                }
-            }
-
-            if (IsMouseButtonDown(0)) {
-                DrawRectangle(75 + posx, 45 + posy, 100, 100, Q_BLACK);
-                DrawRectangle(85 + posx, 55 + posy, 80, 80, Q_GRAY);
-                if (!isMinus) {
-                    DrawRectangle(120 + posx, 70 + posy, 10, 50, Q_BLACK);
-                }
-                DrawRectangle(100 + posx, 90 + posy, 50, 10, Q_BLACK);
-            } else if ((!isMinus) ? (numToIncrement < maxMinVal) : (numToIncrement > maxMinVal)) {
-                DrawRectangle(70 + posx, 40 + posy, 100, 100, Q_BLACK);
-                DrawRectangle(80 + posx, 50 + posy, 80, 80, Q_GRAY);
-                if (!isMinus) {
-                    DrawRectangle(115 + posx, 65 + posy, 10, 50, Q_BLACK); //correct
-                }
-                DrawRectangle(95 + posx, 85 + posy, 50, 10, Q_BLACK);
-                DrawRectangle(75 + posx, 140 + posy, 95, 5, Q_DARKGRAY);
-                DrawRectangle(170 + posx, 45 + posy, 5, 100, Q_DARKGRAY);
-            }
-        }
-    } else {
-        DrawRectangle(75 + posx, 45 + posy, 100, 100, Q_BLACK);
-        DrawRectangle(85 + posx, 55 + posy, 80, 80, Q_DARKGRAY);
-        if (!isMinus) {
-            DrawRectangle(120 + posx, 70 + posy, 10, 50, Q_BLACK);
-        }
-        DrawRectangle(100 + posx, 90 + posy, 50, 10, Q_BLACK);
-    }
-    return numToIncrement;
-}
-
-/*
 ** Checks if any printable characters are pressed
 */
 bool isAnyKeyPressed() {
@@ -345,7 +283,12 @@ bool isAnyKeyPressed() {
 }
 
 
-int main( /*int argc, char** argv, char** envv*/ ) {
+int main( int argc, char** argv/*, char** envv*/ ) {
+
+    bool DEBUG;
+    for ( int i = 0; i < argc; i++ ) {
+        if ( std::string( argv[ i ] ) == "--debug" ) DEBUG = true;
+    }
 
     /*
     ** IDK
@@ -468,7 +411,7 @@ int main( /*int argc, char** argv, char** envv*/ ) {
     Texture2D info2Tex = LoadTextureFromImage( info2Image );
     UnloadImage( info2Image );
 
-    Image backgroundImage = LoadImage( "./resources/textures/backgrounds/quimbert_hell.png");
+    Image backgroundImage = LoadImage( "resources/textures/backgrounds/quimbert_hell.png");
 
 
     while ( !WindowShouldClose() ) {
@@ -510,7 +453,6 @@ int main( /*int argc, char** argv, char** envv*/ ) {
                 break; 
             }
 
-            DrawFPS( 20, 20 );
         } else if ( gameLayout == "howManyQuimberts" ) {
             
             Rectangle backButton = {20, 20, 120, 80};
@@ -1336,6 +1278,7 @@ int main( /*int argc, char** argv, char** envv*/ ) {
             0,
             Q_WHITE
         );
+        if ( DEBUG ) DrawFPS( 20, 200 );
         EndDrawing();
     }
     UnloadRenderTexture( rentex );
