@@ -55,9 +55,15 @@ If you are cloning for the first time clone with `git clone --recurse-submodules
 
 ## TODO
 - [ ] Finish acquiring resources
-- - [ ] Get full res background *Needs to be 16:9 or 16:10, ideally 1920x1080 or 3840x2160*
-- - [ ] Get non-AI music ( except blippy bounce )
-- [ ] Finished writing
+- - [x] Get full res background *Needs to be 16:9 or 16:10, ideally 1920x1080 or 3840x2160*
+- - [ ] Get non-AI music (except blippy bounce) *NOTE: "Commissioned" Jaiden to make it for us*
+- [ ] Finish game
+- - [x] Layout for game screen created
+- - [ ] Write the layout
+- - [ ] Adapt the CLI version bits to GUI version bits
+<details>
+<summary>Completed rewrite from java!</summary>
+- [x] Finish Java rewrite
 - - [x] Wrote quimbert.hpp
 - - [x] Write quimbert.cpp
 - - - [x] Write Quimbert() 
@@ -79,29 +85,26 @@ If you are cloning for the first time clone with `git clone --recurse-submodules
 - - - [x] Write setBox()
 - - - [x] Write processTextInput()
 - - - [x] Write render()
-- - [ ] Write main.cpp
+- - [x] Write main.cpp
 - - - [x] Write randInt()
 - - - [x] Write makeButtonText() - Rewritten, read notes
 - - - [x] Write makeButtonColor()
 - - - [x] Write makeButtonImage()
 - - - [x] Write isLetterPressed()
 - - - [x] Write drawPlus()
-- - - [ ] Write main()
+- - - [x] Write main()
 - - - - [x] Write main function globals
-- - - - [ ] Write everything else
+- - - - [x] Write everything else
 - - - - - [x] Start menu
 - - - - - [x] HMQ
 - - - - - [x] Create Q: info
-- - - - - [ ] Create Q: stats
+- - - - - [x] Create Q: stats
 - - - - - - [x] Port the background things to manage the quimberts creation
-- - - - - - [ ] Rewrite the stat selection buttons
+- - - - - - [x] Rewrite the stat selection buttons
 - - - - - - - [x] Normal +- button
 - - - - - - - [x] Plus all button
-- - - - - - - [ ] Help text
-- - [ ] Finish game
-- - - [x] Layout for game screen created
-- - - [ ] Write the layout
-- - - [ ] Adapt the CLI version bits to GUI version bits
+- - - - - - - [x] Help text
+</details>
 
 ## Changes from java version
 - REMOVED sniff() in QuimbertQuarrel.java (main.cpp) file, see header notes in quimert.hpp for `void sniff()`
@@ -117,4 +120,5 @@ If you are cloning for the first time clone with `git clone --recurse-submodules
 HairyJade Notes for HairyJade:
 - Fix Info Button for stats, make each stat have own info button and display info in button right. Middle is for sprite
 - Add quimbert in the middle of stat page once sprites are received
-- Change scaling to scale whole screen (Maybe beyond a certain point, scaling right now isn't the best)
+- ~~Change scaling to scale whole screen (Maybe beyond a certain point, scaling right now isn't the best)~~ FIXED, fixed aspect ratio isn't possible cross platform
+- Run QuimbertQuarrel with --debug to display fps ( and maybe future debug settings )

@@ -105,7 +105,7 @@ bool makeButtonTextEx( RenderTexture rentex, int pos_x, int pos_y, int size_x, i
     float sf_x = static_cast< float >( rentex.texture.width ) / GetScreenWidth();
     float sf_y = static_cast< float >( rentex.texture.height ) / GetScreenHeight();
 
-    Rectangle main = { ( float ) pos_x, ( float ) pos_y, ( float ) size_x, ( float ) size_y };
+    Rectangle main = { static_cast< float >( pos_x ), static_cast< float >( pos_y ), static_cast< float >( size_x ), static_cast< float >( size_y ) };
     Rectangle coll = main;
     coll.width += 5; coll.height += 5;
 
@@ -126,14 +126,14 @@ bool makeButtonTextEx( RenderTexture rentex, int pos_x, int pos_y, int size_x, i
         DrawRectangleRec( { main.x + main.width, main.y + 5, 5, main.height }, Q_DARKGRAY );
         DrawRectangleRec( { main.x + 5, main.y + main.height, main.width, 5 }, Q_DARKGRAY );
     }
-    DrawText( text.c_str(), ( float ) ( main.x + main.width / 2 ) - ( float ) MeasureText( text.c_str(), fontSize ) / 2, ( float ) ( main.y + main.height / 2 ) - ( float ) MeasureTextEx( GetFontDefault(), text.c_str(), fontSize, ( float ) fontSize / 10 ).y / 2, fontSize, Q_BLACK );
+    DrawText( text.c_str(), static_cast< float >( main.x + main.width / 2 ) - static_cast< float >( MeasureText( text.c_str(), fontSize ) ) / 2, static_cast< float >( main.y + main.height / 2 ) - static_cast< float >( MeasureTextEx( GetFontDefault(), text.c_str(), fontSize, static_cast< float >( fontSize ) / 10 ).y ) / 2, fontSize, Q_BLACK );
 
     return IsMouseButtonReleased( MOUSE_LEFT_BUTTON ) && CheckCollisionPointRec( Vector2{ GetMouseX() * sf_x, GetMouseY() * sf_y }, coll );
 
 }
 
 bool makeButtonText( RenderTexture rentex, int pos_x, int pos_y, std::string text, int fontSize, bool isDisabled = false ) {
-    return makeButtonTextEx( rentex, pos_x, pos_y, MeasureText( text.c_str(), fontSize ) + 40, MeasureTextEx( GetFontDefault(), text.c_str(), fontSize, ( float ) fontSize / 10 ).y + 40, text, fontSize, isDisabled);
+    return makeButtonTextEx( rentex, pos_x, pos_y, MeasureText( text.c_str(), fontSize ) + 40, MeasureTextEx( GetFontDefault(), text.c_str(), fontSize, static_cast< float >( fontSize ) / 10 ).y + 40, text, fontSize, isDisabled);
 }
 
 
@@ -142,83 +142,16 @@ bool makeButtonText( RenderTexture rentex, int pos_x, int pos_y, std::string tex
 */
 bool makeButtonTextCenter( RenderTexture rentex, int pos_x, int pos_y, std::string text, int fontSize, bool isDisabled = false ) {
     return makeButtonText( rentex, pos_x - 10 - 10 - MeasureText( text.c_str(), fontSize ) / 2,
-                               pos_y - 10 - 10 - MeasureTextEx( GetFontDefault(), text.c_str(), fontSize, ( float ) fontSize / 10 ).y,
+                               pos_y - 10 - 10 - MeasureTextEx( GetFontDefault(), text.c_str(), fontSize, static_cast< float >( fontSize ) / 10 ).y,
                                text, fontSize, isDisabled );
 }
 
-/*
-** DEPRECATED, DO NOT USE
-**
-** Makes a button with text
-** Source code is not well documented because i forget how it works
-*/
-bool makeButtonText_DEPRECATED( int pos_x, int pos_y, int size_x, int size_y,
-    std::string text, int fontSize, bool isDisabled = false ) {
-    
-    Rectangle main{ ( float ) pos_x, ( float ) pos_y, ( float ) size_x, ( float ) size_y };
-
-    if ( !isDisabled ) {
-        /*
-        ** Mouse isn't in button
-        */
-        if ( !CheckCollisionPointRec( GetMousePosition(), main ) ) {
-            /*
-            ** Background / buttom bounding box / outline
-            */
-            DrawRectangleRec( main, Q_BLACK );
-            // Inside color
-            DrawRectangle( pos_x + 10, pos_y + 10,
-                size_x - 20, size_y - 20, Q_LIGHTGRAY);
-
-            // Drop shadow
-            DrawRectangle( pos_x + size_x, pos_y + 5, 5,
-                size_y, Q_DARKGRAY);
-            DrawRectangle( pos_x + 5, pos_y + size_y,
-                size_x, 5, Q_DARKGRAY );
-            
-            DrawText( text.c_str(), pos_x + 20, pos_y, fontSize, Q_BLACK);
-
-            return false;
-        /*
-        ** Mouse is in button
-        */
-        } else {
-            if ( IsMouseButtonReleased( MOUSE_LEFT_BUTTON ) ) {
-                DrawRectangle( pos_x + 5, pos_y + 5, size_x, size_y, Q_BLACK );
-                DrawRectangle( pos_x + 15, pos_y + 15, size_x - 20, size_y - 20, Q_GRAY );
-                DrawText( text.c_str(), pos_x + 25, pos_y + 25 - 20, fontSize, Q_BLACK );
-                return true;
-
-            }
-
-            if ( !IsMouseButtonDown( MOUSE_BUTTON_LEFT ) ) {
-                // same except dark interior
-                DrawRectangleRec( main, Q_BLACK );
-                DrawRectangle( pos_x + 10, pos_y + 10, size_x - 20, size_y - 20, Q_GRAY );
-                DrawRectangle( pos_x + size_x, pos_y + 5, 5, size_y, Q_DARKGRAY );
-                DrawRectangle( pos_x + 5, pos_y + size_y, size_x, 5, Q_DARKGRAY );
-                DrawText( text.c_str(), pos_x + 20, pos_y + 20 - 20, fontSize, Q_BLACK );
-                return false;
-            } else {
-                DrawRectangle( pos_x + 5, pos_y + 5, size_x, size_y, Q_BLACK );
-                DrawRectangle( pos_x + 15, pos_y + 15, size_x - 20, size_y - 20, Q_GRAY );
-                DrawText( text.c_str(), pos_x + 25, pos_y + 25 - 20, fontSize, Q_BLACK );
-                return false;
-            }
-        }
-    } else {
-        DrawRectangle( pos_x + 5, pos_y + 5, size_x, size_y, Q_BLACK );
-        DrawRectangle( pos_x + 15, pos_y + 15, size_x - 20, size_y - 20, Q_GRAY );
-        DrawText( text.c_str(), pos_x + 25, pos_y + 25 - 20, fontSize, Q_BLACK );
-        return false;
-    }
-}
 
 bool makeButtonColor( RenderTexture rentex, int pos_x, int pos_y, int size_x, int size_y, Color color1, Color color2, bool isDisabled = false ) {
     float sf_x = static_cast< float >( rentex.texture.width ) / GetScreenWidth();
     float sf_y = static_cast< float >( rentex.texture.height ) / GetScreenHeight();
 
-    Rectangle main = { ( float ) pos_x, ( float ) pos_y, ( float ) size_x, ( float ) size_y };
+    Rectangle main = { static_cast< float >( pos_x ), static_cast< float >( pos_y ), static_cast< float >( size_x ), static_cast< float >( size_y ) };
     Rectangle coll = main;
     coll.width += 5; coll.height += 5;
 
@@ -248,45 +181,7 @@ bool makeButtonColor( RenderTexture rentex, int pos_x, int pos_y, int size_x, in
 bool makeButtonColorCenter( RenderTexture rentex, int pos_x, int pos_y, int size_x, int size_y, Color color1, Color color2, bool isDisabled = false ) {
     return makeButtonColor( rentex, pos_x - size_x / 2, pos_y - size_y / 2, size_x, size_y, color1, color2, isDisabled );
 }
-/*
-** Copy-pasted from Java verson
-*/
-bool makeButtonColor_DEPRECATED( int pos_x, int pos_y, int size_x, int size_y, Color color1, Color color2, bool isDisabled = false ) {
-    bool result = false;
-    // background rectangle / collision rectangle
-    Rectangle main{ ( float ) pos_x, ( float ) pos_y, ( float ) size_x, ( float ) size_y };
-    if ( !isDisabled ) {
-        if ( !CheckCollisionPointRec( GetMousePosition(), main ) ) {
-            // background / button bounding box / outline
-            DrawRectangleRec( main, Q_BLACK );
-            // inner body color
-            DrawRectangle( pos_x + 10, pos_y + 10, size_x - 20, size_y - 20, color1 );
-            // drop shadow
-            DrawRectangle( pos_x + size_x, pos_y + 5, 5, size_y, Q_DARKGRAY );
-            DrawRectangle( pos_x + 5, pos_y + size_y, size_x, 5, Q_DARKGRAY );
-        } else {
-            if ( IsMouseButtonReleased( 0 ) ) {
-                result = true;
-            }
 
-            if ( !IsMouseButtonDown( 0 ) && !result ) {
-                // same except dark interior
-                DrawRectangleRec( main, Q_BLACK );
-                DrawRectangle( pos_x + 10, pos_y + 10, size_x - 20, size_y - 20, color2 );
-                DrawRectangle( pos_x + size_x, pos_y + 5, 5, size_y, Q_DARKGRAY );
-                DrawRectangle( pos_x + 5, pos_y + size_y, size_x, 5, Q_DARKGRAY );
-            } else {
-
-                DrawRectangle( pos_x + 5, pos_y + 5, size_x, size_y, Q_BLACK );
-                DrawRectangle( pos_x + 15, pos_y + 15, size_x - 20, size_y - 20, color2 );
-            }
-        }
-    } else {
-        DrawRectangle( pos_x + 5, pos_y + 5, size_x, size_y, Q_BLACK );
-        DrawRectangle( pos_x + 15, pos_y + 15, size_x - 20, size_y - 20, color2 );
-    }
-    return result;
-}
 
 /*
 ** NOTE: Call with the "image" part as &someImg, and unload it after ( if desired )
@@ -296,7 +191,7 @@ bool makeButtonImage( RenderTexture rentex, int pos_x, int pos_y, Texture2D tex,
     float sf_y = static_cast< float >( rentex.texture.height ) / GetScreenHeight();
 
 
-    Rectangle main = { ( float ) pos_x, ( float ) pos_y, ( float ) tex.width + 20, ( float ) tex.height + 20 };
+    Rectangle main = { static_cast< float >( pos_x ), static_cast< float >( pos_y ), static_cast< float >( tex.width + 20 ), static_cast< float >( tex.height + 20 ) };
     Rectangle coll = main;
     coll.width += 5; coll.height += 5;
     
@@ -328,67 +223,13 @@ bool makeButtonImageCenter( RenderTexture rentex, int pos_x, int pos_y, Texture2
     return makeButtonImage( rentex, pos_x - ( tex.width + 40 ) / 2, pos_y - ( tex.height + 40 ) / 2, tex, background, isDisabled );
 }
 
-/*
-** Copy-pasted again
-** NOTE: Call with the "image" part as &someImg, and unload it after ( if desired )
-*/
-bool makeButtonImage_DEPRACATED(int pos_x, int pos_y, int size_x, int size_y, Image* image, bool isDisabled = false ) {
-    // load image
-    ImageCrop( image , { ( float ) pos_x + 10, ( float ) pos_y + 10, ( float ) size_x - 20, ( float ) size_y - 20 } );
-    Texture tex = LoadTextureFromImage( *image );
-    bool result = false;
-
-    // background rectangle / collision rectangle
-    Rectangle main{ ( float ) pos_x, ( float ) pos_y, ( float ) size_x, ( float ) size_y };
-    if (!isDisabled) {
-        if (!CheckCollisionPointRec(GetMousePosition(), main)) {
-            // background / button bounding box / outline
-            DrawRectangleRec(main, Q_BLACK);
-            // inner body color
-            DrawRectangle(pos_x + 10, pos_y + 10, size_x - 20, size_y - 20, Q_LIGHTGRAY);
-            // drop shadow
-            DrawRectangle(pos_x + size_x, pos_y + 5, 5, size_y, Q_DARKGRAY);
-            DrawRectangle(pos_x + 5, pos_y + size_y, size_x, 5, Q_DARKGRAY);
-
-            DrawTexture(tex, pos_x + 10, pos_y + 10, Q_WHITE);
-        } else {
-            if (IsMouseButtonReleased(0)) {
-                result = true;
-            }
-
-            if (!IsMouseButtonDown(0) && !result) {
-                // same except dark interior
-                DrawRectangleRec(main, Q_BLACK);
-                DrawRectangle(pos_x + 10, pos_y + 10, size_x - 20, size_y - 20, Q_GRAY);
-                DrawRectangle(pos_x + size_x, pos_y + 5, 5, size_y, Q_DARKGRAY);
-                DrawRectangle(pos_x + 5, pos_y + size_y, size_x, 5, Q_DARKGRAY);
-
-                DrawTexture(tex, pos_x + 10, pos_y + 10, Q_WHITE);
-
-            } else {
-
-                DrawRectangle(pos_x + 5, pos_y + 5, size_x, size_y, Q_BLACK);
-                DrawRectangle(pos_x + 15, pos_y + 15, size_x - 20, size_y - 20, Q_GRAY);
-                DrawTexture(tex, pos_x + 15, pos_y + 15, Q_WHITE);
-
-            }
-        }
-    } else {
-        DrawRectangle(pos_x + 5, pos_y + 5, size_x, size_y, Q_BLACK);
-        DrawRectangle(pos_x + 15, pos_y + 15, size_x - 20, size_y - 20, Q_GRAY);
-    }
-    UnloadTexture( tex );
-    return result;
-}
-
-
 
 int drawPlus( RenderTexture rentex, int pos_x, int pos_y, int size_x, int size_y, bool canNotBePressed, int startNum, int maxOrMinVal, bool isMinus = false ) {
     float sf_x = static_cast< float >( rentex.texture.width ) / GetScreenWidth();
     float sf_y = static_cast< float >( rentex.texture.height ) / GetScreenHeight();
 
 
-    Rectangle main = { ( float ) pos_x, ( float ) pos_y, ( float ) size_x, ( float ) size_y }; /* Main body (Q_BLACK outline) */
+    Rectangle main = { static_cast< float >( pos_x ), static_cast< float >( pos_y ), static_cast< float >( size_x ), static_cast< float >( size_y ) }; /* Main body (Q_BLACK outline) */
     Rectangle coll = main; /* Collision hitbox */
     coll.width += 5; coll.height += 5; /* Update collision hitbox to include Q_GRAY area, to prevent jankyness */
     
@@ -427,69 +268,7 @@ int drawPlus( RenderTexture rentex, int pos_x, int pos_y, int size_x, int size_y
 }
 
 int drawPlusCenter( RenderTexture rentex, int pos_x, int pos_y, int size_x, int size_y, bool canNotBePressed, int startNum, int maxOrMinVal, bool isMinus = false ) {
-    return drawPlus( rentex, pos_x - ( float ) size_x / 2, pos_y - ( float ) size_y / 2, size_x, size_y, canNotBePressed, startNum, maxOrMinVal, isMinus );
-}
-
-/*
-** You guessed it! Copy-pasted
-*/
-int drawPlus_DEPRECATED(int posx, int posy, bool isGrayedOut, int numToIncrement, int maxMinVal, bool isMinus) {
-    Rectangle rec = { (float) posx, (float) posy, 100, 100 };
-    if (!isGrayedOut) {
-        if(!CheckCollisionPointRec(GetMousePosition(), rec)) {
-            DrawRectangleRec(rec, Q_BLACK);
-            DrawRectangle(80 + posx, 50 + posy, 80, 80, Q_LIGHTGRAY);
-            if (!isMinus) {
-                DrawRectangle(115 + posx, 65 + posy, 10, 50, Q_BLACK);
-            }
-            DrawRectangle(95 + posx, 85 + posy, 50, 10, Q_BLACK);
-            DrawRectangle(75 + posx, 140 + posy, 95, 5, Q_DARKGRAY);
-            DrawRectangle(170 + posx, 45 + posy, 5, 100, Q_DARKGRAY); 
-        } else {
-            if (IsMouseButtonReleased(0)) {
-                if (!isMinus) {
-                    numToIncrement++;
-                } else {
-                    numToIncrement--;
-                }
-
-                if ((!isMinus) ? (numToIncrement <= maxMinVal) : (numToIncrement >= maxMinVal)) {
-                    DrawRectangle(75 + posx, 45 + posy, 100, 100, Q_BLACK);
-                    DrawRectangle(85 + posx, 55 + posy, 80, 80, Q_DARKGRAY);
-                    if (!isMinus) {
-                        DrawRectangle(120 + posx, 70 + posy, 10, 50, Q_BLACK);
-                    }
-                    DrawRectangle(100 + posx, 90 + posy, 50, 10, Q_BLACK);
-                }
-            }
-
-            if (IsMouseButtonDown(0)) {
-                DrawRectangle(75 + posx, 45 + posy, 100, 100, Q_BLACK);
-                DrawRectangle(85 + posx, 55 + posy, 80, 80, Q_GRAY);
-                if (!isMinus) {
-                    DrawRectangle(120 + posx, 70 + posy, 10, 50, Q_BLACK);
-                }
-                DrawRectangle(100 + posx, 90 + posy, 50, 10, Q_BLACK);
-            } else if ((!isMinus) ? (numToIncrement < maxMinVal) : (numToIncrement > maxMinVal)) {
-                DrawRectangle(70 + posx, 40 + posy, 100, 100, Q_BLACK);
-                DrawRectangle(80 + posx, 50 + posy, 80, 80, Q_GRAY);
-                if (!isMinus) {
-                    DrawRectangle(115 + posx, 65 + posy, 10, 50, Q_BLACK); //correct
-                }
-                DrawRectangle(95 + posx, 85 + posy, 50, 10, Q_BLACK);
-                DrawRectangle(75 + posx, 140 + posy, 95, 5, Q_DARKGRAY);
-                DrawRectangle(170 + posx, 45 + posy, 5, 100, Q_DARKGRAY);
-            }
-        }
-    } else {
-        DrawRectangle(75 + posx, 45 + posy, 100, 100, Q_BLACK);
-        DrawRectangle(85 + posx, 55 + posy, 80, 80, Q_DARKGRAY);
-        if (!isMinus) {
-            DrawRectangle(120 + posx, 70 + posy, 10, 50, Q_BLACK);
-        }
-        DrawRectangle(100 + posx, 90 + posy, 50, 10, Q_BLACK);
-    }
-    return numToIncrement;
+    return drawPlus( rentex, pos_x - size_x / 2 , pos_y - size_y / 2, size_x, size_y, canNotBePressed, startNum, maxOrMinVal, isMinus );
 }
 
 /*
@@ -504,7 +283,12 @@ bool isAnyKeyPressed() {
 }
 
 
-int main( /*int argc, char** argv, char** envv*/ ) {
+int main( int argc, char** argv ) {
+
+    bool DEBUG;
+    for ( int i = 0; i < argc; i++ ) {
+        if ( std::string( argv[ i ] ) == "--debug" ) DEBUG = true;
+    }
 
     /*
     ** IDK
@@ -539,22 +323,16 @@ int main( /*int argc, char** argv, char** envv*/ ) {
         
     bool takenColors[ 10 ] = { false };
 
-    bool showStatsInfoBox = false;
+    bool showStatsInfoBoxLooks = false;
+    bool showStatsInfoBoxSmell = false;
+    bool showStatsInfoBoxPersonality = false;
+    bool showStatsInfoBoxGumption = false;
+    bool showStatsInfoBoxLength = false;
 
     bool showInventory = false;
     int inventoryScrollCount = 0;
     bool showGambleUi = false;
     bool showStatsBox = false;
-
-    // Image info1 = LoadImage( "./resources/textures/UI/infoButton1.png" );
-    // Image info2 = LoadImage( "./resources/textures/UI/infoButton2.png" );
-    // Image info3 = LoadImage( "./resources/textures/UI/infoButton3.png" );
-    // Texture2D infoButton1 = LoadTexture( "./resources/textures/UI/infoButton1.png" );
-    // Texture2D infoButton2 = LoadTexture( "./resources/textures/UI/infoButton2.png" );
-    // Texture2D infoButton3 = LoadTexture( "./resources/textures/UI/infoButton3.png" );
-    // UnloadImage( info1 );
-    // UnloadImage( info2 );
-    // UnloadImage( info3 );
 
     SetConfigFlags( FLAG_WINDOW_RESIZABLE | FLAG_WINDOW_MAXIMIZED );
 
@@ -563,8 +341,7 @@ int main( /*int argc, char** argv, char** envv*/ ) {
     RenderTexture rentex = LoadRenderTexture( 1920, 1080 );
 
 
-    //InitWindow(1366, 768, "Quimbert Quarrel");
-    SetWindowMinSize(600, 500); 
+    SetWindowMinSize(600, 500);
     SetWindowMaxSize(monitorWidth, monitorHeight);
     SetWindowPosition(40, 70);
     MaximizeWindow();
@@ -576,11 +353,14 @@ int main( /*int argc, char** argv, char** envv*/ ) {
     Music mania = LoadMusicStream("./resources/soundtrack/MenuMania.mp3");
     Music quimbertcall = LoadMusicStream("./resources/soundtrack/Quimbert's Call (Main Menu Theme).mp3");
 
-    PlayMusicStream(blippy);
-    SetMusicVolume(blippy, 0.25f);
-    SetMusicVolume(ambient, 0.25f);
-    SetMusicVolume(mania, 0.25f);
-    SetMusicVolume(quimbertcall, 0.25f);
+    SetMusicVolume( blippy, 1 );
+    SetMusicVolume( ambient, 1 );
+    SetMusicVolume( mania, 1 );
+    SetMusicVolume( quimbertcall, 1 );
+    PlayMusicStream( mania );
+    PlayMusicStream( quimbertcall );
+    PlayMusicStream( blippy );
+    PlayMusicStream( ambient );
 
     QuimbertTextBox textBoxName(
         Rectangle{
@@ -624,8 +404,9 @@ int main( /*int argc, char** argv, char** envv*/ ) {
     Texture2D info2Tex = LoadTextureFromImage( info2Image );
     UnloadImage( info2Image );
 
-    Image backgroundImage = LoadImage( "./resources/textures/backgrounds/quimbert_hell.png");
-
+    Image backgroundImage = LoadImage( "resources/textures/backgrounds/quimbert_hell.png");
+    Texture2D backgroundTex = LoadTextureFromImage( backgroundImage );
+    UnloadImage( backgroundImage );
 
     while ( !WindowShouldClose() ) {
 
@@ -637,7 +418,10 @@ int main( /*int argc, char** argv, char** envv*/ ) {
         ClearBackground( Q_WHITE );
 
         if ( !isMusicMuted ) {
-            UpdateMusicStream( blippy );
+            // UpdateMusicStream( blippy );
+            // UpdateMusicStream( quimbertcall );
+            // UpdateMusicStream( mania );
+            UpdateMusicStream( ambient );
         }
 
         if ( gameLayout == "start" ) {
@@ -645,7 +429,7 @@ int main( /*int argc, char** argv, char** envv*/ ) {
             DrawText("Quimbert Quarrel", ( rentex.texture.width / 2 ) - ( MeasureText( "Quimbert Quarrel", 96 ) / 2 ), ( rentex.texture.height / 4), 96, Q_BLACK);
             DrawText("A Green Apple Game", ( rentex.texture.width / 2 ) - ( MeasureText( "A Green Apple Game", 36 ) / 2 ), ( rentex.texture.height / 4 + 100), 36, Q_BLACK);
 
-            Rectangle localButton{ ( float ) rentex.texture.width / 2 - 155, ( float ) rentex.texture.height / 2, 300, 150 };
+            Rectangle localButton{ static_cast< float >( rentex.texture.width ) / 2 - 155, static_cast< float >( rentex.texture.height ) / 2, 300, 150 };
 
             //Local Button (Next Layout)
             if ( makeButtonTextCenter( rentex, rentex.texture.width / 2, rentex.texture.height / 2 + 200, "Local", 80, false ) ) {
@@ -662,8 +446,109 @@ int main( /*int argc, char** argv, char** envv*/ ) {
                 /* Break out of the main game loop and stop execution */
                 break; 
             }
+            if ( DEBUG ) {
+                isMusicMuted = true;
+                quimbertArr.emplace_back( 10, 10, "blue", 10, 5, 0, "a", "a");
+                quimbertArr.emplace_back( 10, 10, "green", 10, 5, 0, "ab", "ab");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                currentQuimbert = 0;
+                gameLayout = "game";
+            }
 
-            DrawFPS( 20, 20 );
         } else if ( gameLayout == "howManyQuimberts" ) {
             
             Rectangle backButton = {20, 20, 120, 80};
@@ -783,7 +668,7 @@ int main( /*int argc, char** argv, char** envv*/ ) {
                 /*
                 ** The box that the color buttons are in
                 */
-                Rectangle colorSelectionPanelMain = { ( float ) rentex.texture.width / 2 + 60 + 20 + 20, 450, 80 * 5 + 25, 80 * 2 + 25 };
+                Rectangle colorSelectionPanelMain = { static_cast< float >( rentex.texture.width ) / 2 + 60 + 20 + 20, 450, 80 * 5 + 25, 80 * 2 + 25 };
                 Rectangle colorSelectionPanelInside = colorSelectionPanelMain;
                 colorSelectionPanelInside.x += 10; colorSelectionPanelInside.y += 10; 
                 colorSelectionPanelInside.width -= 20; colorSelectionPanelInside.height -= 20;
@@ -944,7 +829,7 @@ int main( /*int argc, char** argv, char** envv*/ ) {
                 }
             }
 
-            Rectangle doneButton = { ( float ) rentex.texture.width - 175, 20, 150, 80 };
+            Rectangle doneButton = { static_cast< float >( rentex.texture.width ) - 175, 20, 150, 80 };
 
             //Create Quimbert button
             if ( makeButtonText( rentex, rentex.texture.width - 175, 20, "Done", 48, points != 0 ) ) {
@@ -1017,7 +902,11 @@ int main( /*int argc, char** argv, char** envv*/ ) {
                         points = randInt(25, 35);
 
                         if ( ++currentQuimbert < quimbertQuantity) {
-                            showStatsInfoBox = false;
+                            showStatsInfoBoxLooks = false;
+                            showStatsInfoBoxSmell = false;
+                            showStatsInfoBoxPersonality = false;
+                            showStatsInfoBoxGumption = false;
+                            showStatsInfoBoxLength = false;
                             showColorSelectionPanel = false;
 
                             gameLayout = "createQuimbertDetails";
@@ -1042,10 +931,16 @@ int main( /*int argc, char** argv, char** envv*/ ) {
 
             
             /* Draw the looks buttons */
-            Rectangle looks_stat_main = { pos_x - ( float ) MeasureText( std::to_string( looks ).c_str(), 60 ) / 2 - 20, pos_y - ( float ) MeasureTextEx( GetFontDefault(), std::to_string( looks ).c_str(), 60, 6 ).y / 2 - 20, ( float ) MeasureText( std::to_string( looks ).c_str(), 60 ) + 40, MeasureTextEx( GetFontDefault(), std::to_string( looks ).c_str(), 60, 6 ).y + 40 };
+            std::string looks_string = std::to_string( looks );
+            Rectangle looks_stat_main = {
+                pos_x - static_cast< float >( MeasureText( looks_string.c_str(), 60 ) ) / 2 - 20,
+                pos_y - static_cast< float >( MeasureTextEx( GetFontDefault(), looks_string.c_str(), 60, 6 ).y ) / 2 - 20,
+                static_cast< float >( MeasureText( looks_string.c_str(), 60 ) + 40 ),
+                static_cast< float >( MeasureTextEx( GetFontDefault(), looks_string.c_str(), 60, 6 ).y ) + 40
+            };
             Rectangle looks_stat_inside = looks_stat_main;
             
-            DrawText( "Looks", pos_x - ( float ) MeasureText( "Looks", 48 ) / 2, pos_y - 110, 48, Q_BLACK );
+            DrawText( "Looks", pos_x - MeasureText( "Looks", 48 ) / 2, pos_y - 110, 48, Q_BLACK );
             
             looks_stat_inside.x += 10; looks_stat_inside.y += 10;
             looks_stat_inside.width -= 20; looks_stat_inside.height -= 20;
@@ -1071,18 +966,46 @@ int main( /*int argc, char** argv, char** envv*/ ) {
             if ( makeButtonTextEx( rentex, pos_x - 200 - MeasureText( "--", 60 ) / 2 - 20, pos_y - 30, MeasureText( "--", 60 ) + 40, 60, "--", 60, looks < 1 ) ) {
                 looks = 0;
             }
+            /* Stats Button, same for all of the below */
+            if ( makeButtonImageCenter( rentex, pos_x + 7, pos_y + 100, info2Tex ) ) {
+                showStatsInfoBoxLooks = !showStatsInfoBoxLooks;
+                showStatsInfoBoxSmell = false;
+                showStatsInfoBoxPersonality = false;
+                showStatsInfoBoxGumption = false;
+                showStatsInfoBoxLength = false;
+            }
 
-
-            
+            const std::string looksHelp{
+                "The Looks stat\n"
+                "improves your health."
+            };
+            if ( showStatsInfoBoxLooks ) {
+                DrawText(
+                    looksHelp.c_str(),
+                    pos_x - MeasureText(
+                        looksHelp.c_str(),
+                        48
+                    ) / 2,
+                    pos_y + 140,
+                    48,
+                    Q_BLACK
+                );
+            }
             /* Move it down a bit so they don't overlap */
-            pos_y += 40 + rentex.texture.height / 5;
+            pos_y += 40 + rentex.texture.height / 3;
 
 
             /* Smell */
-            Rectangle smell_stat_main = { pos_x - ( float ) MeasureText( std::to_string( smell ).c_str(), 60 ) / 2 - 20, pos_y - ( float ) MeasureTextEx( GetFontDefault(), std::to_string( smell ).c_str(), 60, 6 ).y / 2 - 20, ( float ) MeasureText( std::to_string( smell ).c_str(), 60 ) + 40, MeasureTextEx( GetFontDefault(), std::to_string( smell ).c_str(), 60, 6 ).y + 40 };
+            std::string smell_string = std::to_string( smell );
+            Rectangle smell_stat_main = {
+                pos_x - static_cast< float >( MeasureText( smell_string.c_str(), 60 ) ) / 2 - 20,
+                pos_y - static_cast< float >( MeasureTextEx( GetFontDefault(), smell_string.c_str(), 60, 6 ).y ) / 2 - 20,
+                static_cast< float >( MeasureText( smell_string.c_str(), 60 ) + 40 ),
+                static_cast< float >( MeasureTextEx( GetFontDefault(), smell_string.c_str(), 60, 6 ).y ) + 40
+            };
             Rectangle smell_stat_inside = smell_stat_main;
             
-            DrawText( "smell", pos_x - ( float ) MeasureText( "smell", 48 ) / 2, pos_y - 110, 48, Q_BLACK );
+            DrawText( "smell", pos_x - MeasureText( "smell", 48 ) / 2, pos_y - 110, 48, Q_BLACK );
             
             smell_stat_inside.x += 10; smell_stat_inside.y += 10;
             smell_stat_inside.width -= 20; smell_stat_inside.height -= 20;
@@ -1107,18 +1030,48 @@ int main( /*int argc, char** argv, char** envv*/ ) {
             if ( makeButtonTextEx( rentex, pos_x - 200 - MeasureText( "--", 60 ) / 2 - 20, pos_y - 30, MeasureText( "--", 60 ) + 40, 60, "--", 60, smell < 1 ) ) {
                 smell = 0;
             }
+            if ( makeButtonImageCenter( rentex, pos_x + 7, pos_y + 100, info2Tex ) ) {
+                showStatsInfoBoxLooks = false;
+                showStatsInfoBoxSmell = !showStatsInfoBoxSmell;
+                showStatsInfoBoxPersonality = false;
+                showStatsInfoBoxGumption = false;
+                showStatsInfoBoxLength = false;
+            }
+            const std::string smellHelp{
+                "The Smell stat\n"
+                "improves your ability\n"
+                "to \"Sniff\" (get items)."
+            };
+            if ( showStatsInfoBoxSmell ) {
+                DrawText(
+                    smellHelp.c_str(),
+                    pos_x - MeasureText(
+                        smellHelp.c_str(),
+                        48
+                    ) / 2,
+                    pos_y + 140,
+                    48,
+                    Q_BLACK
+                );
+            }
 
 
-
-            /* Move it down */
-            pos_y += 40 + rentex.texture.height / 5;
+            /* Move it to the middle */
+            pos_y = 320;
+            pos_x = rentex.texture.width / 2;
 
 
             /* Personality */
-            Rectangle personality_stat_main = { pos_x - ( float ) MeasureText( std::to_string( personality ).c_str(), 60 ) / 2 - 20, pos_y - ( float ) MeasureTextEx( GetFontDefault(), std::to_string( personality ).c_str(), 60, 6 ).y / 2 - 20, ( float ) MeasureText( std::to_string( personality ).c_str(), 60 ) + 40, MeasureTextEx( GetFontDefault(), std::to_string( personality ).c_str(), 60, 6 ).y + 40 };
+            std::string personality_string = std::to_string( personality );
+            Rectangle personality_stat_main = {
+                pos_x - static_cast< float >( MeasureText( personality_string.c_str(), 60 ) ) / 2 - 20,
+                pos_y - static_cast< float >( MeasureTextEx( GetFontDefault(), personality_string.c_str(), 60, 6 ).y ) / 2 - 20,
+                static_cast< float >( MeasureText( personality_string.c_str(), 60 ) + 40 ),
+                static_cast< float >( MeasureTextEx( GetFontDefault(), personality_string.c_str(), 60, 6 ).y ) + 40
+            };
             Rectangle personality_stat_inside = personality_stat_main;
             
-            DrawText( "personality", pos_x - ( float ) MeasureText( "personality", 48 ) / 2, pos_y - 110, 48, Q_BLACK );
+            DrawText( "personality", pos_x - MeasureText( "personality", 48 ) / 2, pos_y - 110, 48, Q_BLACK );
             
             personality_stat_inside.x += 10; personality_stat_inside.y += 10;
             personality_stat_inside.width -= 20; personality_stat_inside.height -= 20;
@@ -1143,17 +1096,45 @@ int main( /*int argc, char** argv, char** envv*/ ) {
             if ( makeButtonTextEx( rentex, pos_x - 200 - MeasureText( "--", 60 ) / 2 - 20, pos_y - 30, MeasureText( "--", 60 ) + 40, 60, "--", 60, personality < 1 ) ) {
                 personality = 0;
             }
-
+            if ( makeButtonImageCenter( rentex, pos_x + 7, pos_y + 100, info2Tex ) ) {
+                showStatsInfoBoxLooks = false;
+                showStatsInfoBoxSmell = false;
+                showStatsInfoBoxPersonality = !showStatsInfoBoxPersonality;
+                showStatsInfoBoxGumption = false;
+                showStatsInfoBoxLength = false;
+            }
+            const std::string personalityHelp{
+                "The Personality stat\n"
+                "improves your blocks."
+            };
+            if ( showStatsInfoBoxPersonality ) {
+                DrawText(
+                    personalityHelp.c_str(),
+                    pos_x - MeasureText(
+                        personalityHelp.c_str(),
+                        48
+                    ) / 2,
+                    pos_y + 140,
+                    48,
+                    Q_BLACK
+                );
+            }
             /* Move it to the other side */
-            pos_x = rentex.texture.width - pos_x;
+            pos_x = rentex.texture.width - 280;
             pos_y = 220;
 
 
             /* gumption */
-            Rectangle gumption_stat_main = { pos_x - ( float ) MeasureText( std::to_string( gumption ).c_str(), 60 ) / 2 - 20, pos_y - ( float ) MeasureTextEx( GetFontDefault(), std::to_string( gumption ).c_str(), 60, 6 ).y / 2 - 20, ( float ) MeasureText( std::to_string( gumption ).c_str(), 60 ) + 40, MeasureTextEx( GetFontDefault(), std::to_string( gumption ).c_str(), 60, 6 ).y + 40 };
+            std::string gumption_string = std::to_string( gumption );
+            Rectangle gumption_stat_main = {
+                pos_x - static_cast< float >( MeasureText( gumption_string.c_str(), 60 ) ) / 2 - 20,
+                pos_y - static_cast< float >( MeasureTextEx( GetFontDefault(), gumption_string.c_str(), 60, 6 ).y ) / 2 - 20,
+                static_cast< float >( MeasureText( gumption_string.c_str(), 60 ) + 40 ),
+                static_cast< float >( MeasureTextEx( GetFontDefault(), gumption_string.c_str(), 60, 6 ).y ) + 40
+            };
             Rectangle gumption_stat_inside = gumption_stat_main;
             
-            DrawText( "gumption", pos_x - ( float ) MeasureText( "gumption", 48 ) / 2, pos_y - 110, 48, Q_BLACK );
+            DrawText( "gumption", pos_x - MeasureText( "gumption", 48 ) / 2, pos_y - 110, 48, Q_BLACK );
             
             gumption_stat_inside.x += 10; gumption_stat_inside.y += 10;
             gumption_stat_inside.width -= 20; gumption_stat_inside.height -= 20;
@@ -1178,17 +1159,46 @@ int main( /*int argc, char** argv, char** envv*/ ) {
             if ( makeButtonTextEx( rentex, pos_x - 200 - MeasureText( "--", 60 ) / 2 - 20, pos_y - 30, MeasureText( "--", 60 ) + 40, 60, "--", 60, gumption < 1 ) ) {
                 gumption = 0;
             }
-
+            if ( makeButtonImageCenter( rentex, pos_x + 7, pos_y + 100, info2Tex ) ) {
+                showStatsInfoBoxLooks = false;
+                showStatsInfoBoxSmell = false;
+                showStatsInfoBoxPersonality = false;
+                showStatsInfoBoxGumption = !showStatsInfoBoxGumption;
+                showStatsInfoBoxLength = false;
+            }
+            const std::string gumptionHelp{
+                "The Looks stat\n"
+                "improves your item\n"
+                "use chances/ability."
+            };
+            if ( showStatsInfoBoxGumption ) {
+                DrawText(
+                    gumptionHelp.c_str(),
+                    pos_x - MeasureText(
+                        gumptionHelp.c_str(),
+                        48
+                    ) / 2,
+                    pos_y + 140,
+                    48,
+                    Q_BLACK
+                );
+            }
             
 
             /* Move it down */
-            pos_y += 40 + rentex.texture.height / 5;
+            pos_y += 40 + rentex.texture.height / 3;
 
             /* length */
-            Rectangle length_stat_main = { pos_x - ( float ) MeasureText( std::to_string( length ).c_str(), 60 ) / 2 - 20, pos_y - ( float ) MeasureTextEx( GetFontDefault(), std::to_string( length ).c_str(), 60, 6 ).y / 2 - 20, ( float ) MeasureText( std::to_string( length ).c_str(), 60 ) + 40, MeasureTextEx( GetFontDefault(), std::to_string( length ).c_str(), 60, 6 ).y + 40 };
+            std::string length_string = std::to_string( length );
+            Rectangle length_stat_main = {
+                pos_x - static_cast< float >( MeasureText( length_string.c_str(), 60 ) ) / 2 - 20,
+                pos_y - static_cast< float >( MeasureTextEx( GetFontDefault(), length_string.c_str(), 60, 6 ).y ) / 2 - 20,
+                static_cast< float >( MeasureText( length_string.c_str(), 60 ) + 40 ),
+                static_cast< float >( MeasureTextEx( GetFontDefault(), length_string.c_str(), 60, 6 ).y ) + 40
+            };
             Rectangle length_stat_inside = length_stat_main;
             
-            DrawText( "length", pos_x - ( float ) MeasureText( "length", 48 ) / 2, pos_y - 110, 48, Q_BLACK );
+            DrawText( "length", pos_x - MeasureText( "length", 48 ) / 2, pos_y - 110, 48, Q_BLACK );
             
             length_stat_inside.x += 10; length_stat_inside.y += 10;
             length_stat_inside.width -= 20; length_stat_inside.height -= 20;
@@ -1213,7 +1223,29 @@ int main( /*int argc, char** argv, char** envv*/ ) {
             if ( makeButtonTextEx( rentex, pos_x - 200 - MeasureText( "--", 60 ) / 2 - 20, pos_y - 30, MeasureText( "--", 60 ) + 40, 60, "--", 60, length < 1 ) ) {
                 length = 0;
             }
-
+            if ( makeButtonImageCenter( rentex, pos_x + 7, pos_y + 100, info2Tex ) ) {
+                showStatsInfoBoxLooks = false;
+                showStatsInfoBoxSmell = false;
+                showStatsInfoBoxPersonality = false;
+                showStatsInfoBoxGumption = false;
+                showStatsInfoBoxLength = !showStatsInfoBoxLength;
+            }
+            const std::string lengthHelp{
+                "The Looks stat\n"
+                "improves your damage."
+            };
+            if ( showStatsInfoBoxLength ) {
+                DrawText(
+                    lengthHelp.c_str(),
+                    pos_x - MeasureText(
+                        lengthHelp.c_str(),
+                        48
+                    ) / 2,
+                    pos_y + 140,
+                    48,
+                    Q_BLACK
+                );
+            }
             points += oldLooks - looks;
             points += oldSmell - smell;
             points += oldPersonality - personality;
@@ -1221,7 +1253,20 @@ int main( /*int argc, char** argv, char** envv*/ ) {
             points += oldLength - length;
 
 
-            DrawText( ( std::string( "Points: " ) + std::to_string( points ) ).c_str(), ( float ) rentex.texture.width / 2 - ( float ) MeasureText( ( std::string( "Points: " ) + std::to_string( points ) ).c_str(), 48 ) / 2, 150, 48, Q_BLACK );
+            DrawText(
+                (
+                    std::string( "Points: " ) + std::to_string( points )
+                ).c_str(),
+                rentex.texture.width / 2 - MeasureText(
+                    (
+                        std::string( "Points: " ) + std::to_string( points )
+                    ).c_str(),
+                    48
+                ) / 2,
+                150,
+                48,
+                Q_BLACK
+            );
             const char* statsHelpText =
                 "Stats Descriptions:\n"
                 "Looks: \n"
@@ -1231,18 +1276,12 @@ int main( /*int argc, char** argv, char** envv*/ ) {
                 "Length: \n";
 
             const char *titleText = "Select Stats";
-            DrawText( titleText, ( float ) rentex.texture.width / 2 - ( float ) MeasureText( titleText, 80 ) / 2, 30, 80, Q_BLACK );
-
-            if ( makeButtonImageCenter( rentex, ( float ) rentex.texture.width / 2 + ( float ) MeasureText( titleText, 80 ) / 2 + 60, 60, info2Tex ) ) {
-                showStatsInfoBox = !showStatsInfoBox;
-            }
-            if ( showStatsInfoBox ) {
-                DrawText( statsHelpText, ( float ) rentex.texture.width / 2 - ( float ) MeasureText( statsHelpText, 40 ) / 2 + 80, ( float ) rentex.texture.height / 2 + 80, 40, Q_BLACK );
-            }
+            DrawText( titleText, rentex.texture.width / 2 - MeasureText( titleText, 80 ) / 2, 30, 80, Q_BLACK );
 
         } else if ( gameLayout == "game" ) {
-            /* Image is bad :( */
-            Image tmpImage = ImageCopy( backgroundImage );
+
+            /* no longer necessary for because of the scaling system */
+            // Image tmpImage = ImageCopy( backgroundImage );
 
             const double BACKGROUND_ASPECT_RATIO = static_cast< double >( backgroundImage.width ) / static_cast< double >( backgroundImage.height );
             if ( static_cast< double >( rentex.texture.width ) / static_cast< double >( rentex.texture.height ) > BACKGROUND_ASPECT_RATIO ) {
@@ -1251,12 +1290,11 @@ int main( /*int argc, char** argv, char** envv*/ ) {
                 ImageResize( &tmpImage, rentex.texture.width, rentex.texture.width / BACKGROUND_ASPECT_RATIO );
             }
             
-            /* Image is bad :( */
-            Texture2D backgroundTex = LoadTextureFromImage( tmpImage );
+            // Texture2D backgroundTex = LoadTextureFromImage( tmpImage );
             
 
-            // ClearBackground( Q_BLACK );
-            // DrawTexture( backgroundTex, 0, 0, Q_WHITE );
+            ClearBackground( Q_BLACK );
+            DrawTexture( backgroundTex, 0, 0, Q_WHITE );
             
 
             /* Botton Row */
@@ -1266,9 +1304,9 @@ int main( /*int argc, char** argv, char** envv*/ ) {
                                      MeasureText( "Inventory", 60 ) +
                                      MeasureText( "Attack", 60 ) + 
                                      45 * 5 /* account for button padding */;
-            const int BUTTON_GAP = ( float ) ( rentex.texture.width - TOTAL_BUTTON_WIDTH ) / 6; /* number of gaps */
+            const int BUTTON_GAP = static_cast< float >( rentex.texture.width - TOTAL_BUTTON_WIDTH ) / 6; /* number of gaps */
 
-            int button_position_y = rentex.texture.height - 40 - 20 - MeasureTextEx( GetFontDefault(), "DONT_CHANGE", 60, ( float ) 60 / 10 ).y;
+            int button_position_y = rentex.texture.height - 40 - 20 - MeasureTextEx( GetFontDefault(), "DONT_CHANGE", 60, static_cast< float >( 60 ) / 10 ).y;
             int button_position_x = BUTTON_GAP;
 
             
@@ -1282,21 +1320,120 @@ int main( /*int argc, char** argv, char** envv*/ ) {
 
             if ( makeButtonText( rentex, button_position_x, button_position_y, "Sniff", 60 ) ) {}
             button_position_x += BUTTON_GAP + MeasureText( "Sniff", 60 ) + 45;
-
+            
+            /* Center of button x */
+            int inventory_button_x = button_position_x + MeasureText("Inventory", 60) / 2 + 20;
+            /* Top of button */
+            int inventory_botton_y = button_position_y;
             if ( makeButtonText( rentex, button_position_x, button_position_y, "Inventory", 60) ) {
                 showInventory = true;
             }
+
+
+
             /* this is here to get the location of the inventory button,
                and use that to get the location of the inventory box */
-            // if ( showInventory ) {
-            //     Rectangle inventoryBack = Rectangle{
-            //         .x = 
-            //     }
-            //     if ( )
-            // } else {
-            //     inventoryScrollCount = 0;
-            // }
-            /* end inventory drawing */
+            int inventory_box_size_x = (
+                10 /* border */ + 60 /* box */ ) * 3 /* 3 boxes */ +
+                ( 10 /* border */ + 20 /* scroll bar */ + 10 /* border again */ );
+
+            int inventory_box_size_y = (
+                10 /* border */ + 60 /* box */ ) * 2 /* 2 boxes */ +
+                ( 10 /* border */ );
+
+            if ( showInventory ) {
+                /* main background */
+                Rectangle inventory_background{
+                    inventory_button_x - static_cast< float >( inventory_box_size_x ) / 2,
+                    static_cast< float >( inventory_botton_y - inventory_box_size_y - 10 ),
+                    static_cast< float >( inventory_box_size_x ),
+                    static_cast< float >( inventory_box_size_y )
+                };
+                
+                /* draw the grid, where items will eventually be drawn */
+                DrawRectangleRec( inventory_background, Q_BLACK );
+                for ( int i = 0; i < 2; i++ ) {
+                    int pos_y = inventory_background.y + 10 + 70 * i;
+                    for ( int j = 0; j < 3; j++ ) {
+                        int pos_x = inventory_background.x + 10 + 70 * j;
+                        DrawRectangleRec( Rectangle{ static_cast< float >( pos_x ), static_cast< float >( pos_y ), 60, 60 }, Q_GRAY );
+                    }
+                }
+
+                /* This is the scroll arrow section */
+                Rectangle scroll_button = Rectangle{
+                    inventory_background.x + inventory_background.width - 20 /* width of scroll bar */ - 10 /* border */,
+                    inventory_background.y + 10,
+                    20,
+                    40
+                };
+                DrawRectangleRec( scroll_button, Q_GREEN );
+                if ( IsMouseButtonReleased( MOUSE_LEFT_BUTTON ) && CheckCollisionPointRec( Vector2{ GetMouseX() * sf_x, GetMouseY() * sf_y }, scroll_button ) ) { /* check collision with scroll up */
+                    if ( inventoryScrollCount >= 1 ) {
+                        inventoryScrollCount--;
+                    }
+                }
+                DrawTriangle( /* triangle of up arrow */
+                    Vector2{
+                        scroll_button.x + scroll_button.width / 2,
+                        scroll_button.y
+                    },
+                    Vector2{
+                        scroll_button.x,
+                        scroll_button.y + 20
+                    },
+                    Vector2{
+                        scroll_button.x + scroll_button.width,
+                        scroll_button.y + 20
+                    },
+                    Q_RED
+                );
+                DrawRectangle( /* the not triangle of the up arrow */
+                    scroll_button.x + 5,
+                    scroll_button.y + 20,
+                    10,
+                    20,
+                    Q_PURPLE
+                );
+
+                scroll_button.y = inventory_background.y + inventory_background.height - scroll_button.height - 10;
+                DrawRectangleRec( scroll_button, Q_GREEN );
+                if ( IsMouseButtonReleased( MOUSE_LEFT_BUTTON ) && CheckCollisionPointRec( Vector2{ GetMouseX() * sf_x, GetMouseY() * sf_y }, scroll_button ) ) { /* check collision with scroll down */
+                    if ( ( inventoryScrollCount + 2 ) * 3 < quimbertArr[ currentQuimbert ].getInventoryDangerous()->size() / 3 ) {
+                        inventoryScrollCount++;
+                    }
+                }
+
+                DrawTriangle( /* the triangle of the down arrow */
+                    Vector2{
+                        scroll_button.x + scroll_button.width / 2,
+                        scroll_button.y + scroll_button.height
+                    },
+                    Vector2{
+                        scroll_button.x + scroll_button.width,
+                        scroll_button.y + scroll_button.height - 20
+                    },
+                    Vector2{
+                        scroll_button.x,
+                        scroll_button.y + scroll_button.height - 20
+                    },
+                    Q_RED
+                );
+                DrawRectangle( /* the not triangle of the down arrow */
+                    scroll_button.x + 5,
+                    scroll_button.y + scroll_button.height - 20 - 20,
+                    10,
+                    20,
+                    Q_PURPLE
+                );
+
+                std::cout << inventoryScrollCount << '\n';
+            } else {
+                inventoryScrollCount = 0;
+            } /* end inventory drawing */
+
+
+
             button_position_x += BUTTON_GAP + MeasureText( "Inventory", 60 ) + 45;
 
             if ( makeButtonText( rentex, button_position_x, button_position_y, "Attack", 60 ) ) {}
@@ -1304,19 +1441,19 @@ int main( /*int argc, char** argv, char** envv*/ ) {
             Rectangle healthBlockCorner = Rectangle{
                 10,
                 10,
-                ( float ) MeasureTextEx( 
+                static_cast< float >( MeasureTextEx( 
                     GetFontDefault(),
                     "Health: 20\nBlocks: 10",
                     60,
-                    ( float ) 60 / 10 
-                ).x + 40,
+                    6 
+                ).x + 40 ),
 
-                ( float ) MeasureTextEx(
+                static_cast< float >( MeasureTextEx(
                     GetFontDefault(),
                     "Health: 20\nBlocks: 10",
                     60,
-                    ( float ) 60 / 10
-                ).y + 30
+                    6
+                ).y + 30 )
             };
 
             DrawRectangleRec( healthBlockCorner, Q_BLACK );
@@ -1422,8 +1559,6 @@ int main( /*int argc, char** argv, char** envv*/ ) {
             }
 
 
-
-            // UnloadTexture( backgroundTex );
         } /* end render if tree */
 
         EndTextureMode();
@@ -1447,6 +1582,7 @@ int main( /*int argc, char** argv, char** envv*/ ) {
             0,
             Q_WHITE
         );
+        if ( DEBUG ) DrawFPS( 20, 200 );
         EndDrawing();
     }
     UnloadRenderTexture( rentex );
