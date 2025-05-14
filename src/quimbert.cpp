@@ -250,43 +250,6 @@ std::string Quimbert::getStatsString() {
         "/10\nLength: " + std::to_string( _length ) + "/10\nOwner: " + _owner + "\n";
 }
 
-// std::string Quimbert::getStrStat( std::string stat ) {
-//     if ( stat == "color") return _color;
-//     else if ( stat == "name") return _name;
-//     else if ( stat == "owner") return _owner;
-
-//     throw std::runtime_error( "Invalid Stat" );
-// }
-
-// void Quimbert::setStrStat( std::string stat, std::string newValue ) {
-//     if ( stat == "color") _color = newValue;
-//     else if ( stat == "name") _name = newValue;
-//     else if ( stat == "owner") _owner = newValue;
-
-//     throw std::runtime_error( "Invalid Stat" );
-// }
-
-// int Quimbert::getIntStat( std::string stat ) {
-//     if ( stat == "looks") return _looks;
-//     else if ( stat == "smell") return _smell;
-//     else if ( stat == "personality") return _personality;
-//     else if ( stat == "gumption") return _gumption;
-//     else if ( stat == "length") return _length;
-
-//     throw std::runtime_error( "Invalid Stat" );
-// }
-
-// void Quimbert::setIntStat( std::string stat, int newValue ) {
-//     if ( stat == "looks") _looks = newValue;
-//     else if ( stat == "smell") _smell = newValue;
-//     else if ( stat == "personality") _personality = newValue;
-//     else if ( stat == "gumption") _gumption = newValue;
-//     else if ( stat == "length") _length = newValue;
-
-//     throw std::runtime_error( "Invalid Stat" );
-// }
-
-
 
 /*
 ** Get the stats
