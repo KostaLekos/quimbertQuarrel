@@ -57,7 +57,13 @@ If you are cloning for the first time clone with `git clone --recurse-submodules
 - [ ] Finish acquiring resources
 - - [x] Get full res background *Needs to be 16:9 or 16:10, ideally 1920x1080 or 3840x2160*
 - - [ ] Get non-AI music (except blippy bounce) *NOTE: "Commissioned" Jaiden to make it for us*
-- [ ] Finished writing
+- [ ] Finish game
+- - [x] Layout for game screen created
+- - [ ] Write the layout
+- - [ ] Adapt the CLI version bits to GUI version bits
+<details>
+<summary>Completed rewrite from java!</summary>
+- [x] Finish Java rewrite
 - - [x] Wrote quimbert.hpp
 - - [x] Write quimbert.cpp
 - - - [x] Write Quimbert() 
@@ -98,10 +104,7 @@ If you are cloning for the first time clone with `git clone --recurse-submodules
 - - - - - - - [x] Normal +- button
 - - - - - - - [x] Plus all button
 - - - - - - - [x] Help text
-- - [ ] Finish game
-- - - [x] Layout for game screen created
-- - - [ ] Write the layout
-- - - [ ] Adapt the CLI version bits to GUI version bits
+</details>
 
 ## Changes from java version
 - REMOVED sniff() in QuimbertQuarrel.java (main.cpp) file, see header notes in quimert.hpp for `void sniff()`

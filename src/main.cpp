@@ -268,7 +268,7 @@ int drawPlus( RenderTexture rentex, int pos_x, int pos_y, int size_x, int size_y
 }
 
 int drawPlusCenter( RenderTexture rentex, int pos_x, int pos_y, int size_x, int size_y, bool canNotBePressed, int startNum, int maxOrMinVal, bool isMinus = false ) {
-    return drawPlus( rentex, pos_x - static_cast< float > ( size_x / 2 ), pos_y - static_cast< float > ( size_y / 2 ), size_x, size_y, canNotBePressed, startNum, maxOrMinVal, isMinus );
+    return drawPlus( rentex, pos_x - size_x / 2 , pos_y - size_y / 2, size_x, size_y, canNotBePressed, startNum, maxOrMinVal, isMinus );
 }
 
 /*
@@ -445,6 +445,108 @@ int main( int argc, char** argv ) {
             if ( makeButtonImage( rentex, rentex.texture.width - 120, 10, exitTex ) ) {
                 /* Break out of the main game loop and stop execution */
                 break; 
+            }
+            if ( DEBUG ) {
+                isMusicMuted = true;
+                quimbertArr.emplace_back( 10, 10, "blue", 10, 5, 0, "a", "a");
+                quimbertArr.emplace_back( 10, 10, "green", 10, 5, 0, "ab", "ab");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                currentQuimbert = 0;
+                gameLayout = "game";
             }
 
         } else if ( gameLayout == "howManyQuimberts" ) {
@@ -1218,21 +1320,120 @@ int main( int argc, char** argv ) {
 
             if ( makeButtonText( rentex, button_position_x, button_position_y, "Sniff", 60 ) ) {}
             button_position_x += BUTTON_GAP + MeasureText( "Sniff", 60 ) + 45;
-
+            
+            /* Center of button x */
+            int inventory_button_x = button_position_x + MeasureText("Inventory", 60) / 2 + 20;
+            /* Top of button */
+            int inventory_botton_y = button_position_y;
             if ( makeButtonText( rentex, button_position_x, button_position_y, "Inventory", 60) ) {
                 showInventory = true;
             }
+
+
+
             /* this is here to get the location of the inventory button,
                and use that to get the location of the inventory box */
-            // if ( showInventory ) {
-            //     Rectangle inventoryBack = Rectangle{
-            //         .x = 
-            //     }
-            //     if ( )
-            // } else {
-            //     inventoryScrollCount = 0;
-            // }
-            /* end inventory drawing */
+            int inventory_box_size_x = (
+                10 /* border */ + 60 /* box */ ) * 3 /* 3 boxes */ +
+                ( 10 /* border */ + 20 /* scroll bar */ + 10 /* border again */ );
+
+            int inventory_box_size_y = (
+                10 /* border */ + 60 /* box */ ) * 2 /* 2 boxes */ +
+                ( 10 /* border */ );
+
+            if ( showInventory ) {
+                /* main background */
+                Rectangle inventory_background{
+                    inventory_button_x - static_cast< float >( inventory_box_size_x ) / 2,
+                    static_cast< float >( inventory_botton_y - inventory_box_size_y - 10 ),
+                    static_cast< float >( inventory_box_size_x ),
+                    static_cast< float >( inventory_box_size_y )
+                };
+                
+                /* draw the grid, where items will eventually be drawn */
+                DrawRectangleRec( inventory_background, Q_BLACK );
+                for ( int i = 0; i < 2; i++ ) {
+                    int pos_y = inventory_background.y + 10 + 70 * i;
+                    for ( int j = 0; j < 3; j++ ) {
+                        int pos_x = inventory_background.x + 10 + 70 * j;
+                        DrawRectangleRec( Rectangle{ static_cast< float >( pos_x ), static_cast< float >( pos_y ), 60, 60 }, Q_GRAY );
+                    }
+                }
+
+                /* This is the scroll arrow section */
+                Rectangle scroll_button = Rectangle{
+                    inventory_background.x + inventory_background.width - 20 /* width of scroll bar */ - 10 /* border */,
+                    inventory_background.y + 10,
+                    20,
+                    40
+                };
+                DrawRectangleRec( scroll_button, Q_GREEN );
+                if ( IsMouseButtonReleased( MOUSE_LEFT_BUTTON ) && CheckCollisionPointRec( Vector2{ GetMouseX() * sf_x, GetMouseY() * sf_y }, scroll_button ) ) { /* check collision with scroll up */
+                    if ( inventoryScrollCount >= 1 ) {
+                        inventoryScrollCount--;
+                    }
+                }
+                DrawTriangle( /* triangle of up arrow */
+                    Vector2{
+                        scroll_button.x + scroll_button.width / 2,
+                        scroll_button.y
+                    },
+                    Vector2{
+                        scroll_button.x,
+                        scroll_button.y + 20
+                    },
+                    Vector2{
+                        scroll_button.x + scroll_button.width,
+                        scroll_button.y + 20
+                    },
+                    Q_RED
+                );
+                DrawRectangle( /* the not triangle of the up arrow */
+                    scroll_button.x + 5,
+                    scroll_button.y + 20,
+                    10,
+                    20,
+                    Q_PURPLE
+                );
+
+                scroll_button.y = inventory_background.y + inventory_background.height - scroll_button.height - 10;
+                DrawRectangleRec( scroll_button, Q_GREEN );
+                if ( IsMouseButtonReleased( MOUSE_LEFT_BUTTON ) && CheckCollisionPointRec( Vector2{ GetMouseX() * sf_x, GetMouseY() * sf_y }, scroll_button ) ) { /* check collision with scroll down */
+                    if ( ( inventoryScrollCount + 2 ) * 3 < quimbertArr[ currentQuimbert ].getInventoryDangerous()->size() / 3 ) {
+                        inventoryScrollCount++;
+                    }
+                }
+
+                DrawTriangle( /* the triangle of the down arrow */
+                    Vector2{
+                        scroll_button.x + scroll_button.width / 2,
+                        scroll_button.y + scroll_button.height
+                    },
+                    Vector2{
+                        scroll_button.x + scroll_button.width,
+                        scroll_button.y + scroll_button.height - 20
+                    },
+                    Vector2{
+                        scroll_button.x,
+                        scroll_button.y + scroll_button.height - 20
+                    },
+                    Q_RED
+                );
+                DrawRectangle( /* the not triangle of the down arrow */
+                    scroll_button.x + 5,
+                    scroll_button.y + scroll_button.height - 20 - 20,
+                    10,
+                    20,
+                    Q_PURPLE
+                );
+
+                std::cout << inventoryScrollCount << '\n';
+            } else {
+                inventoryScrollCount = 0;
+            } /* end inventory drawing */
+
+
+
             button_position_x += BUTTON_GAP + MeasureText( "Inventory", 60 ) + 45;
 
             if ( makeButtonText( rentex, button_position_x, button_position_y, "Attack", 60 ) ) {}
