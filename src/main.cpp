@@ -1242,17 +1242,17 @@ int main( /*int argc, char** argv, char** envv*/ ) {
 
         } else if ( gameLayout == "game" ) {
             /* Image is bad :( */
-            // Image tmpImage = ImageCopy( backgroundImage );
+            Image tmpImage = ImageCopy( backgroundImage );
 
-            // const double BACKGROUND_ASPECT_RATIO = static_cast< double >( backgroundImage.width ) / static_cast< double >( backgroundImage.height );
-            // if ( static_cast< double >( rentex.texture.width ) / static_cast< double >( rentex.texture.height ) > BACKGROUND_ASPECT_RATIO ) {
-            //     ImageResize( &tmpImage, rentex.texture.height * BACKGROUND_ASPECT_RATIO, rentex.texture.height );
-            // } else {
-            //     ImageResize( &tmpImage, rentex.texture.width, rentex.texture.width / BACKGROUND_ASPECT_RATIO );
-            // }
+            const double BACKGROUND_ASPECT_RATIO = static_cast< double >( backgroundImage.width ) / static_cast< double >( backgroundImage.height );
+            if ( static_cast< double >( rentex.texture.width ) / static_cast< double >( rentex.texture.height ) > BACKGROUND_ASPECT_RATIO ) {
+                ImageResize( &tmpImage, rentex.texture.height * BACKGROUND_ASPECT_RATIO, rentex.texture.height );
+            } else {
+                ImageResize( &tmpImage, rentex.texture.width, rentex.texture.width / BACKGROUND_ASPECT_RATIO );
+            }
             
             /* Image is bad :( */
-            // Texture2D backgroundTex = LoadTextureFromImage( tmpImage );
+            Texture2D backgroundTex = LoadTextureFromImage( tmpImage );
             
 
             // ClearBackground( Q_BLACK );
