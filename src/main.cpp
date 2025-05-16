@@ -1330,7 +1330,9 @@ int main( int argc, char** argv ) {
                         int pos_x = inventory_background.x + 10 + 70 * j;
                         DrawRectangleRec( Rectangle{ static_cast< float >( pos_x ), static_cast< float >( pos_y ), 60, 60 }, Q_GRAY );
 
-                        if ( quimbertArr[ currentQuimbert ].getInventory().size() > static_cast< std::size_t >( inventoryScrollCount * 3 + i * 3 + j ) ) {
+
+                        /* Draw the items */
+                        if ( quimbertArr[ currentQuimbert ].getInventory().size() > static_cast< std::size_t > ( inventoryScrollCount * 3 + i * 3 + j ) ) {
                             if ( item_map_texture.contains( quimbertArr[ currentQuimbert ].getInventory()[ inventoryScrollCount * 3 + i * 3 + j ] ) ) {
                                 DrawTexture(
                                     item_map_texture[ quimbertArr[ currentQuimbert ].getInventory()[ inventoryScrollCount * 3 + i * 3 + j ] ],
@@ -1385,7 +1387,7 @@ int main( int argc, char** argv ) {
                 scroll_button.y = inventory_background.y + inventory_background.height - scroll_button.height - 10;
                 DrawRectangleRec( scroll_button, Q_GREEN );
                 if ( IsMouseButtonReleased( MOUSE_LEFT_BUTTON ) && CheckCollisionPointRec( Vector2{ GetMouseX() * sf_x, GetMouseY() * sf_y }, scroll_button ) ) { /* check collision with scroll down */
-                    if ( ( inventoryScrollCount + 2 ) < quimbertArr[ currentQuimbert ].getInventoryDangerous()->size() / 3 ) {
+                    if ( ( inventoryScrollCount + 1 ) < quimbertArr[ currentQuimbert ].getInventoryDangerous()->size() / 3 ) {
                         inventoryScrollCount++;
                     }
                 }
