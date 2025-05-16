@@ -35,6 +35,7 @@
 #define Q_GRAY Color{130, 130, 130, 255}
 #define Q_PINK Color{255, 109, 194, 255}
 #define Q_MAGENTA Color{255, 82, 183, 255}
+#define Q_Shadow_Red Color{77, 0, 15, 255}
 
 std::mt19937_64::result_type randInt( int min, int max ) {
     std::random_device randomDev;
@@ -963,7 +964,7 @@ int main( int argc, char** argv ) {
             };
             Rectangle smell_stat_inside = smell_stat_main;
             
-            DrawText( "smell", pos_x - MeasureText( "smell", 48 ) / 2, pos_y - 110, 48, Q_BLACK );
+            DrawText( "Smell", pos_x - MeasureText( "Smell", 48 ) / 2, pos_y - 110, 48, Q_BLACK );
             
             smell_stat_inside.x += 10; smell_stat_inside.y += 10;
             smell_stat_inside.width -= 20; smell_stat_inside.height -= 20;
@@ -1029,7 +1030,7 @@ int main( int argc, char** argv ) {
             };
             Rectangle personality_stat_inside = personality_stat_main;
             
-            DrawText( "personality", pos_x - MeasureText( "personality", 48 ) / 2, pos_y - 110, 48, Q_BLACK );
+            DrawText( "Personality", pos_x - MeasureText( "Personality", 48 ) / 2, pos_y - 110, 48, Q_BLACK );
             
             personality_stat_inside.x += 10; personality_stat_inside.y += 10;
             personality_stat_inside.width -= 20; personality_stat_inside.height -= 20;
@@ -1092,7 +1093,7 @@ int main( int argc, char** argv ) {
             };
             Rectangle gumption_stat_inside = gumption_stat_main;
             
-            DrawText( "gumption", pos_x - MeasureText( "gumption", 48 ) / 2, pos_y - 110, 48, Q_BLACK );
+            DrawText( "Gumption", pos_x - MeasureText( "Gumption", 48 ) / 2, pos_y - 110, 48, Q_BLACK );
             
             gumption_stat_inside.x += 10; gumption_stat_inside.y += 10;
             gumption_stat_inside.width -= 20; gumption_stat_inside.height -= 20;
@@ -1125,7 +1126,7 @@ int main( int argc, char** argv ) {
                 showStatsInfoBoxLength = false;
             }
             const std::string gumptionHelp{
-                "The Looks stat\n"
+                "The Gumption stat\n"
                 "improves your item\n"
                 "use chances/ability."
             };
@@ -1156,7 +1157,7 @@ int main( int argc, char** argv ) {
             };
             Rectangle length_stat_inside = length_stat_main;
             
-            DrawText( "length", pos_x - MeasureText( "length", 48 ) / 2, pos_y - 110, 48, Q_BLACK );
+            DrawText( "Length", pos_x - MeasureText( "Length", 48 ) / 2, pos_y - 110, 48, Q_BLACK );
             
             length_stat_inside.x += 10; length_stat_inside.y += 10;
             length_stat_inside.width -= 20; length_stat_inside.height -= 20;
@@ -1189,7 +1190,7 @@ int main( int argc, char** argv ) {
                 showStatsInfoBoxLength = !showStatsInfoBoxLength;
             }
             const std::string lengthHelp{
-                "The Looks stat\n"
+                "The Length stat\n"
                 "improves your damage."
             };
             if ( showStatsInfoBoxLength ) {
