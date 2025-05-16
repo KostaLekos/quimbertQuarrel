@@ -8,6 +8,7 @@
 #include <string>
 #include <iostream>
 #include <random>
+#include <map>
 
 #define Q_WHITE Color{255, 255, 255, 255}
 #define Q_RAYWHITE Color{245, 245, 245, 255}
@@ -285,7 +286,7 @@ bool isAnyKeyPressed() {
 
 int main( int argc, char** argv ) {
 
-    bool DEBUG;
+    bool DEBUG = false;
     for ( int i = 0; i < argc; i++ ) {
         if ( std::string( argv[ i ] ) == "--debug" ) DEBUG = true;
     }
@@ -383,6 +384,7 @@ int main( int argc, char** argv ) {
     textBoxName.setCharLength( 25 );
     textBoxOwner.setCharLength( 25 );
     
+    /* MAIN UI LOADING BLOCK */
 
     Image exitImage = LoadImage( "./resources/textures/UI/exit.png" );
     ImageResize( &exitImage, 70, 70 );
@@ -407,6 +409,40 @@ int main( int argc, char** argv ) {
     Image backgroundImage = LoadImage( "resources/textures/backgrounds/quimbert_hell.png");
     Texture2D backgroundTex = LoadTextureFromImage( backgroundImage );
     UnloadImage( backgroundImage );
+
+    /* END MAIN UI LOADING BLOCK */
+    
+    
+    /* MAIN ITEM LOADING BLOCK */
+    std::map< std::string, Texture > item_map_texture;
+
+    /* WARNING, changing the image won't change the texture unless done before the textures are loaded */
+    std::map< std::string, Image > item_map_image;
+
+    item_map_image[ "ak47" ] = LoadImage( "resources/textures/items/tmp_ak47.png" );
+    item_map_image[ "bazooka" ] = LoadImage( "resources/textures/items/tmp_bazooka.png" );
+    item_map_image[ "black truffle" ] = LoadImage( "resources/textures/items/tmp_black_truffle.png" );
+    item_map_image[ "carrot" ] = LoadImage( "resources/textures/items/tmp_carrot.png" );
+    item_map_image[ "green flower" ] = LoadImage( "resources/textures/items/tmp_green_flower.png" );
+    item_map_image[ "knife" ] = LoadImage( "resources/textures/items/tmp_knife.png" );
+    item_map_image[ "mushroom" ] = LoadImage( "resources/textures/items/tmp_mushroom.png" );
+    item_map_image[ "orange flower" ] = LoadImage( "resources/textures/items/tmp_orange_flower.png" );
+    item_map_image[ "purple flower" ] = LoadImage( "resources/textures/items/tmp_purple_flower.png" );
+    item_map_image[ "red flower" ] = LoadImage( "resources/textures/items/tmp_red_flower.png" );
+    item_map_image[ "rock" ] = LoadImage( "resources/textures/items/tmp_rock.png" );
+    item_map_image[ "turnip" ] = LoadImage( "resources/textures/items/tmp_turnip.png" );
+    item_map_image[ "twig" ] = LoadImage( "resources/textures/items/tmp_twig.png" );
+    item_map_image[ "white truffle" ] = LoadImage( "resources/textures/items/tmp_white_truffle.png" );
+    item_map_image[ "yellow flower" ] = LoadImage( "resources/textures/items/tmp_yellow_flower.png" );
+    item_map_image[ "unidentified piece of flesh" ] = LoadImage( "resources/textures/items/tmp_unidentified_piece_of_flesh.png" );
+    
+    /* non const because im fucking evil */
+    for ( auto& [key, value] : item_map_image ) {
+        ImageResize( &value, 60, 60 );
+        item_map_texture[ key ] = LoadTextureFromImage( value );
+    }
+    
+    /* END MAIN ITEM LOADING BLOCK */
 
     while ( !WindowShouldClose() ) {
 
@@ -450,101 +486,23 @@ int main( int argc, char** argv ) {
                 isMusicMuted = true;
                 quimbertArr.emplace_back( 10, 10, "blue", 10, 5, 0, "a", "a");
                 quimbertArr.emplace_back( 10, 10, "green", 10, 5, 0, "ab", "ab");
-                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
-                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
-                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
-                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
-                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
-                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
-                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
-                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
-                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
-                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
-                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
-                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
-                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
-                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
-                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
-                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
-                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
-                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
-                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
-                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
-                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
-                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
-                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
-                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
-                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
-                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
-                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
-                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
-                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
-                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
-                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
-                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
-                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
-                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
-                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
-                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
-                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
-                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
-                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
-                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
-                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
-                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
-                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
-                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
-                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
-                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
-                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
-                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
-                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
-                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
-                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
-                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
-                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
-                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
-                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
-                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
-                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
-                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
-                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
-                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
-                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
-                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
-                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
-                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
-                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
-                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
-                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
-                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
-                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
-                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
-                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
-                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
-                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
-                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
-                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
-                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
-                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
-                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
-                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
-                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
-                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
-                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
-                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
-                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
-                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
-                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
-                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
-                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
-                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
-                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
-                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
-                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
-                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
-                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
-                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("NOT AN ITEM DUMBASS");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("black truffle");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("mushroom");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("twig");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("rock");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("white truffle");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("unidentified piece of flesh");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("carrot");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("knife");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("ak47");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("bazooka");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("turnip");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("yellow flower");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("green flower");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("purple flower");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("orange flower");
+                quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("red flower");
+                
                 currentQuimbert = 0;
                 gameLayout = "game";
             }
@@ -1283,12 +1241,12 @@ int main( int argc, char** argv ) {
             /* no longer necessary for because of the scaling system */
             // Image tmpImage = ImageCopy( backgroundImage );
 
-            const double BACKGROUND_ASPECT_RATIO = static_cast< double >( backgroundImage.width ) / static_cast< double >( backgroundImage.height );
-            if ( static_cast< double >( rentex.texture.width ) / static_cast< double >( rentex.texture.height ) > BACKGROUND_ASPECT_RATIO ) {
-                ImageResize( &tmpImage, rentex.texture.height * BACKGROUND_ASPECT_RATIO, rentex.texture.height );
-            } else {
-                ImageResize( &tmpImage, rentex.texture.width, rentex.texture.width / BACKGROUND_ASPECT_RATIO );
-            }
+            // const double BACKGROUND_ASPECT_RATIO = static_cast< double >( backgroundImage.width ) / static_cast< double >( backgroundImage.height );
+            // if ( static_cast< double >( rentex.texture.width ) / static_cast< double >( rentex.texture.height ) > BACKGROUND_ASPECT_RATIO ) {
+            //     ImageResize( &tmpImage, rentex.texture.height * BACKGROUND_ASPECT_RATIO, rentex.texture.height );
+            // } else {
+            //     ImageResize( &tmpImage, rentex.texture.width, rentex.texture.width / BACKGROUND_ASPECT_RATIO );
+            // }
             
             // Texture2D backgroundTex = LoadTextureFromImage( tmpImage );
             
@@ -1326,7 +1284,7 @@ int main( int argc, char** argv ) {
             /* Top of button */
             int inventory_botton_y = button_position_y;
             if ( makeButtonText( rentex, button_position_x, button_position_y, "Inventory", 60) ) {
-                showInventory = true;
+                showInventory = !showInventory;
             }
 
 
@@ -1357,8 +1315,22 @@ int main( int argc, char** argv ) {
                     for ( int j = 0; j < 3; j++ ) {
                         int pos_x = inventory_background.x + 10 + 70 * j;
                         DrawRectangleRec( Rectangle{ static_cast< float >( pos_x ), static_cast< float >( pos_y ), 60, 60 }, Q_GRAY );
+
+                        if ( quimbertArr[ currentQuimbert ].getInventory().size() > static_cast< std::size_t >( inventoryScrollCount * 3 + i * 3 + j ) ) {
+                            if ( item_map_texture.contains( quimbertArr[ currentQuimbert ].getInventory()[ inventoryScrollCount * 3 + i * 3 + j ] ) ) {
+                                DrawTexture(
+                                    item_map_texture[ quimbertArr[ currentQuimbert ].getInventory()[ inventoryScrollCount * 3 + i * 3 + j ] ],
+                                    pos_x,
+                                    pos_y,
+                                    Q_WHITE
+                                );
+                            } else {
+                                std::cout << "ERROR: " << quimbertArr[ currentQuimbert ].getInventory()[ inventoryScrollCount * 3 + i * 3 + j ] << "In Inventory but isn't a valid item\n";
+                            }
+                        }
                     }
                 }
+
 
                 /* This is the scroll arrow section */
                 Rectangle scroll_button = Rectangle{
@@ -1399,7 +1371,7 @@ int main( int argc, char** argv ) {
                 scroll_button.y = inventory_background.y + inventory_background.height - scroll_button.height - 10;
                 DrawRectangleRec( scroll_button, Q_GREEN );
                 if ( IsMouseButtonReleased( MOUSE_LEFT_BUTTON ) && CheckCollisionPointRec( Vector2{ GetMouseX() * sf_x, GetMouseY() * sf_y }, scroll_button ) ) { /* check collision with scroll down */
-                    if ( ( inventoryScrollCount + 2 ) * 3 < quimbertArr[ currentQuimbert ].getInventoryDangerous()->size() / 3 ) {
+                    if ( ( inventoryScrollCount + 2 ) < quimbertArr[ currentQuimbert ].getInventoryDangerous()->size() / 3 ) {
                         inventoryScrollCount++;
                     }
                 }
@@ -1427,7 +1399,6 @@ int main( int argc, char** argv ) {
                     Q_PURPLE
                 );
 
-                std::cout << inventoryScrollCount << '\n';
             } else {
                 inventoryScrollCount = 0;
             } /* end inventory drawing */
@@ -1586,4 +1557,12 @@ int main( int argc, char** argv ) {
         EndDrawing();
     }
     UnloadRenderTexture( rentex );
+
+    for ( auto& [key, value] : item_map_texture ) {
+        UnloadTexture( value );
+    }
+    for ( auto& [key, value] : item_map_image ) {
+        UnloadImage( value );
+    }
+
 }
