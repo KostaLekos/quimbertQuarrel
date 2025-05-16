@@ -102,7 +102,7 @@ Color stocDark( std::string color ) {
 ** Rewrote makeButtonText, give position of top-left corner, text, fontsize, and whether or not to ignore input
 ** Made better than the previous one!
 */
-bool makeButtonTextEx( RenderTexture rentex, int pos_x, int pos_y, int size_x, int size_y, std::string text, int fontSize, bool isDisabled = false ) {
+bool makeButtonTextEx( RenderTexture rentex, int pos_x, int pos_y, int size_x, int size_y, std::string text, int fontSize, bool isDisabled = false, Color mainColor1 = Q_GRAY, Color mainColor2 = Q_DARKGRAY, bool doDropShadow = true, Color dropShadowColor = Q_DARKGRAY ) {
 
     float sf_x = static_cast< float >( rentex.texture.width ) / GetScreenWidth();
     float sf_y = static_cast< float >( rentex.texture.height ) / GetScreenHeight();
@@ -124,11 +124,24 @@ bool makeButtonTextEx( RenderTexture rentex, int pos_x, int pos_y, int size_x, i
     DrawRectangleRec( inside, CheckCollisionPointRec( Vector2{ GetMouseX() * sf_x, GetMouseY() * sf_y }, coll ) ? Q_DARKGRAY : Q_GRAY ); // inside color
 
     // Drop shaddow
-    if ( !buttonDown ) {
-        DrawRectangleRec( { main.x + main.width, main.y + 5, 5, main.height }, Q_DARKGRAY );
-        DrawRectangleRec( { main.x + 5, main.y + main.height, main.width, 5 }, Q_DARKGRAY );
+    if ( doDropShadow && !buttonDown ) {
+        DrawRectangleRec( { main.x + main.width, main.y + 5, 5, main.height }, dropShadowColor );
+        DrawRectangleRec( { main.x + 5, main.y + main.height, main.width, 5 }, dropShadowColor );
     }
-    DrawText( text.c_str(), static_cast< float >( main.x + main.width / 2 ) - static_cast< float >( MeasureText( text.c_str(), fontSize ) ) / 2, static_cast< float >( main.y + main.height / 2 ) - static_cast< float >( MeasureTextEx( GetFontDefault(), text.c_str(), fontSize, static_cast< float >( fontSize ) / 10 ).y ) / 2, fontSize, Q_BLACK );
+    DrawText(
+        text.c_str(),
+        static_cast< float >( main.x + main.width / 2 ) - static_cast< float >( MeasureText( text.c_str(), fontSize ) ) / 2,
+        static_cast< float >( main.y + main.height / 2 ) - static_cast< float >(
+            MeasureTextEx(
+                GetFontDefault(),
+                text.c_str(),
+                fontSize,
+                static_cast< float >( fontSize ) / 10
+            ).y
+        ) / 2,
+        fontSize,
+        Q_BLACK
+    );
 
     return IsMouseButtonReleased( MOUSE_LEFT_BUTTON ) && CheckCollisionPointRec( Vector2{ GetMouseX() * sf_x, GetMouseY() * sf_y }, coll );
 
