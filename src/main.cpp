@@ -300,10 +300,13 @@ bool isAnyKeyPressed() {
 
 int main( int argc, char** argv ) {
 
+
+    /* Debug flags and command line parsing */
     bool DEBUG = false;
     for ( int i = 0; i < argc; i++ ) {
         if ( std::string( argv[ i ] ) == "--debug" ) DEBUG = true;
     }
+    /* End command line parsing */
 
     /*
     ** IDK
@@ -323,16 +326,22 @@ int main( int argc, char** argv ) {
     std::string name = "";
     std::string owner = "";
     
+    /* end default stat initialization */
+
+    /* other stat initialization */
     int points = randInt( 25, 35 );
     std::vector< Quimbert > quimbertArr;
     bool gameDone = false;
     bool isMusicMuted = false;
     std::string gameLayout = "start";
+    /* end other stat initialization */
     
     int currentQuimbert = 0;
     
     int monitorWidth = GetMonitorWidth( 0 ), monitorHeight = GetMonitorHeight( 0 );
     
+
+    /* should show panel booleans */
     bool showColorSelectionPanel = false;
     Color currentColor = stoc( color );
         
@@ -348,19 +357,24 @@ int main( int argc, char** argv ) {
     int inventoryScrollCount = 0;
     bool showGambleUi = false;
     bool showStatsBox = false;
+    /* end panel booleans*/
 
+    /* Window initialization */
     SetConfigFlags( FLAG_WINDOW_RESIZABLE | FLAG_WINDOW_MAXIMIZED );
 
     InitWindow(1366, 768, "Quimbert Quarrel");
 
     RenderTexture rentex = LoadRenderTexture( 1920, 1080 );
-
-
+    
+    SetExitKey(KEY_NULL);
+    
     SetWindowMinSize(600, 500);
     SetWindowMaxSize(monitorWidth, monitorHeight);
     SetWindowPosition(40, 70);
     MaximizeWindow();
     SetTargetFPS(60);
+    /* End window initialization*/
+
     InitAudioDevice();
 
     Music blippy = LoadMusicStream("./resources/soundtrack/BlippyBounce.mp3");
@@ -458,14 +472,16 @@ int main( int argc, char** argv ) {
     
     /* END MAIN ITEM LOADING BLOCK */
 
-    while ( !WindowShouldClose() ) {
-
+    while ( !WindowShouldClose() && !( IsKeyDown( KEY_LEFT_CONTROL ) && IsKeyReleased( KEY_Q ) ) ) {
+        
+        /* before game rendering frame initialization */
         BeginTextureMode( rentex );
 
         float sf_x = static_cast< float >( rentex.texture.width ) / GetScreenWidth();
         float sf_y = static_cast< float >( rentex.texture.height ) / GetScreenHeight();
 
         ClearBackground( Q_WHITE );
+
 
         if ( !isMusicMuted ) {
             // UpdateMusicStream( blippy );
