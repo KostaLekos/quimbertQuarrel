@@ -331,7 +331,7 @@ int main( int argc, char** argv ) {
     /* other stat initialization */
     int points = randInt( 25, 35 );
     std::vector< Quimbert > quimbertArr;
-    bool gameDone = false;
+    // bool gameDone = false; /* commented for now to shutup the compiler */
     bool isMusicMuted = false;
     std::string gameLayout = "start";
     /* end other stat initialization */
@@ -393,7 +393,7 @@ int main( int argc, char** argv ) {
 
     QuimbertTextBox textBoxName(
         Rectangle{
-            static_cast< float >( rentex.texture.width / 2 + 20 ),
+            static_cast< float >( rentex.texture.width ) / 2 + 20,
             250,
             375,
             75
@@ -402,7 +402,7 @@ int main( int argc, char** argv ) {
 
     QuimbertTextBox textBoxOwner(
         Rectangle{
-            static_cast< float >( rentex.texture.width / 2 + 20 ),
+            static_cast< float >( rentex.texture.width ) / 2 + 20,
             350,
             375,
             75
@@ -463,6 +463,7 @@ int main( int argc, char** argv ) {
     item_map_image[ "white truffle" ] = LoadImage( "resources/textures/items/tmp_white_truffle.png" );
     item_map_image[ "yellow flower" ] = LoadImage( "resources/textures/items/tmp_yellow_flower.png" );
     item_map_image[ "unidentified piece of flesh" ] = LoadImage( "resources/textures/items/tmp_unidentified_piece_of_flesh.png" );
+
     
     /* non const because im fucking evil */
     for ( auto& [key, value] : item_map_image ) {
@@ -470,6 +471,12 @@ int main( int argc, char** argv ) {
         item_map_texture[ key ] = LoadTextureFromImage( value );
     }
     
+    std::map< std::string, Image > quimbert_map_image;
+    std::map< std::string, Texture > quimbert_map_texture;
+
+    quimbert_map_image[ "tmp_quimbert" ] = LoadImage( "resources/textures/quimberts/tmp_quimbert.png");
+    quimbert_map_texture[ "tmp_quimbert" ] = LoadTextureFromImage( quimbert_map_image[ "tmp_quimbert" ] );
+
     /* END MAIN ITEM LOADING BLOCK */
 
     while ( !WindowShouldClose() && !( IsKeyDown( KEY_LEFT_CONTROL ) && IsKeyReleased( KEY_Q ) ) ) {
@@ -495,7 +502,14 @@ int main( int argc, char** argv ) {
             DrawText("Quimbert Quarrel", ( rentex.texture.width / 2 ) - ( MeasureText( "Quimbert Quarrel", 96 ) / 2 ), ( rentex.texture.height / 4), 96, Q_BLACK);
             DrawText("A Green Apple Game", ( rentex.texture.width / 2 ) - ( MeasureText( "A Green Apple Game", 36 ) / 2 ), ( rentex.texture.height / 4 + 100), 36, Q_BLACK);
 
-            Rectangle localButton{ static_cast< float >( rentex.texture.width ) / 2 - 155, static_cast< float >( rentex.texture.height ) / 2, 300, 150 };
+            /* shutup the compiler
+            Rectangle localButton{
+                static_cast< float >( rentex.texture.width ) / 2 - 155,
+                static_cast< float >( rentex.texture.height ) / 2,
+                300,
+                150
+            };
+            */
 
             //Local Button (Next Layout)
             if ( makeButtonTextCenter( rentex, rentex.texture.width / 2, rentex.texture.height / 2 + 200, "Local", 80, false ) ) {
@@ -817,7 +831,6 @@ int main( int argc, char** argv ) {
                 }
             }
 
-            Rectangle doneButton = { static_cast< float >( rentex.texture.width ) - 175, 20, 150, 80 };
 
             //Create Quimbert button
             if ( makeButtonText( rentex, rentex.texture.width - 175, 20, "Done", 48, points != 0 ) ) {
@@ -1255,13 +1268,6 @@ int main( int argc, char** argv ) {
                 48,
                 Q_BLACK
             );
-            const char* statsHelpText =
-                "Stats Descriptions:\n"
-                "Looks: \n"
-                "Smell: \n"
-                "Personality: \n"
-                "Gumption: \n"
-                "Length: \n";
 
             const char *titleText = "Select Stats";
             DrawText( titleText, rentex.texture.width / 2 - MeasureText( titleText, 80 ) / 2, 30, 80, Q_BLACK );
@@ -1301,6 +1307,9 @@ int main( int argc, char** argv ) {
             if ( makeButtonText( rentex, button_position_x, button_position_y, "Gamble", 60 ) ) {
                 showGambleUi = true;
             }
+
+            if ( showGambleUi ) {}
+
             button_position_x += BUTTON_GAP + MeasureText( "Gamble", 60 ) + 45;
 
             if ( makeButtonText( rentex, button_position_x, button_position_y, "Block", 60 ) ) {}
@@ -1316,20 +1325,17 @@ int main( int argc, char** argv ) {
             if ( makeButtonText( rentex, button_position_x, button_position_y, "Inventory", 60) ) {
                 showInventory = !showInventory;
             }
-
-
-
-            /* this is here to get the location of the inventory button,
-               and use that to get the location of the inventory box */
-            int inventory_box_size_x = (
-                10 /* border */ + 60 /* box */ ) * 3 /* 3 boxes */ +
-                ( 10 /* border */ + 20 /* scroll bar */ + 10 /* border again */ );
-
-            int inventory_box_size_y = (
-                10 /* border */ + 60 /* box */ ) * 2 /* 2 boxes */ +
-                ( 10 /* border */ );
-
+            
             if ( showInventory ) {
+
+                /* this is here to get the location of the inventory button,
+                   and use that to get the location of the inventory box */
+                int inventory_box_size_x = ( 10 /* border */ + 60 /* box */ ) * 3 /* 3 boxes */
+                                         + ( 10 /* border */ + 20 /* scroll bar */ + 10 /* border again */ );
+    
+                int inventory_box_size_y = ( 10 /* border */ + 60 /* box */ ) * 2 /* 2 boxes */
+                                         + ( 10 /* border */ );
+
                 /* main background */
                 Rectangle inventory_background{
                     inventory_button_x - static_cast< float >( inventory_box_size_x ) / 2,
@@ -1403,7 +1409,7 @@ int main( int argc, char** argv ) {
                 scroll_button.y = inventory_background.y + inventory_background.height - scroll_button.height - 10;
                 DrawRectangleRec( scroll_button, Q_GREEN );
                 if ( IsMouseButtonReleased( MOUSE_LEFT_BUTTON ) && CheckCollisionPointRec( Vector2{ GetMouseX() * sf_x, GetMouseY() * sf_y }, scroll_button ) ) { /* check collision with scroll down */
-                    if ( ( inventoryScrollCount + 1 ) < quimbertArr[ currentQuimbert ].getInventoryDangerous()->size() / 3 ) {
+                    if ( static_cast< unsigned long >( inventoryScrollCount + 1 ) < quimbertArr[ currentQuimbert ].getInventoryDangerous()->size() / 3 ) {
                         inventoryScrollCount++;
                     }
                 }
@@ -1434,8 +1440,7 @@ int main( int argc, char** argv ) {
             } else {
                 inventoryScrollCount = 0;
             } /* end inventory drawing */
-
-
+            
 
             button_position_x += BUTTON_GAP + MeasureText( "Inventory", 60 ) + 45;
 
@@ -1560,6 +1565,27 @@ int main( int argc, char** argv ) {
                 );
 
             }
+            /* draw the quimberts to the screen */
+            const Vector2 quimbert_positions[ 8 ] = {
+                Vector2{ 300, 300 },
+                Vector2{ 400, 300 },
+                Vector2{ 500, 300 },
+                Vector2{ 600, 300 },
+                Vector2{ 700, 300 },
+                Vector2{ 800, 300 },
+                Vector2{ 900, 300 },
+                Vector2{ 1000, 300 }
+            };
+
+            for ( std::size_t i = 0; i < quimbertArr.size(); i++ ) {
+                /* FIXME: actually render quimberts correctly, only possible once we get the quimbert textures */
+                DrawTexture(
+                    quimbert_map_texture[ "tmp_quimbert" ],
+                    quimbert_positions[ i ].x,
+                    quimbert_positions[ i ].y,
+                    Q_WHITE
+                );
+            }
 
 
         } /* end render if tree */
@@ -1588,6 +1614,9 @@ int main( int argc, char** argv ) {
         if ( DEBUG ) DrawFPS( 20, 200 );
         EndDrawing();
     }
+
+    /* CLEANUP */
+
     UnloadRenderTexture( rentex );
 
     for ( auto& [key, value] : item_map_texture ) {
@@ -1596,5 +1625,13 @@ int main( int argc, char** argv ) {
     for ( auto& [key, value] : item_map_image ) {
         UnloadImage( value );
     }
+
+    for ( auto& [key, value] : quimbert_map_image ) {
+        UnloadImage( value );
+    }
+    for ( auto& [key, value] : quimbert_map_texture ) {
+        UnloadTexture( value );
+    }
+
 
 }
