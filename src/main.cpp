@@ -1573,14 +1573,14 @@ int main( int argc, char** argv ) {
             }
             /* draw the quimberts to the screen */
             const Vector2 quimbert_positions[ 8 ] = {
-                Vector2{ 280, 566 },
-                Vector2{ 400, 640 },
-                Vector2{ 615, 635 },
-                Vector2{ 760, 660 },
-                Vector2{ 1015, 640 },
-                Vector2{ 1150, 650 },
-                Vector2{ 1310, 580 },
-                Vector2{ 1425, 610 },
+                Vector2{ 802, 320 }, // 3
+                Vector2{ 947, 304 }, // 8
+                Vector2{ 300, 560 }, // 2
+                Vector2{ 1350, 600 }, // 5
+                Vector2{ 345, 404 }, // 7
+                Vector2{ 1200, 475 }, // 4
+                Vector2{ 153, 420 }, // 1
+                Vector2{ 1685, 420 }, // 6
             };
 
             for ( std::size_t i = 0; i < quimbertArr.size(); i++ ) {
