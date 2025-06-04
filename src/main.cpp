@@ -529,7 +529,13 @@ int main( int argc, char** argv ) {
             if ( DEBUG ) {
                 isMusicMuted = true;
                 quimbertArr.emplace_back( 10, 10, "blue", 10, 5, 0, "a", "a");
-                quimbertArr.emplace_back( 10, 10, "green", 10, 5, 0, "ab", "ab");
+                quimbertArr.emplace_back( 10, 10, "green", 10, 5, 0, "abc", "abc");
+                quimbertArr.emplace_back( 10, 10, "red", 10, 5, 0, "abd", "abd");
+                quimbertArr.emplace_back( 10, 10, "orange", 10, 5, 0, "sab", "asb");
+                quimbertArr.emplace_back( 10, 10, "purple", 10, 5, 0, "sabs", "abss");
+                quimbertArr.emplace_back( 10, 10, "pink", 10, 5, 0, "asdab", "asdab");
+                quimbertArr.emplace_back( 10, 10, "gray", 10, 5, 0, "afgadfgab", "afgadfgab");
+                quimbertArr.emplace_back( 10, 10, "yellow", 10, 5, 0, "aashdafhgb", "aashdafhgb");
                 quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("black truffle");
                 quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("mushroom");
                 quimbertArr[ 0 ].getInventoryDangerous()->emplace_back("twig");
@@ -1567,22 +1573,26 @@ int main( int argc, char** argv ) {
             }
             /* draw the quimberts to the screen */
             const Vector2 quimbert_positions[ 8 ] = {
-                Vector2{ 300, 300 },
-                Vector2{ 400, 300 },
-                Vector2{ 500, 300 },
-                Vector2{ 600, 300 },
-                Vector2{ 700, 300 },
-                Vector2{ 800, 300 },
-                Vector2{ 900, 300 },
-                Vector2{ 1000, 300 }
+                Vector2{ 280, 566 },
+                Vector2{ 400, 640 },
+                Vector2{ 615, 635 },
+                Vector2{ 760, 660 },
+                Vector2{ 1015, 640 },
+                Vector2{ 1150, 650 },
+                Vector2{ 1310, 580 },
+                Vector2{ 1425, 610 },
             };
 
             for ( std::size_t i = 0; i < quimbertArr.size(); i++ ) {
                 /* FIXME: actually render quimberts correctly, only possible once we get the quimbert textures */
-                DrawTexture(
+                DrawTextureEx(
                     quimbert_map_texture[ "tmp_quimbert" ],
-                    quimbert_positions[ i ].x,
-                    quimbert_positions[ i ].y,
+                    Vector2{ 
+                        quimbert_positions[ i ].x,
+                        quimbert_positions[ i ].y,
+                    },
+                    0,
+                    0.25f,
                     Q_WHITE
                 );
             }
